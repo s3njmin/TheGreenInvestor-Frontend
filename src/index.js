@@ -9,6 +9,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
+  /*Note that: App js is injected into the root div*/
   <BrowserRouter>
     <App />
   </BrowserRouter>

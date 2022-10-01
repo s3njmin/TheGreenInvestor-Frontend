@@ -30,3 +30,192 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+/*Green-App title*/
+.navbar-brand {
+  color: white;
+  text-shadow: #ddd;
+  font-weight: bolder;
+}
+
+/*Other buttons like Home User, Login Register*/
+.nav-link {
+  color: white;
+  text-shadow: #ddd;
+  font-weight: normal;
+}
+
+img[alt="thegreeninvestorlogo"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.RectangleQuestions {
+  /* position: absolute; */
+  margin-top: 2%;
+  width: 100%;
+  height: 70vh;
+
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+
+  /* width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  box-sizing: border-box;
+  border-radius: 2px; */
+}
+
+/* the line under the nav bar*/
+.border-bottom-line {
+  -webkit-box-shadow: 0px 1px 1px #010101;
+  -moz-box-shadow: 0px 1px 1px #040404;
+  box-shadow: 5px 5px 10px #00500793;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid whitesmoke;
+  padding: 10px;
+}
+
+/* css to fit background image to screen */
+.App {
+  background-image: url('../src/assets/green-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  margin-top: 0px;
+  font-size: 20px;
+}
+
+/* container for the buttons */
+.block {
+  /* display: block; */
+  margin-top: 6px;
+  display: inline-block;
+  width: 100%;
+  height: 7.5vh;
+  border: none;
+  background-color: #f7f7f7b8;
+  padding: 14px 28px;
+  font-size: 1.5vw;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* when hover over the container for the buttons */
+.block:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.button {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgb(145, 92, 182);
+  padding: 15px 40px;
+  border-radius: 4px;
+  font-weight: normal;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+
+/* hover over buttons */
+.glow-button:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
+/* container for the game panel */
+.q-container {
+  width: 100%;
+  height: 50%;
+}
+
+/*left quadrant*/
+.quodrant1,
+.quodrant3 {
+  display: inline;
+  float: left;
+  width: 60%;
+  height: 100%;
+}
+
+/*right quadrant*/
+.quodrant2,
+.quodrant4 {
+  display: inline;
+  float: left;
+  width: 40%;
+  height: 100%;
+}
+
+.quodrant1 {
+  top: 0;
+  left: 50vh;
+  /* background-color: red; */
+}
+
+.quodrant2 {
+  top: 0;
+  left: 0;
+  /* background-color: rgb(129, 129, 67); */
+}
+
+.quodrant3 {
+  top: 50vw;
+  left: 0;
+  /* background-color: blue; */
+}
+
+.quodrant4 {
+  top: 50vw;
+  left: 50vh;
+  /* background-color: green; */
+}
+
+/*bad responsive design someone halp pls*/
+
+h1 {
+  font-size: 3vw;
+}
+
+h2 {
+  font-size: 2vw;
+}
+
+/* .page {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+}
+
+.fade-appear,
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 450ms linear 250ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 150ms linear;
+} */

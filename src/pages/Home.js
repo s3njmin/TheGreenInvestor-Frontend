@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
 
@@ -42,21 +43,14 @@ export default class Home extends Component {
   render() {
     return (
       <div style={{ marginTop: 200, height: "170px" }}>
-        <header
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.5)",
-            height: "170px",
-          }}
-        >
-          <h3
-            style={{
-              textAlign: "center",
-              verticalAlign: "bottom",
-            }}
-          >
-            {"Start Game"}
-          </h3>
-        </header>
+        <h1 className="text-center" style={{ color: "whitesmoke" }}>Welcome to The Green Investor</h1>
+
+        <div className="text-center">
+          <Link to="/game" className="">
+            <button className="btn btn-primary btn-lg" style={{ width: "30vh" }}>Play Game</button>
+          </Link>
+
+        </div>
       </div>
     );
   }
