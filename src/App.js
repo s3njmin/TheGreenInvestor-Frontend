@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Routes, Route} from "react-router-dom";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import AuthService from "./services/auth.service";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -13,6 +13,9 @@ import NavBar from "./components/NavBar";
 import Game from "./pages/Game";
 import GameOver from "./pages/GameOver";
 import GameWin from "./pages/GameWin";
+
+// import AuthVerify from "./common/auth-verify";
+import EventBus from "./common/EventBus";
 
 
 class App extends Component {
