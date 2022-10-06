@@ -33,23 +33,6 @@ export default function Home() {
 
   const tabValues = ["first", "second", "third", "forth"];
 
-  const tabVariant = {
-    active: {
-      width: "55%",
-      transition: {
-        type: "tween",
-        duration: 0.4,
-      },
-    },
-    inactive: {
-      width: "15%",
-      transition: {
-        type: "tween",
-        duration: 0.4,
-      },
-    },
-  };
-
   function handleNextClick() {
     let oldIndex = tabValues.indexOf(activeTab);
     setActiveTab(tabValues[++oldIndex]);
@@ -88,39 +71,18 @@ export default function Home() {
             })}
           >
             <Tabs.List layout position="apart">
-              <motion.Tabs.Tab
-                variants={tabVariant}
-                animate={activeTab === index ? "active" : "inactive"}
-                className="lg:text-md xl:text-xl"
-                value="first"
-              >
-                {" "}
+              <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
                 Introduction
-              </motion.Tabs.Tab>
-              <motion.Tabs.Tab
-                variants={tabVariant}
-                animate={activeTab === index ? "active" : "inactive"}
-                className="lg:text-md xl:text-xl"
-                value="second"
-              >
+              </Tabs.Tab>
+              <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
                 What is Sustainability?
-              </motion.Tabs.Tab>
-              <motion.Tabs.Tab
-                variants={tabVariant}
-                animate={activeTab === index ? "active" : "inactive"}
-                className="lg:text-md xl:text-xl"
-                value="third"
-              >
+              </Tabs.Tab>
+              <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
                 Importance of Sustainability
-              </motion.Tabs.Tab>
-              <motion.Tabs.Tab
-                variants={tabVariant}
-                animate={activeTab === index ? "active" : "inactive"}
-                className="lg:text-md xl:text-xl"
-                value="forth"
-              >
+              </Tabs.Tab>
+              <Tabs.Tab className="lg:text-md xl:text-xl" value="forth">
                 How to Play?
-              </motion.Tabs.Tab>
+              </Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
               {displayContent[0].src}
