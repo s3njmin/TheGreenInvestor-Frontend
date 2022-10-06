@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { motion } from "framer-motion";
 
 import GameService from "../services/GameService";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
@@ -35,7 +36,14 @@ export default class Game extends Component {
 
   render() {
     return (
-      <div>
+      <motion.div
+        layout
+        animate={{ opacity: 0.5 }}
+        transition={{
+          opacity: { ease: "linear" },
+          layout: { duration: 0.3 },
+        }}
+      >
         <img src={thegreeninvestor} alt="thegreeninvestorlogo" />
         <div className="RectangleQuestions center">
           <div className="q-container">
@@ -85,7 +93,7 @@ export default class Game extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
+import { motion } from "framer-motion";
 
 import thegreeninvestor from "../assets/thegreeninvestor.png";
 
@@ -32,6 +33,23 @@ export default function Home() {
 
   const tabValues = ["first", "second", "third", "forth"];
 
+  const tabVariant = {
+    active: {
+      width: "55%",
+      transition: {
+        type: "tween",
+        duration: 0.4,
+      },
+    },
+    inactive: {
+      width: "15%",
+      transition: {
+        type: "tween",
+        duration: 0.4,
+      },
+    },
+  };
+
   function handleNextClick() {
     let oldIndex = tabValues.indexOf(activeTab);
     setActiveTab(tabValues[++oldIndex]);
@@ -42,13 +60,18 @@ export default function Home() {
   }
 
   return (
-    <div style={{ marginTop: 30, height: "170px" }}>
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: "0%" }}
+      transition={{ type: "spring", stiffness: 100 }}
+      style={{ marginTop: 30, height: "170px" }}
+    >
       <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" />
-
       <Box className="bg-gray-50 bg-opacity-70 h-[70vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-20">
         <h1 className="text-center text-darkGreen-50">
           Welcome to the Sustainability Game!
         </h1>
+
         <Stack className="h-[50vh]" justify="space-between">
           <Tabs
             value={activeTab}
@@ -64,21 +87,41 @@ export default function Home() {
               },
             })}
           >
-            <Tabs.List position="apart">
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
+            <Tabs.List layout position="apart">
+              <motion.Tabs.Tab
+                variants={tabVariant}
+                animate={activeTab === index ? "active" : "inactive"}
+                className="lg:text-md xl:text-xl"
+                value="first"
+              >
+                {" "}
                 Introduction
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
+              </motion.Tabs.Tab>
+              <motion.Tabs.Tab
+                variants={tabVariant}
+                animate={activeTab === index ? "active" : "inactive"}
+                className="lg:text-md xl:text-xl"
+                value="second"
+              >
                 What is Sustainability?
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
+              </motion.Tabs.Tab>
+              <motion.Tabs.Tab
+                variants={tabVariant}
+                animate={activeTab === index ? "active" : "inactive"}
+                className="lg:text-md xl:text-xl"
+                value="third"
+              >
                 Importance of Sustainability
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="forth">
+              </motion.Tabs.Tab>
+              <motion.Tabs.Tab
+                variants={tabVariant}
+                animate={activeTab === index ? "active" : "inactive"}
+                className="lg:text-md xl:text-xl"
+                value="forth"
+              >
                 How to Play?
-              </Tabs.Tab>
+              </motion.Tabs.Tab>
             </Tabs.List>
-
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
               {displayContent[0].src}
             </Tabs.Panel>
@@ -121,6 +164,6 @@ export default function Home() {
           </div>
         </Stack>
       </Box>
-    </div>
+    </motion.div>
   );
 }
