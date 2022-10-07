@@ -7,6 +7,21 @@ import DataMetric from "../components/DataMetric/DataMetric";
 import { CashIcon, MoraleIcon, SustainabilityIcon } from "../icons";
 import { Box } from "@mantine/core";
 
+const variants = {
+  hidden: {
+    y: "100%",
+  },
+  visible: {
+    y: "0%",
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.5,
+      type: "spring",
+      duration: 1.5,
+    },
+  },
+};
+
 export default class Game extends Component {
   constructor(props) {
     super(props);
@@ -37,12 +52,10 @@ export default class Game extends Component {
   render() {
     return (
       <motion.div
-        layout
-        animate={{ opacity: 0.5 }}
-        transition={{
-          opacity: { ease: "linear" },
-          layout: { duration: 0.3 },
-        }}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
       >
         <img src={thegreeninvestor} alt="thegreeninvestorlogo" />
         <div className="RectangleQuestions center">

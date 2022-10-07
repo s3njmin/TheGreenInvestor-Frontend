@@ -134,6 +134,13 @@ img[alt="thegreeninvestorlogo"] {
   box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
 }
 
+/* on click buttons */
+.glow-button:active {
+  background-color: #569d80;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
 /* container for the game panel */
 .q-container {
   width: 100%;

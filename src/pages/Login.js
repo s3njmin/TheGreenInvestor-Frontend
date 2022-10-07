@@ -2,12 +2,28 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { motion } from "framer-motion";
 
 import AuthService from "../services/auth.service";
 
-import { withRouter } from '../common/with-router';
+import { withRouter } from "../common/with-router";
 
-const required = value => {
+const variants = {
+  hidden: {
+    opacity: "0%,"
+  },
+  visible: {
+    opacity: "100%",
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.5,
+      type: "spring",
+      duration: 1.5,
+    },
+  },
+};
+
+const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -28,19 +44,19 @@ class Login extends Component {
       username: "",
       password: "",
       loading: false,
-      message: ""
+      message: "",
     };
   }
 
   onChangeUsername(e) {
     this.setState({
-      username: e.target.value
+      username: e.target.value,
     });
   }
 
   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
     });
   }
 
@@ -49,7 +65,7 @@ class Login extends Component {
 
     this.setState({
       message: "",
-      loading: true
+      loading: true,
     });
 
     this.form.validateAll();
@@ -60,7 +76,7 @@ class Login extends Component {
           this.props.router.navigate("/profile");
           window.location.reload();
         },
-        error => {
+        (error) => {
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -70,20 +86,26 @@ class Login extends Component {
 
           this.setState({
             loading: false,
-            message: resMessage
+            message: resMessage,
           });
         }
       );
     } else {
       this.setState({
-        loading: false
+        loading: false,
       });
     }
   }
 
   render() {
     return (
-      <div className="col-md-12">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
+        className="col-md-12"
+      >
         <div className="card card-container">
           <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -93,7 +115,7 @@ class Login extends Component {
 
           <Form
             onSubmit={this.handleLogin}
-            ref={c => {
+            ref={(c) => {
               this.form = c;
             }}
           >
@@ -142,13 +164,13 @@ class Login extends Component {
             )}
             <CheckButton
               style={{ display: "none" }}
-              ref={c => {
+              ref={(c) => {
                 this.checkBtn = c;
               }}
             />
           </Form>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

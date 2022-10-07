@@ -10,6 +10,21 @@ import UserService from "../services/user.service";
 import { displayContent } from "../assets/LandingPageDisplayContent";
 import { PrevIcon } from "../icons";
 
+const variants = {
+  hidden: {
+    y: "100%",
+  },
+  visible: {
+    y: "0%",
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.5,
+      default: { ease: "linear" },
+      duration: 1.5,
+    },
+  },
+};
+
 export default function Home() {
   const [content, setContent] = useState("");
 
@@ -44,9 +59,14 @@ export default function Home() {
 
   return (
     <motion.div
-      initial={{ y: "100%" }}
-      animate={{ y: "0%" }}
-      transition={{ type: "spring", stiffness: 100 }}
+      // initial={{ y: "100%" }}
+      // animate={{ y: "0%" }}
+      // transition={{ type: "spring", stiffness: 100 }}
+      // exit={{y:"-100%"}}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={variants}
       style={{ marginTop: 30, height: "170px" }}
     >
       <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" />
@@ -117,9 +137,15 @@ export default function Home() {
               </Button>
             ) : (
               <Link to="/game" className="">
-                <Button size="lg" className="bg-darkGreen-50 ">
+                <motion.Button
+                  animate="visible"
+                  exit="hidden"
+                  variants={variants}
+                  size="lg"
+                  className="bg-darkGreen-50 "
+                >
                   Play Game
-                </Button>
+                </motion.Button>
               </Link>
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}
