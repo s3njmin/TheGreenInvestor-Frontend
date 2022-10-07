@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route, Router, useNavigate } from "react-router-dom";
 import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
 
@@ -9,12 +9,24 @@ import UserService from "../services/user.service";
 import { displayContent } from "../assets/LandingPageDisplayContent";
 import { PrevIcon } from "../icons";
 
+import authService from "../services/auth.service";
+
 export default function Home() {
   const [content, setContent] = useState("");
 
   const [activeTab, setActiveTab] = useState("first");
 
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  let navigate = useNavigate();
+
   useEffect(() => {
+
+    const user = authService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+    }
+
     const getPublicContent = async () => {
       try {
         const res = await UserService.getPublicContent();
@@ -22,8 +34,8 @@ export default function Home() {
       } catch (error) {
         setContent(
           (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
+          error.message ||
+          error.toString()
         );
       }
     };
@@ -39,6 +51,32 @@ export default function Home() {
   function handlePrvClick() {
     let oldIndex = tabValues.indexOf(activeTab);
     setActiveTab(tabValues[--oldIndex]);
+  }
+
+  function makeid(length) {
+    var result = '';
+    var characters = '0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+
+  async function signUpAsGuest() {
+    var username = "Guest" + makeid(5);
+    var email = username + "@thegreeninvestor.com";
+    var password = "123456"
+    authService.register(username, email, password)
+      .then();
+    await new Promise(r => setTimeout(r, 1000));
+    authService.login(username, password).then(
+      () => {
+        navigate("/game");
+        window.location.reload();
+      },
+    );
   }
 
   return (
@@ -110,12 +148,21 @@ export default function Home() {
               >
                 Next
               </Button>
-            ) : (
+            ) : (currentUser ? (
               <Link to="/game" className="">
                 <Button size="lg" className="bg-darkGreen-50 ">
                   Play Game
                 </Button>
               </Link>
+            ) : (
+              <Button
+                size="lg"
+                className="bg-darkGreen-50"
+                onClick={signUpAsGuest}
+              >
+                Play as Guest
+              </Button>
+            )
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}
           </div>
