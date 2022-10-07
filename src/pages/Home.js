@@ -4,26 +4,12 @@ import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
 import { motion } from "framer-motion";
 
+import { variants } from "../assets/Animations";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
 
 import UserService from "../services/user.service";
 import { displayContent } from "../assets/LandingPageDisplayContent";
 import { PrevIcon } from "../icons";
-
-const variants = {
-  hidden: {
-    y: "100%",
-  },
-  visible: {
-    y: "0%",
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.5,
-      default: { ease: "linear" },
-      duration: 1.5,
-    },
-  },
-};
 
 export default function Home() {
   const [content, setContent] = useState("");
@@ -59,10 +45,6 @@ export default function Home() {
 
   return (
     <motion.div
-      // initial={{ y: "100%" }}
-      // animate={{ y: "0%" }}
-      // transition={{ type: "spring", stiffness: 100 }}
-      // exit={{y:"-100%"}}
       initial="hidden"
       animate="visible"
       exit="hidden"

@@ -1,26 +1,12 @@
 import React, { Component } from "react";
 import { motion } from "framer-motion";
 
+import { variants } from "../assets/Animations";
 import GameService from "../services/GameService";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
 import DataMetric from "../components/DataMetric/DataMetric";
 import { CashIcon, MoraleIcon, SustainabilityIcon } from "../icons";
 import { Box } from "@mantine/core";
-
-const variants = {
-  hidden: {
-    y: "100%",
-  },
-  visible: {
-    y: "0%",
-    transition: {
-      when: "afterChildren",
-      staggerChildren: 0.5,
-      type: "spring",
-      duration: 1.5,
-    },
-  },
-};
 
 export default class Game extends Component {
   constructor(props) {

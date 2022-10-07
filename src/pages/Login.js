@@ -4,24 +4,10 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { motion } from "framer-motion";
 
+import { variants } from "../assets/Animations";
 import AuthService from "../services/auth.service";
 
 import { withRouter } from "../common/with-router";
-
-const variants = {
-  hidden: {
-    opacity: "0%,"
-  },
-  visible: {
-    opacity: "100%",
-    transition: {
-      when: "afterChildren",
-      staggerChildren: 0.5,
-      type: "spring",
-      duration: 1.5,
-    },
-  },
-};
 
 const required = (value) => {
   if (!value) {
@@ -100,9 +86,9 @@ class Login extends Component {
   render() {
     return (
       <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
+        initial="hidden_ease"
+        animate="visible_ease"
+        exit="hidden_ease"
         variants={variants}
         className="col-md-12"
       >
