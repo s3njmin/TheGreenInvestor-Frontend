@@ -70,7 +70,7 @@ export default function Home() {
     var username = "Guest" + makeid(5);
     var email = username + "@thegreeninvestor.com";
     var password = "123456"
-    authService.register(username, email, password)
+    authService.register(username, email, password, "GUEST")
       .then();
     await new Promise(r => setTimeout(r, 1000));
     authService.login(username, password).then(
