@@ -2,14 +2,12 @@ import React, { useState, useEffect, Component } from "react";
 import { motion } from "framer-motion";
 
 import { variants } from "../assets/Animations";
-import GameService from "../services/GameService";
-import thegreeninvestor from "../assets/thegreeninvestor.png";
+
 import DataMetric from "../components/DataMetric/DataMetric";
 import { CashIcon, MoraleIcon, SustainabilityIcon } from "../icons";
 import { Box, Grid, Text, Button, Group } from "@mantine/core";
 
 import authHeader from "../services/auth-header";
-import image1 from "../assets/img1.jpg";
 
 import axios from "axios";
 
@@ -18,6 +16,14 @@ export default function Game() {
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
+
+  const [index, setIndex] = useState(1);
+
+  async function onClickHandler() {
+    setIndex(index + 1);
+    setQuestion(data[index]);
+  }
+  console.log(index);
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +36,10 @@ export default function Game() {
         .then(async (response) => {
           await setData(response.data);
           await setQuestion(response.data[0]);
-          return axios.get(`http://localhost:8080/api/questions/1/options`);
+          return axios.get(`http://localhost:8080/api/questions/1/options`, {
+            headers: authHeader(),
+            "Content-Type": "application/json",
+          });
         })
         .then((response) => {
           setOptions(response.data);
@@ -42,6 +51,19 @@ export default function Game() {
     }
     getAllData();
   }, []);
+
+  useEffect(() => {
+    async function getOptions() {
+      await axios
+        .get(`http://localhost:8080/api/questions/${question.id}/options`, {
+          headers: authHeader(),
+          "Content-Type": "application/json",
+        })
+        .catch((error) => console.log(error.response));
+    }
+    getOptions();
+  }, [question]);
+
   if (data === undefined || question === undefined || options === undefined) {
     return <>Still loading...</>;
   }
@@ -62,7 +84,7 @@ export default function Game() {
               </Text>
               <img
                 className="h-[70%] w-[70%] text-center"
-                src={require("../assets/img1.jpg")}
+                src={require(`../assets/img1.jpg`)}
                 alt="new"
               />
             </Box>
@@ -80,22 +102,26 @@ export default function Game() {
                 size="md"
                 className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
               >
-                Placeholder
+                {options[1]}
               </Button>
               <Button
                 size="md"
                 className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
               >
-                Placeholder
+                {options[2]}
               </Button>
               <Button
                 size="md"
                 className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
               >
-                Placeholder
+                {options[3]}
               </Button>
 
-              <Button size="md" className="h-[90%] bg-darkGreen-50 text-black">
+              <Button
+                onClick={onClickHandler}
+                size="md"
+                className="h-[90%] bg-darkGreen-50 text-black"
+              >
                 Submit
               </Button>
             </Box>
