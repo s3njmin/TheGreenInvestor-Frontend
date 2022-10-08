@@ -3,10 +3,26 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import { motion } from "framer-motion";
 
 import AuthService from "../services/auth.service";
 
-const required = value => {
+const variants = {
+  hidden: {
+    opacity: "0%,",
+  },
+  visible: {
+    opacity: "100%",
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.5,
+      type: "spring",
+      duration: 1.5,
+    },
+  },
+};
+
+const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -16,7 +32,7 @@ const required = value => {
   }
 };
 
-const email = value => {
+const email = (value) => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -26,7 +42,7 @@ const email = value => {
   }
 };
 
-const vusername = value => {
+const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -36,7 +52,7 @@ const vusername = value => {
   }
 };
 
-const vpassword = value => {
+const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -59,25 +75,25 @@ export default class Register extends Component {
       email: "",
       password: "",
       successful: false,
-      message: ""
+      message: "",
     };
   }
 
   onChangeUsername(e) {
     this.setState({
-      username: e.target.value
+      username: e.target.value,
     });
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
   onChangePassword(e) {
     this.setState({
-      password: e.target.value
+      password: e.target.value,
     });
   }
 
@@ -86,7 +102,7 @@ export default class Register extends Component {
 
     this.setState({
       message: "",
-      successful: false
+      successful: false,
     });
 
     this.form.validateAll();
@@ -97,13 +113,13 @@ export default class Register extends Component {
         this.state.email,
         this.state.password
       ).then(
-        response => {
+        (response) => {
           this.setState({
             message: response.data.message,
-            successful: true
+            successful: true,
           });
         },
-        error => {
+        (error) => {
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -113,7 +129,7 @@ export default class Register extends Component {
 
           this.setState({
             successful: false,
-            message: resMessage
+            message: resMessage,
           });
         }
       );
@@ -122,7 +138,13 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
+        className="col-md-12"
+      >
         <div className="card card-container">
           <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -132,7 +154,7 @@ export default class Register extends Component {
 
           <Form
             onSubmit={this.handleRegister}
-            ref={c => {
+            ref={(c) => {
               this.form = c;
             }}
           >
@@ -196,13 +218,13 @@ export default class Register extends Component {
             )}
             <CheckButton
               style={{ display: "none" }}
-              ref={c => {
+              ref={(c) => {
                 this.checkBtn = c;
               }}
             />
           </Form>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

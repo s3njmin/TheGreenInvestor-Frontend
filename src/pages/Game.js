@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { motion } from "framer-motion";
 
+import { variants } from "../assets/Animations";
 import GameService from "../services/GameService";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
 import DataMetric from "../components/DataMetric/DataMetric";
@@ -35,7 +37,12 @@ export default class Game extends Component {
 
   render() {
     return (
-      <div>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
+      >
         <img src={thegreeninvestor} alt="thegreeninvestorlogo" />
         <div className="RectangleQuestions center">
           <div className="q-container">
@@ -85,7 +92,7 @@ export default class Game extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

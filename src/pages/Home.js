@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, Route, Router, useNavigate } from "react-router-dom";
 import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
+import { motion } from "framer-motion";
 
+import { variants } from "../assets/Animations";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
 
 import UserService from "../services/user.service";
@@ -80,13 +82,19 @@ export default function Home() {
   }
 
   return (
-    <div style={{ marginTop: 30, height: "170px" }}>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={variants}
+      style={{ marginTop: 30, height: "170px" }}
+    >
       <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" />
-
       <Box className="bg-gray-50 bg-opacity-70 h-[70vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-20">
         <h1 className="text-center text-darkGreen-50">
           Welcome to the Sustainability Game!
         </h1>
+
         <Stack className="h-[50vh]" justify="space-between">
           <Tabs
             value={activeTab}
@@ -102,7 +110,7 @@ export default function Home() {
               },
             })}
           >
-            <Tabs.List position="apart">
+            <Tabs.List layout position="apart">
               <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
                 Introduction
               </Tabs.Tab>
@@ -116,7 +124,6 @@ export default function Home() {
                 How to Play?
               </Tabs.Tab>
             </Tabs.List>
-
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
               {displayContent[0].src}
             </Tabs.Panel>
@@ -150,9 +157,15 @@ export default function Home() {
               </Button>
             ) : (currentUser ? (
               <Link to="/game" className="">
-                <Button size="lg" className="bg-darkGreen-50 ">
+                <motion.Button
+                  animate="visible"
+                  exit="hidden"
+                  variants={variants}
+                  size="lg"
+                  className="bg-darkGreen-50 "
+                >
                   Play Game
-                </Button>
+                </motion.Button>
               </Link>
             ) : (
               <Button
@@ -168,6 +181,6 @@ export default function Home() {
           </div>
         </Stack>
       </Box>
-    </div>
+    </motion.div>
   );
 }

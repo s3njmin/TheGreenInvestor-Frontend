@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AuthService from "./services/auth.service";
 import Login from "./pages/Login";
@@ -17,23 +18,14 @@ import GameWin from "./pages/GameWin";
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
-
 class App extends Component {
-  
-
   constructor(props) {
-
     super(props);
 
-    this.state = {
-
-    };
-
+    this.state = {};
   }
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -41,23 +33,27 @@ class App extends Component {
         <NavBar />
         <div className="line"></div>
         <div className="container mt-3">
-              <Routes location = {this.props.location}>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/user" element={<BoardUser />} />
-                <Route path="/mod" element={<BoardModerator />} />
-                <Route path="/admin" element={<BoardAdmin />} />
-                <Route path="/game" element={<Game />} />
-                <Route path="/gameover" element={<GameOver />} />
-                <Route path="/gamewin" element={<GameWin />} />
-              </Routes>
+          <AnimatePresence>
+            <Routes
+              location={this.props.location}
+              // key={this.props.location.pathname}
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/user" element={<BoardUser />} />
+              <Route path="/mod" element={<BoardModerator />} />
+              <Route path="/admin" element={<BoardAdmin />} />
+              <Route path="/game" element={<Game />} />
+              <Route path="/gameover" element={<GameOver />} />
+              <Route path="/gamewin" element={<GameWin />} />
+            </Routes>
+          </AnimatePresence>
         </div>
         {/* <AuthVerify logOut={this.logOut}/> */}
       </div>
-
     );
   }
 }
