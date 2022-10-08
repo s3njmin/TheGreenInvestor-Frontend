@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 
 import AuthService from "../services/auth.service";
 
+import { withRouter } from "../common/with-router";
+
 const variants = {
   hidden: {
     opacity: "0%,",
@@ -62,13 +64,16 @@ const vpassword = (value) => {
   }
 };
 
-export default class Register extends Component {
+
+class Register extends Component {
+
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+
 
     this.state = {
       username: "",
@@ -97,7 +102,7 @@ export default class Register extends Component {
     });
   }
 
-  handleRegister(e) {
+  async handleRegister(e) {
     e.preventDefault();
 
     this.setState({
@@ -111,7 +116,8 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        "USER"
       ).then(
         (response) => {
           this.setState({
@@ -134,6 +140,31 @@ export default class Register extends Component {
         }
       );
     }
+
+    //wait one second
+    await new Promise(r => setTimeout(r, 1000));
+
+    AuthService.login(this.state.username, this.state.password).then(
+      async () => {
+
+        /* not a good way of implementing here, reimplement smoother*/
+
+        this.props.router.navigate("/home")
+
+        //refresh
+        window.location.reload();
+
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
+
   }
 
   render() {
@@ -228,3 +259,5 @@ export default class Register extends Component {
     );
   }
 }
+
+export default withRouter(Register);
