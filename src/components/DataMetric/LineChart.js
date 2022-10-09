@@ -46,6 +46,7 @@ const LineChart = () => {
             type: "line",
             smooth: true,
             color: "#245A44",
+            height: "100%",
             areaStyle: {
               color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
@@ -60,6 +61,9 @@ const LineChart = () => {
             },
           },
         ],
+      }}
+      style={{
+        height: "100%",
       }}
     />
   );

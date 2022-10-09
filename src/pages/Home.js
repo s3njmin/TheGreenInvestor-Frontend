@@ -23,7 +23,6 @@ export default function Home() {
   let navigate = useNavigate();
 
   useEffect(() => {
-
     const user = authService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
@@ -36,8 +35,8 @@ export default function Home() {
       } catch (error) {
         setContent(
           (error.response && error.response.data) ||
-          error.message ||
-          error.toString()
+            error.message ||
+            error.toString()
         );
       }
     };
@@ -56,12 +55,11 @@ export default function Home() {
   }
 
   function makeid(length) {
-    var result = '';
-    var characters = '0123456789';
+    var result = "";
+    var characters = "0123456789";
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() *
-        charactersLength));
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
   }
@@ -69,16 +67,13 @@ export default function Home() {
   async function signUpAsGuest() {
     var username = "Guest" + makeid(5);
     var email = username + "@thegreeninvestor.com";
-    var password = "123456"
-    authService.register(username, email, password, "GUEST")
-      .then();
-    await new Promise(r => setTimeout(r, 1000));
-    authService.login(username, password).then(
-      () => {
-        navigate("/game");
-        window.location.reload();
-      },
-    );
+    var password = "123456";
+    authService.register(username, email, password, "GUEST").then();
+    await new Promise((r) => setTimeout(r, 1000));
+    authService.login(username, password).then(() => {
+      navigate("/game");
+      window.location.reload();
+    });
   }
 
   return (
@@ -89,13 +84,13 @@ export default function Home() {
       variants={variants}
       style={{ marginTop: 30, height: "170px" }}
     >
-      <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" />
-      <Box className="bg-gray-50 bg-opacity-70 h-[70vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-20">
+      {/* <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" /> */}
+      <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
         <h1 className="text-center text-darkGreen-50">
           Welcome to the Sustainability Game!
         </h1>
 
-        <Stack className="h-[50vh]" justify="space-between">
+        <Stack className="h-full" justify="space-between">
           <Tabs
             value={activeTab}
             onTabChange={setActiveTab}
@@ -138,7 +133,7 @@ export default function Home() {
             </Tabs.Panel>
           </Tabs>
 
-          <div className=" w-full flex items-center align-baseline justify-center ">
+          <div className=" w-full h-full flex flex-grow items-center mt-auto align-baseline justify-center ">
             {activeTab !== "first" && (
               <div className="flex-1">
                 <PrevIcon
@@ -155,14 +150,14 @@ export default function Home() {
               >
                 Next
               </Button>
-            ) : (currentUser ? (
+            ) : currentUser ? (
               <Link to="/game" className="">
                 <motion.Button
                   animate="visible"
                   exit="hidden"
                   variants={variants}
                   size="lg"
-                  className="bg-darkGreen-50 "
+                  className="bg-darkGreen-50 mt-auto "
                 >
                   Play Game
                 </motion.Button>
@@ -175,7 +170,6 @@ export default function Home() {
               >
                 Play as Guest
               </Button>
-            )
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}
           </div>

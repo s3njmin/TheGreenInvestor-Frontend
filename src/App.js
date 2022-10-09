@@ -32,7 +32,7 @@ class App extends Component {
       <div className="App">
         <NavBar />
         <div className="line"></div>
-        <div className="container mt-3">
+        <div className=" justify-center pl-10 pr-10 pt-3 ">
           <AnimatePresence>
             <Routes
               location={this.props.location}

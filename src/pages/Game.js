@@ -17,12 +17,23 @@ export default function Game() {
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
 
+  
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const imageArray = [1, 2, 3];
+
+  const [imageIndex, setImageIndex] = useState(0);
+
   const [index, setIndex] = useState(1);
 
   async function onClickHandler() {
     setIndex(index + 1);
     setQuestion(data[index]);
+    setImageIndex(imageIndex + 1);
+    setSelectedOption(null);
   }
+
   console.log(index);
 
   useEffect(() => {
@@ -54,12 +65,15 @@ export default function Game() {
 
   useEffect(() => {
     async function getOptions() {
-      await axios
-        .get(`http://localhost:8080/api/questions/${question.id}/options`, {
-          headers: authHeader(),
-          "Content-Type": "application/json",
-        })
-        .catch((error) => console.log(error.response));
+      if (question !== undefined) {
+        const res = await axios
+          .get(`http://localhost:8080/api/questions/${question.id}/options`, {
+            headers: authHeader(),
+            "Content-Type": "application/json",
+          })
+          .catch((error) => console.log(error.response));
+        setOptions(res.data);
+      }
     }
     getOptions();
   }, [question]);
@@ -78,13 +92,13 @@ export default function Game() {
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-2">
         <Grid className="h-full w-full">
           <Grid.Col span={7} className="h-full">
-            <Box className="h-[55%] w-full flex flex-col items-center space-y-2">
+            <Box className="h-[55%] w-full flex flex-col items-center space-y-4">
               <Text className="text-center font-semibold text-xl">
                 {question.question}
               </Text>
               <img
-                className="h-[70%] w-[70%] text-center"
-                src={require(`../assets/img1.jpg`)}
+                className="h-[70%] w-[50%] text-center rounded-2xl drop-shadow-xl"
+                src={require(`../assets/img${imageArray[imageIndex]}.jpg`)}
                 alt="new"
               />
             </Box>
@@ -93,34 +107,83 @@ export default function Game() {
               className="h-[45%] w-full flex flex-col items-center space-y-2"
             >
               <Button
+                onClick={() => setSelectedOption(0)}
                 size="md"
-                className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                className={
+                  selectedOption === 0
+                    ? "w-[80%] h-full opacity-80 bg-darkGreen-50 text-white"
+                    : " w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                }
+                styles={(theme) => ({
+                  root: {
+                    "&:hover": {
+                      backgroundColor: theme.fn.darken("#245A44", 0.05),
+                    },
+                  },
+                })}
               >
-                {options[0]}
+                {options[0].option}
               </Button>
               <Button
+                onClick={() => setSelectedOption(1)}
                 size="md"
-                className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                className={
+                  selectedOption === 1
+                    ? "w-[80%] h-full opacity-80 bg-darkGreen-50 text-white"
+                    : " w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                }
+                styles={(theme) => ({
+                  root: {
+                    "&:hover": {
+                      backgroundColor: theme.fn.darken("#245A44", 0.05),
+                    },
+                  },
+                })}
               >
-                {options[1]}
+                {options[1].option}
               </Button>
               <Button
+                onClick={() => setSelectedOption(2)}
                 size="md"
-                className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                className={
+                  selectedOption === 2
+                    ? "w-[80%] h-full opacity-80 bg-darkGreen-50 text-white"
+                    : " w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                }
+                styles={(theme) => ({
+                  root: {
+                    "&:hover": {
+                      backgroundColor: theme.fn.darken("#245A44", 0.05),
+                    },
+                  },
+                })}
               >
-                {options[2]}
+                {options[2].option}
               </Button>
               <Button
+                onClick={() => setSelectedOption(3)}
                 size="md"
-                className="w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                className={
+                  selectedOption === 3
+                    ? "w-[80%] h-full opacity-80 bg-darkGreen-50 text-white"
+                    : " w-[80%] h-full opacity-80 bg-gray-50 text-black"
+                }
+                styles={(theme) => ({
+                  root: {
+                    "&:hover": {
+                      backgroundColor: theme.fn.darken("#245A44", 0.05),
+                    },
+                  },
+                })}
               >
-                {options[3]}
+                {options[3].option}
               </Button>
 
               <Button
                 onClick={onClickHandler}
+                disabled={selectedOption === null ? true : false}
                 size="md"
-                className="h-[90%] bg-darkGreen-50 text-black"
+                className="h-[90%] w-[15%] bg-darkGreen-50 text-white"
               >
                 Submit
               </Button>
@@ -130,6 +193,7 @@ export default function Game() {
             <Box className="h-[53%] w-full space-y-2">
               <DataMetric
                 hasChart={true}
+               
                 icon={<CashIcon color="grey" className="text-xl" />}
                 increment={5}
                 value={40}
