@@ -6,6 +6,9 @@ import "../css/barchart.css";
 import "../css/navbar.css";
 
 
+import thegreeninvestor from "../assets/thegreeninvestor.png";
+
+
 import AuthService from "../services/auth.service";
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "../common/EventBus";
@@ -92,6 +95,8 @@ export default class Game extends Component {
                         </li>
                     )}
                 </div>
+
+                <img className="" src={thegreeninvestor} alt="thegreeninvestorlogo"/>
 
                 {currentUser ? (
                     <div className="navbar-nav ml-auto">

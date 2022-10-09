@@ -1,6 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
+/** change this to api.js */
+
 const API_URL = "http://localhost:8080/api/";
 
 class GameService {

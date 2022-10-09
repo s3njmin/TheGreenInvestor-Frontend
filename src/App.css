@@ -46,10 +46,10 @@ label {
 }
 
 img[alt="thegreeninvestorlogo"] {
-  display: block;
+  /* display: block; */
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 30%;
 }
 
 .RectangleQuestions {
@@ -93,6 +93,26 @@ img[alt="thegreeninvestorlogo"] {
   height: 100vh;
   margin-top: 0px;
   font-size: 20px;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* container for the buttons */
@@ -146,87 +166,3 @@ img[alt="thegreeninvestorlogo"] {
   width: 100%;
   height: 50%;
 }
-
-/*left quadrant*/
-.quodrant1,
-.quodrant3 {
-  display: inline;
-  float: left;
-  width: 60%;
-  height: 100%;
-}
-
-/*right quadrant*/
-.quodrant2,
-.quodrant4 {
-  display: inline;
-  float: left;
-  width: 40%;
-  height: 100%;
-}
-
-.quodrant1 {
-  top: 0;
-  left: 50vh;
-  /* background-color: red; */
-}
-
-.quodrant2 {
-  top: 0;
-  left: 0;
-  padding-left: 1rem;
-  margin-bottom: 0.5rem;
-  /* background-color: rgb(129, 129, 67); */
-}
-
-.quodrant3 {
-  top: 50vw;
-  left: 0;
-
-  /* background-color: blue; */
-}
-
-.quodrant4 {
-  top: 50vw;
-  left: 50vh;
-  padding-left: 1rem;
-  /* background-color: green; */
-}
-
-/*bad responsive design someone halp pls*/
-
-h1 {
-  font-size: 3vw;
-}
-
-h2 {
-  font-size: 2vw;
-}
-
-/* .page {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  right: 0;
-}
-
-.fade-appear,
-.fade-enter {
-  opacity: 0;
-  z-index: 1;
-}
-
-.fade-appear-active,
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 450ms linear 250ms;
-}
-
-.fade-exit {
-  opacity: 1;
-}
-
-.fade-exit.fade-exit-active {
-  opacity: 0;
-  transition: opacity 150ms linear;
-} */

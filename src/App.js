@@ -15,6 +15,8 @@ import Game from "./pages/Game";
 import GameOver from "./pages/GameOver";
 import GameWin from "./pages/GameWin";
 
+import backgroundVideo from "./assets/forestbg.mp4";
+
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
@@ -25,34 +27,37 @@ class App extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (
-      <div className="App">
-        <NavBar />
-        <div className="line"></div>
-        <div className="container mt-3">
-          <AnimatePresence>
-            <Routes
-              location={this.props.location}
+      <div className="main">
+        <video src={backgroundVideo} type="video/mp4" autoPlay loop muted />
+        <div className="content">
+          <NavBar />
+          <div className="line"></div>
+          <div className="container mt-3">
+            <AnimatePresence>
+              <Routes
+                location={this.props.location}
               // key={this.props.location.pathname}
-            >
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/user" element={<BoardUser />} />
-              <Route path="/mod" element={<BoardModerator />} />
-              <Route path="/admin" element={<BoardAdmin />} />
-              <Route path="/game" element={<Game />} />
-              <Route path="/gameover" element={<GameOver />} />
-              <Route path="/gamewin" element={<GameWin />} />
-            </Routes>
-          </AnimatePresence>
+              >
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/user" element={<BoardUser />} />
+                <Route path="/mod" element={<BoardModerator />} />
+                <Route path="/admin" element={<BoardAdmin />} />
+                <Route path="/game" element={<Game />} />
+                <Route path="/gameover" element={<GameOver />} />
+                <Route path="/gamewin" element={<GameWin />} />
+              </Routes>
+            </AnimatePresence>
+          </div>
+          {/* <AuthVerify logOut={this.logOut}/> */}
         </div>
-        {/* <AuthVerify logOut={this.logOut}/> */}
       </div>
     );
   }
