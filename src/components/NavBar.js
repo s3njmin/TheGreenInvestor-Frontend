@@ -5,7 +5,10 @@ import "../App.css";
 import "../css/barchart.css";
 import "../css/navbar.css";
 
+import { MusicUpIcon, MusicOffIcon } from "../icons";
 import thegreeninvestor from "../assets/thegreeninvestor.png";
+import myMusic from "../assets/music.mp3";
+import MuteButton from "./MuteButton";
 
 import AuthService from "../services/auth.service";
 // import AuthVerify from "./common/auth-verify";
@@ -52,11 +55,23 @@ export default class Game extends Component {
     });
   }
 
+  _toggleMuteButton() {
+    var myAudio = document.getElementById("audio_player");
+    myAudio.muted = !myAudio.muted;
+
+    this.setState({
+      isMuted: !this.state.isMuted,
+    });
+  }
+
   render() {
     const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
 
     return (
-      <nav className="navbar navbar-expand bg-gradient-to-r from-transparent via-teal-400/80 border-bottom-line">
+      <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line">
+        <audio id="audio_player" autoPlay loop>
+          <source src={myMusic} type="audio/mp3" />
+        </audio>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
@@ -64,7 +79,11 @@ export default class Game extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/leaderboard"} className="nav-link">
+            <Link
+              to={"/leaderboard"}
+              className="nav-link"
+              onClick={this.toggleMute}
+            >
               Leaderboard
             </Link>
           </li>
@@ -94,7 +113,11 @@ export default class Game extends Component {
           )}
         </div>
 
-        <img className="" src={thegreeninvestor} alt="thegreeninvestorlogo" />
+        <img
+          className="logo"
+          src={thegreeninvestor}
+          alt="thegreeninvestorlogo"
+        />
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
@@ -111,6 +134,14 @@ export default class Game extends Component {
           </div>
         ) : (
           <div className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <span className="changeColor">
+                <MuteButton
+                  isMuted={this.state.isMuted}
+                  _toggleMuteButton={this._toggleMuteButton.bind(this)}
+                />
+              </span>
+            </li>
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
                 Log In

@@ -86,10 +86,8 @@ export default function Home() {
       variants={variants}
       style={{ marginTop: 30, height: "170px" }}
     >
-
       {/* <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" /> */}
       <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
-
         <h1 className="text-center text-darkGreen-50">
           Welcome to the Sustainability Game!
         </h1>
