@@ -27,8 +27,7 @@ const DataMetric = ({ label, icon, value, unit, hasChart, increment }) => {
         <Text className="text-gray-500">{unit}</Text>
         <IncrementChip className="mb-1 ml-2" increment={increment} />
       </Group>
-
-      {hasChart ? <LineChart /> : <BarChart />}
+      <div className="h-full">{hasChart ? <LineChart /> : <BarChart />}</div>
     </Stack>
   );
 };

@@ -31,15 +31,17 @@ class App extends Component {
 
   render() {
     return (
+
       <div className="main">
         <video src={backgroundVideo} type="video/mp4" autoPlay loop muted />
         <div className="content">
           <NavBar />
           <div className="line"></div>
-          <div className="container mt-3">
+          <div className=" justify-center pl-10 pr-10 pt-3 ">
             <AnimatePresence>
               <Routes
                 location={this.props.location}
+
               // key={this.props.location.pathname}
               >
                 <Route path="/" element={<Home />} />

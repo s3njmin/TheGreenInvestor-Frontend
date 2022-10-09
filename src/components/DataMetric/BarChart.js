@@ -39,6 +39,9 @@ const BarChart = () => {
           },
         ],
       }}
+      style={{
+        height: "100%",
+      }}
     />
   );
 };
