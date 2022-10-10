@@ -5,7 +5,7 @@ import {
   HiOutlineCurrencyDollar,
 } from "react-icons/hi";
 
-import { MdMusicNote, MdMusicOff } from "react-icons/md";
+import { TbMusic, TbMusicOff } from "react-icons/tb";
 
 import { FiUsers, FiFeather } from "react-icons/fi";
 
@@ -15,5 +15,5 @@ export const DecreaseIcon = HiTrendingDown;
 export const CashIcon = HiOutlineCurrencyDollar;
 export const MoraleIcon = FiUsers;
 export const SustainabilityIcon = FiFeather;
-export const MusicUpIcon = MdMusicNote;
-export const MusicOffIcon = MdMusicOff;
+export const MusicUpIcon = TbMusic;
+export const MusicOffIcon = TbMusicOff;

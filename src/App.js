@@ -17,6 +17,7 @@ import GameWin from "./pages/GameWin";
 
 import backgroundVideo from "./assets/forestbg.mp4";
 
+
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
@@ -27,11 +28,10 @@ class App extends Component {
     this.state = {};
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     return (
-
       <div className="main">
         <video src={backgroundVideo} type="video/mp4" autoPlay loop muted />
         <div className="content">
@@ -42,7 +42,7 @@ class App extends Component {
               <Routes
                 location={this.props.location}
 
-              // key={this.props.location.pathname}
+                // key={this.props.location.pathname}
               >
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />

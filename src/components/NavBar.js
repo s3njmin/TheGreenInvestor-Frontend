@@ -68,7 +68,7 @@ export default class Game extends Component {
     const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
 
     return (
-      <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line">
+      <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line h-15">
         <audio id="audio_player" autoPlay loop>
           <source src={myMusic} type="audio/mp3" />
         </audio>
@@ -134,7 +134,7 @@ export default class Game extends Component {
           </div>
         ) : (
           <div className="navbar-nav ml-auto">
-            <li className="nav-item">
+            <li className="nav-item pt-2 pr-2">
               <span className="changeColor">
                 <MuteButton
                   isMuted={this.state.isMuted}

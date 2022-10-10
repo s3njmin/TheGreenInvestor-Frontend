@@ -45,7 +45,8 @@ export default function Home() {
     getPublicContent();
   }, []);
 
-  const tabValues = ["first", "second", "third", "forth"];
+  // const tabValues = ["first", "second", "third", "forth"];
+  const tabValues = ["first", "third", "forth"];
 
   function handleNextClick() {
     let oldIndex = tabValues.indexOf(activeTab);
@@ -111,9 +112,9 @@ export default function Home() {
               <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
                 Introduction
               </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
+              {/* <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
                 What is Sustainability?
-              </Tabs.Tab>
+              </Tabs.Tab> */}
               <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
                 Importance of Sustainability
               </Tabs.Tab>
@@ -124,9 +125,9 @@ export default function Home() {
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
               {displayContent[0].src}
             </Tabs.Panel>
-            <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
+            {/* <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
               {displayContent[1].src}
-            </Tabs.Panel>
+            </Tabs.Panel> */}
             <Tabs.Panel className="h-[36vh] overflow-auto" value="third">
               {displayContent[2].src}
             </Tabs.Panel>
@@ -135,7 +136,12 @@ export default function Home() {
             </Tabs.Panel>
           </Tabs>
 
-          <div className=" w-full h-full flex flex-grow items-center mt-auto align-baseline justify-center ">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+            className=" w-full h-full flex flex-grow items-center mt-auto align-baseline justify-center "
+          >
             {activeTab !== "first" && (
               <div className="flex-1">
                 <PrevIcon
@@ -154,7 +160,7 @@ export default function Home() {
               </Button>
             ) : currentUser ? (
               <Link to="/game" className="">
-                <motion.Button
+                <Button
                   animate="visible"
                   exit="hidden"
                   variants={variants}
@@ -162,7 +168,7 @@ export default function Home() {
                   className="bg-darkGreen-50 mt-auto "
                 >
                   Play Game
-                </motion.Button>
+                </Button>
               </Link>
             ) : (
               <Button
@@ -174,7 +180,7 @@ export default function Home() {
               </Button>
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}
-          </div>
+          </motion.div>
         </Stack>
       </Box>
     </motion.div>

@@ -1,4 +1,10 @@
 /* SHIFT */
+
+.logo {
+  width: auto;
+  height: 100px;
+}
+
 nav-link {
   position: relative;
   z-index: 1;
