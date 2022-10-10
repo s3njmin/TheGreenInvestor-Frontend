@@ -139,7 +139,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
+            transition={{ duration: 1 }}
             className=" w-full h-full flex flex-grow items-center mt-auto align-baseline justify-center "
           >
             {activeTab !== "first" && (
@@ -160,13 +160,7 @@ export default function Home() {
               </Button>
             ) : currentUser ? (
               <Link to="/game" className="">
-                <Button
-                  animate="visible"
-                  exit="hidden"
-                  variants={variants}
-                  size="lg"
-                  className="bg-darkGreen-50 mt-auto "
-                >
+                <Button size="lg" className="bg-darkGreen-50 mt-auto ">
                   Play Game
                 </Button>
               </Link>
