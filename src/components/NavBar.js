@@ -121,6 +121,14 @@ export default class Game extends Component {
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
+            <li className="nav-item pt-2 pr-2">
+              <span className="changeColor">
+                <MuteButton
+                  isMuted={this.state.isMuted}
+                  _toggleMuteButton={this._toggleMuteButton.bind(this)}
+                />
+              </span>
+            </li>
             <li className="nav-item">
               <Link to={"/profile"} className="nav-link">
                 {currentUser.username}
