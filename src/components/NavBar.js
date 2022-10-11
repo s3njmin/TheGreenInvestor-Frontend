@@ -118,17 +118,19 @@ export default class Game extends Component {
           src={thegreeninvestor}
           alt="thegreeninvestorlogo"
         />
+        <div className="navbar-nav ml-auto">
+          <li className="nav-item pt-2 pr-2">
+            <span className="changeColor">
+              <MuteButton
+                isMuted={this.state.isMuted}
+                _toggleMuteButton={this._toggleMuteButton.bind(this)}
+              />
+            </span>
+          </li>
+        </div>
 
         {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item pt-2 pr-2">
-              <span className="changeColor">
-                <MuteButton
-                  isMuted={this.state.isMuted}
-                  _toggleMuteButton={this._toggleMuteButton.bind(this)}
-                />
-              </span>
-            </li>
+          <div className="navbar-nav">
             <li className="nav-item">
               <Link to={"/profile"} className="nav-link">
                 {currentUser.username}
@@ -141,15 +143,7 @@ export default class Game extends Component {
             </li>
           </div>
         ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item pt-2 pr-2">
-              <span className="changeColor">
-                <MuteButton
-                  isMuted={this.state.isMuted}
-                  _toggleMuteButton={this._toggleMuteButton.bind(this)}
-                />
-              </span>
-            </li>
+          <div className="navbar-nav">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
                 Log In
