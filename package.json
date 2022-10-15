@@ -8,7 +8,6 @@
     "@mantine/core": "^5.4.2",
     "@mantine/hooks": "^5.4.2",
     "@mui/lab": "^5.0.0-alpha.101",
-    "@mui/material": "^5.10.7",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.1",
     "@testing-library/user-event": "^14.1.1",
@@ -16,13 +15,21 @@
     "bootstrap": "^4.6.2",
     "echarts-for-react": "^3.0.2",
     "framer-motion": "^7.5.2",
+    "i18next": "^21.10.0",
+    "i18next-browser-languagedetector": "^6.1.8",
+    "i18next-http-backend": "^1.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-mighty-mouse": "^1.4.31",
+    "react-i18next": "^11.18.6",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^9.0.8",
     "react-transition-group": "^4.4.5",
     "react-validation": "^3.0.7",
+    "reactjs-popup": "^2.0.5",
+    "sass": "^1.55.0",
     "validator": "^13.7.0"
   },
   "scripts": {
@@ -52,6 +59,7 @@
   "devDependencies": {
     "install": "^0.13.0",
     "npm": "^8.19.2",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.4"
   }
 }

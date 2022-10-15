@@ -53,24 +53,6 @@ img[alt="thegreeninvestorlogo"] {
   height: 220%;
 }
 
-.RectangleQuestions {
-  /* position: absolute; */
-  margin-top: 2%;
-  width: 100%;
-  height: 72vh;
-
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
-
-  /* width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  border: 1px solid #d9d9d9;
-  box-sizing: border-box;
-  border-radius: 2px; */
-}
-
 /* the line under the nav bar*/
 .border-bottom-line {
   -webkit-box-shadow: 0px 1px 1px #010101;
@@ -166,4 +148,15 @@ video {
 .q-container {
   width: 100%;
   height: 50%;
+}
+
+.components-common-assets-LoginPopup {
+	position: relative;
+	width: 60rem;
+	height: 38rem;
+	background: url(assets/popup_bg.png) 50%/contain no-repeat;
+  padding: 100px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 5px;
+  max-width: 350px !important;
 }

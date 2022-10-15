@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useRef, useCallback } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -48,7 +48,7 @@ const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
+        username must be between 3 and 20 characters.
       </div>
     );
   }
@@ -65,199 +65,98 @@ const vpassword = (value) => {
 };
 
 
-class Register extends Component {
+const Register = props => {
 
-  constructor(props) {
-    super(props);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [message, setMessage] = useState();
+  const [successful, setSuccessful] = useState();
 
+  const form = useRef();
+  const checkBtn = useRef();
 
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      successful: false,
-      message: "",
-    };
+  function onChangeUsername(e) {
+    setUsername(e.target.value);
   }
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value,
-    });
+  function onChangeEmail(e) {
+    setEmail(e.target.value);
   }
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
+  function onChangePassword(e) {
+    setPassword(e.target.value);
   }
 
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-
-  async handleRegister(e) {
+  const handleRegister = useCallback(async (e) => {
     e.preventDefault();
+    setMessage("");
+    setSuccessful(false);
+    form.current.validateAll();
 
-    this.setState({
-      message: "",
-      successful: false,
-    });
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.register(username, email, password, "USER").then(response => {
+        setMessage(response.data.message);
+        setSuccessful(true);
+      }, error => {
+        const resMessage = error.response && error.response.data && error.response.data.message || error.message || error.toString();
+        setSuccessful(false);
+        setMessage(resMessage);
+      });
+    } //wait one second
 
-    this.form.validateAll();
 
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
-        this.state.username,
-        this.state.email,
-        this.state.password,
-        "USER"
-      ).then(
-        (response) => {
-          this.setState({
-            message: response.data.message,
-            successful: true,
-          });
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
-            successful: false,
-            message: resMessage,
-          });
-        }
-      );
-    }
-
-    //wait one second
     await new Promise(r => setTimeout(r, 1000));
+    AuthService.login(username, password).then(async () => {
+      /* not a good way of implementing here, reimplement smoother*/
+      props.router.navigate("/home"); //refresh
 
-    AuthService.login(this.state.username, this.state.password).then(
-      async () => {
+      window.location.reload();
+    }, error => {
+      const resMessage = error.response && error.response.data && error.response.data.message || error.message || error.toString();
+    });
+  });
+  return <motion.div initial="hidden" animate="visible" exit="hidden" variants={variants} className="col-md-12">
+    <div className="card card-container">
+      <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img" className="profile-img-card" />
 
-        /* not a good way of implementing here, reimplement smoother*/
+      <Form onSubmit={handleRegister} ref={c => {
+        form.current = c;
+      }}>
+        {!successful && <div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <Input type="text" className="form-control" name="username" value={username} onChange={onChangeUsername} validations={[required, vusername]} />
+          </div>
 
-        this.props.router.navigate("/home")
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <Input type="text" className="form-control" name="email" value={email} onChange={onChangeEmail} validations={[required, email]} />
+          </div>
 
-        //refresh
-        window.location.reload();
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Input type="password" className="form-control" name="password" value={password} onChange={onChangePassword} validations={[required, vpassword]} />
+          </div>
 
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );
+          <div className="form-group">
+            <button className="btn btn-primary btn-block">Sign Up</button>
+          </div>
+        </div>}
 
-  }
-
-  render() {
-    return (
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        variants={variants}
-        className="col-md-12"
-      >
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
-          <Form
-            onSubmit={this.handleRegister}
-            ref={(c) => {
-              this.form = c;
-            }}
-          >
-            {!this.state.successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
-                </div>
-              </div>
-            )}
-
-            {this.state.message && (
-              <div className="form-group">
-                <div
-                  className={
-                    this.state.successful
-                      ? "alert alert-success"
-                      : "alert alert-danger"
-                  }
-                  role="alert"
-                >
-                  {this.state.message}
-                </div>
-              </div>
-            )}
-            <CheckButton
-              style={{ display: "none" }}
-              ref={(c) => {
-                this.checkBtn = c;
-              }}
-            />
-          </Form>
-        </div>
-      </motion.div>
-    );
-  }
-}
+        {message && <div className="form-group">
+          <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+            {message}
+          </div>
+        </div>}
+        <CheckButton style={{
+          display: "none"
+        }} ref={c => {
+          checkBtn.current = c;
+        }} />
+      </Form>
+    </div>
+  </motion.div>;
+};
 
 export default withRouter(Register);

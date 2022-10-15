@@ -3,9 +3,9 @@ import { Link, Route, Router, useNavigate } from "react-router-dom";
 import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import { variants } from "../assets/Animations";
-import thegreeninvestor from "../assets/thegreeninvestor.png";
 
 import UserService from "../services/user.service";
 import { displayContent } from "../assets/LandingPageDisplayContent";
@@ -13,14 +13,14 @@ import { PrevIcon } from "../icons";
 
 import authService from "../services/auth.service";
 
-import backgroundVideo from "../assets/forestbg.mp4";
-
 export default function Home() {
   const [content, setContent] = useState("");
 
   const [activeTab, setActiveTab] = useState("first");
 
   const [currentUser, setCurrentUser] = useState(undefined);
+
+  const { t } = useTranslation();
 
   let navigate = useNavigate();
 
@@ -37,8 +37,8 @@ export default function Home() {
       } catch (error) {
         setContent(
           (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
+          error.message ||
+          error.toString()
         );
       }
     };
@@ -90,7 +90,7 @@ export default function Home() {
       {/* <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" /> */}
       <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
         <h1 className="text-center text-darkGreen-50">
-          Welcome to the Sustainability Game!
+        {t('welcome')}
         </h1>
 
         <Stack className="h-full" justify="space-between">
@@ -110,29 +110,29 @@ export default function Home() {
           >
             <Tabs.List layout position="apart">
               <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
-                Introduction
+                {t('home-tab1')}
               </Tabs.Tab>
               {/* <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
                 What is Sustainability?
               </Tabs.Tab> */}
               <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
-                Importance of Sustainability
+              {t('home-tab2')}
               </Tabs.Tab>
               <Tabs.Tab className="lg:text-md xl:text-xl" value="forth">
-                How to Play?
+              {t('home-tab3')}
               </Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
-              {displayContent[0].src}
+              {t('home-tab1-body')}
             </Tabs.Panel>
             {/* <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
               {displayContent[1].src}
             </Tabs.Panel> */}
             <Tabs.Panel className="h-[36vh] overflow-auto" value="third">
-              {displayContent[2].src}
+              {t('home-tab2-body')}
             </Tabs.Panel>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="forth">
-              {displayContent[3].src}
+              {t('home-tab3-body')}
             </Tabs.Panel>
           </Tabs>
 
@@ -156,12 +156,12 @@ export default function Home() {
                 className="bg-darkGreen-50 justify-center items-center  text-center items"
                 onClick={handleNextClick}
               >
-                Next
+                {t('home-button-next')}
               </Button>
             ) : currentUser ? (
               <Link to="/game" className="">
                 <Button size="lg" className="bg-darkGreen-50 mt-auto ">
-                  Play Game
+                {t('home-button-playgame')}
                 </Button>
               </Link>
             ) : (
@@ -170,7 +170,7 @@ export default function Home() {
                 className="bg-darkGreen-50"
                 onClick={signUpAsGuest}
               >
-                Play as Guest
+                {t('home-button-playguest')}
               </Button>
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}
