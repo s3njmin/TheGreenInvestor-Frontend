@@ -21,7 +21,7 @@ const languages = [
   { value: 'en', text: "English" },
   { value: 'zh', text: "中文(简体）" },
   { value: 'es', text: "español" },
-  { value: 'ms', text: "Bahasa Melayu" },
+  // { value: 'ms', text: "Bahasa Melayu" },
 ]
 
 export default function NavBar() {
