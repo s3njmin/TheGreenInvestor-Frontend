@@ -1,49 +1,92 @@
-import React from "react";
-import ReactECharts from "echarts-for-react";
-import { graphic } from "echarts";
-const BarChart = () => {
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export default function BarChart({ data }) {
+  const didMount = useRef(false);
+  const [yearNumber, setYearNumber] = useState(2);
+
+  const [state, setState] = useState({
+    labels: ["Year 1"],
+    data: [100],
+  });
+
+  useEffect(() => {
+    if (didMount.current) {
+      setYearNumber(yearNumber + 1);
+      setState({
+        labels: [`Year ${yearNumber}`],
+        data: data,
+      });
+    } else {
+      didMount.current = true;
+    }
+  }, [data]);
+
   return (
-    <ReactECharts
-      option={{
-        xAxis: {
-          type: "category",
-          data: ["Year 10"],
+    <Bar
+      options={{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: false,
+          },
         },
-        yAxis: {
-          show: false,
-          type: "value",
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+              drawBorder: false,
+            },
+            ticks: {
+              display: false,
+            },
+            min: 0,
+            max: 100,
+          },
         },
-        grid: {
-          show: false,
-          top: "10%",
-          left: "12.5%",
-          right: "7.5%",
-          bottom: "16%",
-        },
-        series: [
+      }}
+      data={{
+        labels: state.labels,
+        datasets: [
           {
-            data: [120],
-            type: "bar",
-            itemStyle: {
-              color: new graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "#245A44",
-                },
-                {
-                  offset: 1,
-                  color: "#75c8a6",
-                },
-              ]),
+            data: state.data,
+            backgroundColor: (context) => {
+              const ctx = context.chart.ctx;
+              const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+              gradient.addColorStop(0, "#245A44");
+              gradient.addColorStop(1, "#75c8a6");
+              return gradient;
             },
           },
         ],
       }}
-      style={{
-        height: "100%",
-      }}
     />
   );
-};
-
-export default BarChart;
+}

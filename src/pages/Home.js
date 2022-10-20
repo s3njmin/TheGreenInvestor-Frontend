@@ -37,16 +37,15 @@ export default function Home() {
       } catch (error) {
         setContent(
           (error.response && error.response.data) ||
-          error.message ||
-          error.toString()
+            error.message ||
+            error.toString()
         );
       }
     };
     getPublicContent();
   }, []);
 
-  // const tabValues = ["first", "second", "third", "forth"];
-  const tabValues = ["first", "third", "forth"];
+  const tabValues = ["first", "second", "third", "forth"];
 
   function handleNextClick() {
     let oldIndex = tabValues.indexOf(activeTab);
@@ -89,9 +88,7 @@ export default function Home() {
     >
       {/* <img className="pb-3" src={thegreeninvestor} alt="thegreeninvestorlogo" /> */}
       <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
-        <h1 className="text-center text-darkGreen-50">
-        {t('welcome')}
-        </h1>
+        <h1 className="text-center text-darkGreen-50">{t("welcome")}</h1>
 
         <Stack className="h-full" justify="space-between">
           <Tabs
@@ -110,29 +107,29 @@ export default function Home() {
           >
             <Tabs.List layout position="apart">
               <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
-                {t('home-tab1')}
+                {t("home-tab1")}
               </Tabs.Tab>
-              {/* <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
+              <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
                 What is Sustainability?
-              </Tabs.Tab> */}
+              </Tabs.Tab>
               <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
-              {t('home-tab2')}
+                {t("home-tab2")}
               </Tabs.Tab>
               <Tabs.Tab className="lg:text-md xl:text-xl" value="forth">
-              {t('home-tab3')}
+                {t("home-tab3")}
               </Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
-              {t('home-tab1-body')}
+              {t("home-tab1-body")}
             </Tabs.Panel>
-            {/* <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
+            <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
               {displayContent[1].src}
-            </Tabs.Panel> */}
+            </Tabs.Panel>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="third">
-              {t('home-tab2-body')}
+              {t("home-tab2-body")}
             </Tabs.Panel>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="forth">
-              {t('home-tab3-body')}
+              {t("home-tab3-body")}
             </Tabs.Panel>
           </Tabs>
 
@@ -156,12 +153,12 @@ export default function Home() {
                 className="bg-darkGreen-50 justify-center items-center  text-center items"
                 onClick={handleNextClick}
               >
-                {t('home-button-next')}
+                {t("home-button-next")}
               </Button>
             ) : currentUser ? (
               <Link to="/game" className="">
                 <Button size="lg" className="bg-darkGreen-50 mt-auto ">
-                {t('home-button-playgame')}
+                  {t("home-button-playgame")}
                 </Button>
               </Link>
             ) : (
@@ -170,7 +167,7 @@ export default function Home() {
                 className="bg-darkGreen-50"
                 onClick={signUpAsGuest}
               >
-                {t('home-button-playguest')}
+                {t("home-button-playguest")}
               </Button>
             )}
             {activeTab !== "first" && <div class="flex-1"></div>}

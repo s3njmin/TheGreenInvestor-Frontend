@@ -4,11 +4,19 @@ import BarChart from "./BarChart";
 import IncrementChip from "./IncrementChip";
 import LineChart from "./LineChart";
 
-const DataMetric = ({ label, icon, value, unit, hasChart, increment }) => {
+const DataMetric = ({
+  label,
+  icon,
+  value,
+  unit,
+  hasChart,
+  increment,
+  chartData,
+}) => {
   return (
     <Stack
       spacing={4}
-      className={`border border-solid border-gray-800 rounded-sm p-4 bg-gray-50 bg-opacity-50 h-full w-full justify-between `}
+      className={`border border-solid border-gray-800 rounded-sm pt-2 pl-4 pr-4 pb-1 bg-gray-50 bg-opacity-50 h-full w-full justify-between `}
     >
       <Group
         spacing="xs"
@@ -27,7 +35,13 @@ const DataMetric = ({ label, icon, value, unit, hasChart, increment }) => {
         <Text className="text-gray-500">{unit}</Text>
         <IncrementChip className="mb-1 ml-2" increment={increment} />
       </Group>
-      <div className="h-full">{hasChart ? <LineChart /> : <BarChart />}</div>
+      <div className="h-full">
+        {hasChart ? (
+          <LineChart data={chartData} />
+        ) : (
+          <BarChart data={chartData} />
+        )}
+      </div>
     </Stack>
   );
 };

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { variants } from "../assets/Animations";
 
 import DataMetric from "../components/DataMetric/DataMetric";
 import { CashIcon, MoraleIcon, SustainabilityIcon } from "../icons";
-import { Box, Grid, Text, Button, Group } from "@mantine/core";
+import { Box, Grid, Text, Button } from "@mantine/core";
 
 import authHeader from "../services/auth-header";
 
@@ -17,8 +17,6 @@ export default function Game() {
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
 
-  
-
   const [selectedOption, setSelectedOption] = useState(null);
 
   const imageArray = [1, 2, 3];
@@ -27,14 +25,23 @@ export default function Game() {
 
   const [index, setIndex] = useState(1);
 
+  //Statistics Data State to update Graphs
+  const [moraleChartData, setMoraleChartData] = useState([100]);
+  const [sustainabilityChartData, setSustainabilityChartData] = useState([100]);
+  const [cashChartData, setCashChartData] = useState([0, 100]);
+
   async function onClickHandler() {
     setIndex(index + 1);
     setQuestion(data[index]);
     setImageIndex(imageIndex + 1);
     setSelectedOption(null);
+    setMoraleChartData([moraleChartData[0] - 10]);
+    setSustainabilityChartData([sustainabilityChartData[0] - 5]);
+    setCashChartData((prevState) => [
+      ...prevState,
+      cashChartData[cashChartData.length - 1] - 10,
+    ]);
   }
-
-  console.log(index);
 
   useEffect(() => {
     setLoading(true);
@@ -193,30 +200,38 @@ export default function Game() {
             <Box className="h-[53%] w-full space-y-2">
               <DataMetric
                 hasChart={true}
-               
                 icon={<CashIcon color="grey" className="text-xl" />}
                 increment={5}
-                value={40}
+                value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
                 label="Cash"
+                chartData={cashChartData}
               />
             </Box>
 
             <Box className="h-[47%] w-full flex flex-row space-x-2">
-              <DataMetric
-                increment={-5}
-                icon={<MoraleIcon color="grey" className="text-xl" />}
-                value={40}
-                unit={"%"}
-                label="Morale"
-              />
-              <DataMetric
-                icon={<SustainabilityIcon color="grey" className="text-xl" />}
-                increment={7}
-                value={54}
-                unit={"%"}
-                label="Sustainability"
-              />
+              <Box className="h-full w-1/2">
+                <DataMetric
+                  className="w-1/2"
+                  increment={-5}
+                  icon={<MoraleIcon color="grey" className="text-xl" />}
+                  value={moraleChartData[0]}
+                  unit={"%"}
+                  label="Morale"
+                  chartData={moraleChartData}
+                />
+              </Box>
+              <Box className="h-full w-1/2">
+                <DataMetric
+                  className="w-1/2"
+                  icon={<SustainabilityIcon color="grey" className="text-xl" />}
+                  increment={7}
+                  value={sustainabilityChartData[0]}
+                  unit={"%"}
+                  label="Sustainability"
+                  chartData={sustainabilityChartData}
+                />
+              </Box>
             </Box>
           </Grid.Col>
         </Grid>
@@ -224,52 +239,3 @@ export default function Game() {
     </motion.div>
   );
 }
-
-// {/* <div className="RectangleQuestions center">
-// <div className="q-container">
-//   <div className="quodrant1">
-//     <h1 className="text-center">Placeholder</h1>
-//     <p className="text-center">Placeholder</p>
-//   </div>
-//   <div className="quodrant2">
-//     <DataMetric
-//       hasChart={true}
-//       icon={<CashIcon color="grey" className="text-xl" />}
-//       increment={5}
-//       value={40}
-//       unit={"SGD"}
-//       label="Cash"
-//     />
-//     {/* <h2 className="text-center">Placeholder for more text here</h2> */}
-//   </div>
-//   <div className="quodrant3">
-//     <button className="block glow-button">btn1</button>
-//     <button className="block glow-button">btn2</button>
-//     <button className="block glow-button">btn3</button>
-//     <button className="block glow-button">btn4</button>
-//   </div>
-//   <div className="quodrant4">
-//     <Box className="h-[33vh] space-x-4 flex flex-row">
-//       <DataMetric
-//         increment={-5}
-//         icon={<MoraleIcon color="grey" className="text-xl" />}
-//         value={40}
-//         unit={"%"}
-//         label="Morale"
-//       />
-//       <DataMetric
-//         icon={<SustainabilityIcon color="grey" className="text-xl" />}
-//         increment={7}
-//         value={54}
-//         unit={"%"}
-//         label="Sustainability"
-//       />
-//     </Box>
-//     {/* <div className='barcontainer'>
-//                       <div className='bar' style={{ height: '75%', background: '#EA6042' }}>75%</div>
-//                       <div className='bar' style={{ height: '25%', background: '#86E577' }}>25%</div>
-//                       <div className='bar' style={{ height: '50%', background: '#ECF029' }}>50%</div>
-//                   </div> */}
-//   </div>
-// </div>
-// </div> */}

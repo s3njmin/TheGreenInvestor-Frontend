@@ -1,4 +1,4 @@
-import {React} from "react";
+import { React } from "react";
 
 export const displayContent = [
   {
@@ -13,7 +13,14 @@ export const displayContent = [
     caption: "Tab 1",
   },
   {
-    src: <p>lorem lorem</p>,
+    src: (
+      <p>
+        {" "}
+        The Green Investor Sustainability game is a turn-based business
+        management game that will test your skill on how to grow a profitable
+        and sustainable business.
+      </p>
+    ),
     altText: "Tab 2",
     caption: "Tab 2",
   },
