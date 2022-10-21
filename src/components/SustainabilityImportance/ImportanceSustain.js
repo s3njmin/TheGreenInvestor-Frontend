@@ -1,0 +1,93 @@
+import { Grid, Group, Stack, Text } from "@mantine/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import CircleData from "./CircleData";
+import HorizontalBarChart from "./HorizontalBarChart";
+
+const ImportanceSustain = () => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
+  const [flight, setFlight] = useState();
+  const [electricity, setElectricity] = useState();
+  const [fuelConsumption, setFuelConsumption] = useState();
+  useEffect(() => {
+    async function getCarbonData() {
+      setLoading(true);
+      try {
+        const res = await axios.get(`http://localhost:8080/api/carbon`, {
+          "Content-Type": "application/json",
+        });
+        setData(res.data);
+      } catch (error) {
+        console.log(error.response);
+      }
+      // const res = await axios
+      //   .get(`http://localhost:8080/api/carbon`, {
+      //     "Content-Type": "application/json",
+      //   })
+      //   .catch((error) => console.log(error.response));
+
+      setLoading(false);
+    }
+    getCarbonData();
+  }, []);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setFlight(data[9].data);
+      setElectricity(data[0].data);
+      setFuelConsumption([
+        data[10].data.attributes.carbon_lb,
+        data[7].data.attributes.carbon_lb,
+        data[12].data.attributes.carbon_lb,
+      ]);
+    }
+  }, [data]);
+  if (
+    data === undefined ||
+    flight === undefined ||
+    electricity === undefined ||
+    fuelConsumption === undefined
+  ) {
+    return <>Still loading...</>;
+  }
+  return (
+    <div>
+      {loading && <div>Still loading...</div>}
+      {!loading && (
+        <Grid className="h-full w-full">
+          <Grid.Col span={4}>
+            <Text className="text-lg font-semibold">
+              On the right, you some stastics regarding some of the biggest
+              causes of carbon emissions such as flight, electricity and fuel.
+              For fuel, there are multiple types of fuel and we can see the
+              large carbon emissions caused by these types of fuels. BIT is
+              Bituminous Coal , MSW is Municipal Solid Waste and LIG is Lignite
+              Coal. From these large numbers, we can understand that all these
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={8}>
+            <Group
+              spacing="xs"
+              className="flex items-center justify-center h-full w-full p-0 "
+            >
+              <CircleData
+                value={flight.attributes.carbon_lb}
+                label={"Flight"}
+                unit={"lb"}
+              />
+              <CircleData
+                value={electricity.attributes.carbon_lb}
+                label={"Electricity"}
+                unit={"lb"}
+              />
+              <HorizontalBarChart data={fuelConsumption} />
+            </Group>
+          </Grid.Col>
+        </Grid>
+      )}
+    </div>
+  );
+};
+
+export default ImportanceSustain;

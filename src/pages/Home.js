@@ -12,6 +12,7 @@ import { displayContent } from "../assets/LandingPageDisplayContent";
 import { PrevIcon } from "../icons";
 
 import authService from "../services/auth.service";
+import ImportanceSustain from "../components/SustainabilityImportance/ImportanceSustain";
 
 export default function Home() {
   const [content, setContent] = useState("");
@@ -126,7 +127,8 @@ export default function Home() {
               {displayContent[1].src}
             </Tabs.Panel>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="third">
-              {t("home-tab2-body")}
+              {/* {t("home-tab2-body")} */}
+              <ImportanceSustain />
             </Tabs.Panel>
             <Tabs.Panel className="h-[36vh] overflow-auto" value="forth">
               {t("home-tab3-body")}
