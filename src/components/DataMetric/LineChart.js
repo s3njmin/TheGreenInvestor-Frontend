@@ -26,6 +26,7 @@ ChartJS.register(
 
 export default function LineChart({ data }) {
   const didMount = useRef(false);
+  
   const [yearNumber, setYearNumber] = useState(2);
   const [labels, setLabels] = useState(["Year 0", "Year 1"]);
   const [state, setState] = useState({
@@ -46,6 +47,8 @@ export default function LineChart({ data }) {
       didMount.current = true;
     }
   }, [data]);
+
+
   return (
     <div className="h-full">
       <Line
@@ -58,7 +61,7 @@ export default function LineChart({ data }) {
             },
             title: {
               display: false,
-              text: "Chart.js Line Chart",
+              text: "Cash Line Chart",
             },
           },
           legend: {

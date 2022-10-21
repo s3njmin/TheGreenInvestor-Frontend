@@ -24,10 +24,6 @@ const DataMetric = ({
       >
         {icon}
         <Text className="text-gray-500 text-base xl:text-md">{label}</Text>
-
-        {/* <Tooltip label={toolTipBox} withArrow width={220}>
-          <InformationIcon color="gray" />
-        </Tooltip> */}
       </Group>
 
       <Group className="items-end" spacing={4}>

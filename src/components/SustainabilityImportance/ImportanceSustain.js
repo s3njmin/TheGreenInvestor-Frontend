@@ -6,10 +6,14 @@ import HorizontalBarChart from "./HorizontalBarChart";
 
 const ImportanceSustain = () => {
   const [loading, setLoading] = useState(true);
+
+  //different data that needs to be passed to the charts
   const [data, setData] = useState();
   const [flight, setFlight] = useState();
   const [electricity, setElectricity] = useState();
   const [fuelConsumption, setFuelConsumption] = useState();
+
+  //getting carbon data from the backend
   useEffect(() => {
     async function getCarbonData() {
       setLoading(true);
@@ -21,11 +25,6 @@ const ImportanceSustain = () => {
       } catch (error) {
         console.log(error.response);
       }
-      // const res = await axios
-      //   .get(`http://localhost:8080/api/carbon`, {
-      //     "Content-Type": "application/json",
-      //   })
-      //   .catch((error) => console.log(error.response));
 
       setLoading(false);
     }
@@ -43,6 +42,8 @@ const ImportanceSustain = () => {
       ]);
     }
   }, [data]);
+
+  //dont load until data has been retrieved
   if (
     data === undefined ||
     flight === undefined ||

@@ -12,17 +12,18 @@ import authHeader from "../services/auth-header";
 import axios from "axios";
 
 export default function Game() {
-  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
 
+  //used for the highlighting of the selected option
   const [selectedOption, setSelectedOption] = useState(null);
 
+  //hardcoded Image changes on the fronend
   const imageArray = [1, 2, 3];
-
   const [imageIndex, setImageIndex] = useState(0);
 
+  //index to iterate through the set of 10 questions
   const [index, setIndex] = useState(1);
 
   //Statistics Data State to update Graphs
@@ -30,6 +31,7 @@ export default function Game() {
   const [sustainabilityChartData, setSustainabilityChartData] = useState([100]);
   const [cashChartData, setCashChartData] = useState([0, 100]);
 
+  //function called when the submit button is clicked (to transition the question and options and charts)
   async function onClickHandler() {
     setIndex(index + 1);
     setQuestion(data[index]);
@@ -43,8 +45,9 @@ export default function Game() {
     ]);
   }
 
+
+  //to retrieve data from the backend regarding questions,first option
   useEffect(() => {
-    setLoading(true);
     async function getAllData() {
       await axios
         .get("http://localhost:8080/api/questions", {
@@ -62,14 +65,12 @@ export default function Game() {
         .then((response) => {
           setOptions(response.data);
         })
-        .then(() => {
-          setLoading(false);
-        })
         .catch((error) => console.log(error.response));
     }
     getAllData();
   }, []);
 
+  //function to get subsequent options using the id
   useEffect(() => {
     async function getOptions() {
       if (question !== undefined) {
@@ -85,6 +86,7 @@ export default function Game() {
     getOptions();
   }, [question]);
 
+  // prevent running into an not found error causing the app to crash
   if (data === undefined || question === undefined || options === undefined) {
     return <>Still loading...</>;
   }

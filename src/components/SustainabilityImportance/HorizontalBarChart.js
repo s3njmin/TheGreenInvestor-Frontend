@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import * as faker from "@faker-js/faker";
 
 ChartJS.register(
   CategoryScale,
@@ -55,10 +54,7 @@ export const data = {
 };
 
 export default function HorizontalBarChart({ data }) {
-  // const [fuelData, setFuelData] = useState(data);
-  // useEffect(() => {
-  //   setFuelData(data);
-  // }, [data]);
+ 
   return (
     <div className="h-full w-1/3">
       <Bar
