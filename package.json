@@ -8,6 +8,7 @@
     "@mantine/core": "^5.4.2",
     "@mantine/hooks": "^5.4.2",
     "@mui/lab": "^5.0.0-alpha.101",
+    "@mui/x-data-grid": "^5.17.8",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.1",
     "@testing-library/user-event": "^14.1.1",
@@ -26,6 +27,7 @@
     "react-hook-mighty-mouse": "^1.4.31",
     "react-i18next": "^11.18.6",
     "react-icons": "^4.4.0",
+    "react-nice-avatar": "^1.2.4",
     "react-router-dom": "^6.4.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.0.8",
@@ -33,6 +35,7 @@
     "react-validation": "^3.0.7",
     "reactjs-popup": "^2.0.5",
     "sass": "^1.55.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "validator": "^13.7.0"
   },
   "scripts": {

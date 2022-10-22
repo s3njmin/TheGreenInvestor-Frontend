@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Register from "./pages/Register";
@@ -11,28 +11,25 @@ import NavBar from "./components/NavBar";
 import Game from "./pages/Game";
 import GameOver from "./pages/GameOver";
 import GameWin from "./pages/GameWin";
+import Leaderboard from "./pages/Leaderboard";
 import Login from "./components/Login";
 
 import backgroundVideo from "./assets/forestbg.mp4";
-
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
 function App() {
-
   return (
     <div className="main">
       <video src={backgroundVideo} type="video/mp4" autoPlay loop muted />
       <div className="content">
-
         <NavBar />
 
         <div className="line"></div>
-        <div className=" justify-center pl-10 pr-10 pt-3 ">
+        <div className=" justify-center  pl-10 pr-10 pt-3 ">
           <AnimatePresence>
-            <Routes
-            >
+            <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -44,14 +41,19 @@ function App() {
               <Route path="/game" element={<Game />} />
               <Route path="/gameover" element={<GameOver />} />
               <Route path="/gamewin" element={<GameWin />} />
+              
             </Routes>
           </AnimatePresence>
+        </div>
+        <div className=" flex justify-center items-center pl-10 pr-10 pt-3 ">
+          <Routes>
+            <Route path="/leaderboard" element={<Leaderboard />} />
+          </Routes>
         </div>
         {/* <AuthVerify logOut={this.logOut}/> */}
       </div>
     </div>
   );
-
 }
 
 export default App;

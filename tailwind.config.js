@@ -5,10 +5,21 @@ module.exports = {
     extend: {
       colors: {
         darkGreen: {
-          50: "#245A44"
+          50: "#245A44",
+        },
+        gold: {
+          50: "#CFB53B",
+        },
+        silver: {
+          50: "#808080",
+        },
+        bronze: {
+          50: "#CD7F32",
         },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 };
