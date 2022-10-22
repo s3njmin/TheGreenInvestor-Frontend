@@ -8,6 +8,7 @@ import {
 import { TbMusic, TbMusicOff } from "react-icons/tb";
 
 import { FiUsers, FiFeather } from "react-icons/fi";
+import { FaTrophy, FaLeaf, FaStar } from "react-icons/fa";
 
 export const PrevIcon = HiArrowCircleLeft;
 export const IncreaseIcon = HiTrendingUp;
@@ -17,3 +18,6 @@ export const MoraleIcon = FiUsers;
 export const SustainabilityIcon = FiFeather;
 export const MusicUpIcon = TbMusic;
 export const MusicOffIcon = TbMusicOff;
+export const TrophyIcon = FaTrophy;
+export const LeafIcon = FaLeaf;
+export const StarIcon = FaStar;
