@@ -16,7 +16,7 @@ function Login2(props) {
 
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState();
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState();
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState();
@@ -29,7 +29,9 @@ function Login2(props) {
     }, [successfulLogin, successfulRegister]);
 
     const form = useRef();
+    // const form2 = useRef();
     const checkBtn = useRef();
+    // const checkBtn2 = useRef();
 
     const required = (value) => {
         if (!value && isDisplayPopUp) {
@@ -138,7 +140,7 @@ function Login2(props) {
         isLogin ? setIsLogin(false) : setIsLogin(true);
     }
 
-    const handleLogin = useCallback((e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         setMessage("");
         setLoading(true);
@@ -165,9 +167,9 @@ function Login2(props) {
         } else {
             setLoading(false);
         }
-    });
+    };
 
-    const handleRegister = useCallback(async (e) => {
+    const handleRegister = async(e) => {
         e.preventDefault();
         setMessage("");
         setLoading(true);
@@ -188,7 +190,7 @@ function Login2(props) {
         } else {
             setLoading(false);
         }
-    });
+    };
 
     function loginAfterRegister() {
         setTimeout(() => {
@@ -233,10 +235,16 @@ function Login2(props) {
                             <div data-login="" data-loginwrapper="" class="green-password-wrapper" data-form-type="other">
 
 
-
+                                {/* USERNAME BOX */}
                                 <div data-login="" class="green-account">
                                     <span data-login="" class="text">Username</span>
                                     <Input data-login="" type="text" placeholder="username" data-form-type="other" value={username} onChange={onChangeUsername} validations={[vusername]} />
+                                </div>
+                                
+                                {/* EMAIL BOX */}
+                                <div data-login="" class="green-email" style={{display:"none"}}>
+                                    <span data-login="" class="text">Email</span>
+                                    <Input data-login="" type="text" placeholder="email" data-form-type="other" value="example@green-investor.com" onChange={onChangeEmail} validations={[vemail]} />
                                 </div>
 
                                 {/* PASSWORD BOX */}
@@ -264,8 +272,6 @@ function Login2(props) {
                                     </div>
                                 </div>
 
-
-
                             </div>
                             <div data-loginwrapper="" class="green-login-register-wrapper">
                                 <div data-loginwrapper="" class="universal-btn register-btn" onClick={handleRegisterClick}> Register </div>
@@ -286,7 +292,6 @@ function Login2(props) {
                                 }} ref={c => {
                                     checkBtn.current = c;
                                 }} />
-
                             </div>
 
                         </Form>
@@ -339,8 +344,6 @@ function Login2(props) {
                                         </svg>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div data-loginwrapper="" class="green-login-register-wrapper">
                                 <div data-loginwrapper="" class="universal-btn register-btn" onClick={handleRegisterClick}> Back </div>
@@ -365,6 +368,7 @@ function Login2(props) {
                                 }} ref={c => {
                                     checkBtn.current = c;
                                 }} />
+
                             </div>
 
                         </Form>
