@@ -10,6 +10,7 @@ import { Box, Grid, Text, Button } from "@mantine/core";
 import authHeader from "../services/auth-header";
 
 import axios from "axios";
+import ReviewModal from "../components/PostQuestionReview/ReviewModal";
 
 export default function Game() {
   const [data, setData] = useState([]);
@@ -31,20 +32,32 @@ export default function Game() {
   const [sustainabilityChartData, setSustainabilityChartData] = useState([100]);
   const [cashChartData, setCashChartData] = useState([0, 100]);
 
-  //function called when the submit button is clicked (to transition the question and options and charts)
-  async function onClickHandler() {
+  //for Review modal
+  const [opened, setOpened] = useState(false);
+
+  //handle closing of the reviewModal
+  function closeHandler() {
+    setOpened(false);
     setIndex(index + 1);
     setQuestion(data[index]);
     setImageIndex(imageIndex + 1);
     setSelectedOption(null);
+  }
+
+  //function called when the submit button is clicked (to transition the question and options and charts)
+  async function onClickHandler() {
+    // setIndex(index + 1);
+    // setQuestion(data[index]);
+    // setImageIndex(imageIndex + 1);
+    // setSelectedOption(null);
     setMoraleChartData([moraleChartData[0] - 10]);
     setSustainabilityChartData([sustainabilityChartData[0] - 5]);
     setCashChartData((prevState) => [
       ...prevState,
       cashChartData[cashChartData.length - 1] - 10,
     ]);
+    setOpened(true);
   }
-
 
   //to retrieve data from the backend regarding questions,first option
   useEffect(() => {
@@ -87,7 +100,12 @@ export default function Game() {
   }, [question]);
 
   // prevent running into an not found error causing the app to crash
-  if (data === undefined || question === undefined || options === undefined) {
+  if (
+    data === undefined ||
+    question === undefined ||
+    options === undefined ||
+    imageArray[imageIndex] === undefined
+  ) {
     return <>Still loading...</>;
   }
 
@@ -98,6 +116,7 @@ export default function Game() {
       exit="hidden"
       variants={variants}
     >
+      <ReviewModal opened={opened} handleClose={closeHandler} />
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-2">
         <Grid className="h-full w-full">
           <Grid.Col span={7} className="h-full">

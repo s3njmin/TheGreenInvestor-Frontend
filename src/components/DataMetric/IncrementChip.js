@@ -8,7 +8,7 @@ const IncrementChip = ({ increment }) => {
     <Box
       sx={(theme) => ({
         padding: "2px 12px",
-        backgroundColor: theme.colors[colorString][3],
+        backgroundColor: theme.colors[colorString][4],
         borderColor: theme.colors[colorString][9],
         color: theme.colors[colorString][9],
       })}
