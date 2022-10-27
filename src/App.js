@@ -14,7 +14,7 @@ import GameWin from "./pages/GameWin";
 import Leaderboard from "./pages/Leaderboard";
 import Login from "./components/Login";
 
-import backgroundVideo from "./assets/forestbg.mp4";
+// import backgroundVideo from "./assets/forestbg.mp4";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -22,7 +22,7 @@ import EventBus from "./common/EventBus";
 function App() {
   return (
     <div className="main">
-      <video src={backgroundVideo} type="video/mp4" autoPlay loop muted />
+      <video src="https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/bg_vid.mp4" type="video/mp4" autoPlay loop muted />
       <div className="content">
         <NavBar />
 
