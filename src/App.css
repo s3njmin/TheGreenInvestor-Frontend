@@ -151,12 +151,53 @@ video {
 }
 
 .components-common-assets-LoginPopup {
-	position: relative;
-	width: 60rem;
-	height: 38rem;
-	background: url(assets/popup_bg.png) 50%/contain no-repeat;
+  position: relative;
+  width: 60rem;
+  height: 38rem;
+  background: url(assets/popup_bg.png) 50% / contain no-repeat;
   padding: 100px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 5px;
   max-width: 350px !important;
+}
+.goog-logo-link {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+  color: black !important;
+}
+
+#google_translate_element {
+  width: 300px;
+  float: right;
+
+  text-align: right;
+  display: block;
+}
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+#goog-gt-tt {
+  display: none !important;
+  color: blue;
+  top: 0px !important;
+}
+.goog-tooltip {
+  display: none !important;
+}
+.goog-tooltip:hover {
+  display: none !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }

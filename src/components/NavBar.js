@@ -174,6 +174,7 @@ export default function NavBar() {
       </div>
 
       {/* green investor logo */}
+
       <img
         className="logo"
         src={thegreeninvestor}
