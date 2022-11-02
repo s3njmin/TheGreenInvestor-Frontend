@@ -76,6 +76,26 @@ export default function NavBar() {
 
     setIsMuted(!isMuted);
   }
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        includedLanguages: "ar,zh-TW,ms,es,",
+        autoDisplay: false,
+      },
+      "google_translate_element"
+    );
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    window.googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
+
 
   return (
     <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line h-15">
@@ -134,7 +154,7 @@ export default function NavBar() {
       <div className="navbar-nav ml-auto">
 
         {/* language selector */}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <select value={lang} onChange={handleChange}
             style={{ top: "50%", left: "50%", marginTop: "1vh" }}>
             {languages.map(item => {
@@ -142,8 +162,9 @@ export default function NavBar() {
                 value={item.value}>{item.text}</option>);
             })}
           </select>
-        </li>
+        </li> */}
 
+        <div id="google_translate_element"></div>
         {/* music button */}
         <li className="nav-item pt-2 pr-2">
           <span className="changeColor">
