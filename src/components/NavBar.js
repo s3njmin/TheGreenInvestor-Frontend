@@ -17,15 +17,14 @@ import AuthService from "../services/auth.service";
 import EventBus from "../common/EventBus";
 
 const languages = [
-  { value: '', text: "Change language" },
-  { value: 'en', text: "English" },
-  { value: 'zh', text: "中文(简体）" },
-  { value: 'es', text: "español" },
+  { value: "", text: "Change language" },
+  { value: "en", text: "English" },
+  { value: "zh", text: "中文(简体）" },
+  { value: "es", text: "español" },
   // { value: 'ms', text: "Bahasa Melayu" },
-]
+];
 
 export default function NavBar() {
-
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,15 +33,15 @@ export default function NavBar() {
 
   const { t } = useTranslation();
 
-  const [lang, setLang] = useState('');
+  const [lang, setLang] = useState("");
 
-  // This function put query that helps to 
+  // This function put query that helps to
   // change the language
-  const handleChange = e => {
+  const handleChange = (e) => {
     setLang(e.target.value);
     let loc = "http://localhost:8081/";
     window.location.replace(loc + "?lng=" + e.target.value);
-  }
+  };
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -59,8 +58,7 @@ export default function NavBar() {
 
     return () => {
       EventBus.remove("logout");
-    }
-
+    };
   }, []);
 
   function logOut() {
@@ -87,6 +85,37 @@ export default function NavBar() {
     );
   };
   useEffect(() => {
+    if (typeof Node === "function" && Node.prototype) {
+      const originalRemoveChild = Node.prototype.removeChild;
+      Node.prototype.removeChild = function (child) {
+        if (child.parentNode !== this) {
+          if (console) {
+            console.error(
+              "Cannot remove a child from a different parent",
+              child,
+              this
+            );
+          }
+          return child;
+        }
+        return originalRemoveChild.apply(this, arguments);
+      };
+
+      const originalInsertBefore = Node.prototype.insertBefore;
+      Node.prototype.insertBefore = function (newNode, referenceNode) {
+        if (referenceNode && referenceNode.parentNode !== this) {
+          if (console) {
+            console.error(
+              "Cannot insert before a reference node from a different parent",
+              referenceNode,
+              this
+            );
+          }
+          return newNode;
+        }
+        return originalInsertBefore.apply(this, arguments);
+      };
+    }
     var addScript = document.createElement("script");
     addScript.setAttribute(
       "src",
@@ -95,7 +124,6 @@ export default function NavBar() {
     document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
-
 
   return (
     <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line h-15">
@@ -145,14 +173,9 @@ export default function NavBar() {
       </div>
 
       {/* green investor logo */}
-      <img
-        className="logo"
-        src={thegreeninvestor}
-        alt="thegreeninvestorlogo"
-      />
+      <img className="logo" src={thegreeninvestor} alt="thegreeninvestorlogo" />
 
       <div className="navbar-nav ml-auto">
-
         {/* language selector */}
         {/* <li className="nav-item">
           <select value={lang} onChange={handleChange}
@@ -163,8 +186,10 @@ export default function NavBar() {
             })}
           </select>
         </li> */}
+        <div className="pt-2 pr-2">
+          <div id="google_translate_element"></div>
+        </div>
 
-        <div id="google_translate_element"></div>
         {/* music button */}
         <li className="nav-item pt-2 pr-2">
           <span className="changeColor">
