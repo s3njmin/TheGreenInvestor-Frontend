@@ -53,7 +53,7 @@ const ImportanceSustain = () => {
     return (
       <LoadingOverlay
         loaderProps={{ size: "xl", color: "black" }}
-        overlayOpacity={0.3}
+        overlayOpacity={0.0}
         overlayColor="#c5c5c5"
         visible
       />
