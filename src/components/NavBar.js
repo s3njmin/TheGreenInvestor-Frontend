@@ -75,14 +75,19 @@ export default function NavBar() {
     setIsMuted(!isMuted);
   }
   const googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        includedLanguages: "ar,zh-TW,ms,es,en",
-        autoDisplay: false,
-      },
-      "google_translate_element"
-    );
+    var duplicate_google_translate_counter = 0;
+    if (duplicate_google_translate_counter === 0) {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "ar,zh-TW,ms,es,en",
+          autoDisplay: false,
+        },
+
+        "google_translate_element"
+      );
+    }
+    duplicate_google_translate_counter++;
   };
   useEffect(() => {
     if (typeof Node === "function" && Node.prototype) {
