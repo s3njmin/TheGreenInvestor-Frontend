@@ -1,7 +1,14 @@
 import { Modal, Button, Group, Text, Stack } from "@mantine/core";
 import IncrementChip from "../DataMetric/IncrementChip";
 
-export default function ReviewModal({ opened, handleClose }) {
+export default function ReviewModal({
+  cash,
+  sustainability,
+  morale,
+  content,
+  opened,
+  handleClose,
+}) {
   return (
     <>
       <Modal
@@ -13,18 +20,7 @@ export default function ReviewModal({ opened, handleClose }) {
         title="Post Question Review"
       >
         <Stack>
-          <Text className="text-base font-normal">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Tristique senectus et netus et malesuada fames ac. Viverra nibh cras
-            pulvinar mattis nunc sed blandit. Luctus accumsan tortor posuere ac
-            ut consequat. Elementum eu facilisis sed odio morbi quis commodo
-            odio. Fringilla ut morbi tincidunt augue. Eget nunc scelerisque
-            viverra mauris. Posuere sollicitudin aliquam ultrices sagittis orci
-            a scelerisque purus. Justo laoreet sit amet cursus. Morbi tristique
-            senectus et netus et malesuada fames ac turpis. Nec nam aliquam sem
-            et tortor consequat.
-          </Text>
+          <Text className="text-base font-normal">{content}</Text>
 
           <Group spacing={6} className="text-base font-normal">
             {`Find out more in this`}
@@ -45,19 +41,19 @@ export default function ReviewModal({ opened, handleClose }) {
             <Group spacing={6} className="text-base font-semi-bold ">
               <Text>Cash</Text>
               <div className="pt-1">
-                <IncrementChip increment={-20} />
+                <IncrementChip increment={cash} unit={"SGD"} />
               </div>
             </Group>
             <Group spacing={6} className="text-lg font-semi-bold ">
               <Text>Morale</Text>
               <div className="pt-1">
-                <IncrementChip increment={5} />
+                <IncrementChip increment={morale} unit={"%"} />
               </div>
             </Group>
             <Group spacing={6} className="text-base font-semi-bold">
               <Text>Sustainability</Text>
               <div className="pt-1">
-                <IncrementChip increment={-8} />
+                <IncrementChip increment={sustainability} unit={"pts"} />
               </div>
             </Group>
           </Group>

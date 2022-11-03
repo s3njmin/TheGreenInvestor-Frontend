@@ -18,7 +18,13 @@ export default function Game() {
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
+  const [responseStats, setResponseStats] = useState(null);
+  const [responseFeedback, setResponseFeedback] = useState("");
   const [isOpenEnded, setIsOpenEnded] = useState(false);
+
+  //income statistic
+  const [income, setIncome] = useState(20);
+
   //input values for open-ended questions
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
@@ -27,22 +33,18 @@ export default function Game() {
   //used for the highlighting of the selected option
   const [selectedOption, setSelectedOption] = useState(null);
 
-  //hardcoded Image changes on the fronend
-  const imageArray = [1, 2, 3, 4, 5];
-  const [imageIndex, setImageIndex] = useState(0);
-
   //index to iterate through the set of 10 questions
   const [index, setIndex] = useState(1);
 
   //Statistics Data State to update Graphs
   const [moraleChartData, setMoraleChartData] = useState([100]);
-  const [sustainabilityChartData, setSustainabilityChartData] = useState([100]);
+  const [sustainabilityChartData, setSustainabilityChartData] = useState([150]);
   const [cashChartData, setCashChartData] = useState([0, 100]);
 
   //for Review modal
   const [openReview, setOpenReview] = useState(false);
 
-  //for End Game modl
+  //for End Game modal
   const [openEndGame, setOpenEndGame] = useState(false);
 
   //handle closing of the reviewModal
@@ -50,7 +52,6 @@ export default function Game() {
     setOpenReview(false);
     setIndex(index + 1);
     setQuestion(data[index]);
-    setImageIndex(imageIndex + 1);
     setSelectedOption(null);
   }
 
@@ -61,23 +62,46 @@ export default function Game() {
 
   //function called when the submit button is clicked (to transition the question and options and charts)
   async function onClickHandler() {
-    // setIndex(index + 1);
-    // setQuestion(data[index]);
-    // setImageIndex(imageIndex + 1);
-    // setSelectedOption(null);
-    setMoraleChartData([moraleChartData[0] - 10]);
-    setSustainabilityChartData([sustainabilityChartData[0] - 5]);
-    setCashChartData((prevState) => [
-      ...prevState,
-      cashChartData[cashChartData.length - 1] - 10,
-    ]);
+    if (selectedOption != null) {
+      setResponseStats(
+        [
+          options[selectedOption].costImpact,
+          options[selectedOption].moraleImpact,
+          options[selectedOption].sustainabilityImpact,
+        ],
+        function () {
+          console.log("setResponsestats completed");
+        }
+      );
+      setResponseFeedback(options[selectedOption].feedback, function () {
+        console.log("setfeedback completed");
+      });
+    }
 
     //submit Answer to backend
     submitAnswer();
-
+    
     setOpenReview(true);
     //setOpenEndGame(true);
   }
+
+  //function to change chart data upon submitting a response
+  useEffect(() => {
+    function changeChartData() {
+      if (question?.openEnded === false && responseStats !== null) {
+        setMoraleChartData([moraleChartData[0] + responseStats[1]]);
+        setSustainabilityChartData([
+          sustainabilityChartData[0] + responseStats[2],
+        ]);
+        setCashChartData((prevState) => [
+          ...prevState,
+          cashChartData[cashChartData.length - 1] - responseStats[0] + income,
+        ]);
+        setIncome(income + options[selectedOption].incomeImpact);
+      }
+    }
+    changeChartData();
+  }, [responseFeedback, responseStats]);
 
   //function to submit Answer to backend
   async function submitAnswer() {
@@ -110,7 +134,7 @@ export default function Game() {
   useEffect(() => {
     async function getAllData() {
       await axios
-        .get("http://localhost:8080/api/questions", {
+        .get("http://localhost:8080/api/questionsAndOptions", {
           headers: authHeader(),
           "Content-Type": "application/json",
         })
@@ -118,13 +142,7 @@ export default function Game() {
           await setData(response.data);
           await setQuestion(response.data[0]);
           await setIsOpenEnded(response.data[0].openEnded);
-          return axios.get(`http://localhost:8080/api/questions/1/options`, {
-            headers: authHeader(),
-            "Content-Type": "application/json",
-          });
-        })
-        .then((response) => {
-          setOptions(response.data);
+          await setOptions(response.data[0].options);
         })
         .catch((error) => console.log(error.response));
     }
@@ -135,18 +153,14 @@ export default function Game() {
   useEffect(() => {
     async function getOptions() {
       if (question !== undefined) {
-        const res = await axios
-          .get(`http://localhost:8080/api/questions/${question.id}/options`, {
-            headers: authHeader(),
-            "Content-Type": "application/json",
-          })
-          .catch((error) => console.log(error.response));
-        setOptions(res.data);
+        setOptions(question.options);
         setIsOpenEnded(question.openEnded);
       }
     }
     getOptions();
   }, [question]);
+
+  
 
   // prevent running into an not found error causing the app to crash
   if (data === undefined || question === undefined || options === undefined) {
@@ -169,7 +183,14 @@ export default function Game() {
       exit="hidden"
       variants={variants}
     >
-      <ReviewModal opened={openReview} handleClose={closeReviewHandler} />
+      <ReviewModal
+        content={responseFeedback}
+        cash={responseStats && responseStats[0]}
+        morale={responseStats && responseStats[1]}
+        sustainability={responseStats && responseStats[2]}
+        opened={openReview}
+        handleClose={closeReviewHandler}
+      />
       <GameEndPopup
         failed={true}
         opened={openEndGame}
@@ -177,7 +198,7 @@ export default function Game() {
         userName={"Bob"}
         finalScore={2000}
       />
-      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-2">
+      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-1">
         <Grid className="h-full w-full">
           <Grid.Col span={7} className="h-full">
             <Box className="h-[55%] w-full flex flex-col items-center space-y-4">
@@ -185,7 +206,7 @@ export default function Game() {
                 {question.question}
               </Text>
               <img
-                className="h-[70%] w-[40%] text-center rounded-2xl drop-shadow-xl"
+                className="h-[60%] w-[40%] text-center rounded-2xl drop-shadow-xl"
                 src={question.imageLink}
                 alt="new"
               />
@@ -325,7 +346,7 @@ export default function Game() {
               <DataMetric
                 hasChart={true}
                 icon={<CashIcon color="grey" className="text-xl" />}
-                increment={5}
+                increment={income}
                 value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
                 label="Cash"
@@ -336,8 +357,9 @@ export default function Game() {
             <Box className="h-[47%] w-full flex flex-row space-x-2">
               <Box className="h-full w-1/2">
                 <DataMetric
+                  morale={true}
                   className="w-1/2"
-                  increment={-5}
+                  increment={responseStats ? responseStats[1] : 0}
                   icon={<MoraleIcon color="grey" className="text-xl" />}
                   value={moraleChartData[0]}
                   unit={"%"}
@@ -347,11 +369,12 @@ export default function Game() {
               </Box>
               <Box className="h-full w-1/2">
                 <DataMetric
+                  morale={false}
                   className="w-1/2"
                   icon={<SustainabilityIcon color="grey" className="text-xl" />}
-                  increment={7}
+                  increment={responseStats ? responseStats[2] : 0}
                   value={sustainabilityChartData[0]}
-                  unit={"%"}
+                  unit={"pts"}
                   label="Sustainability"
                   chartData={sustainabilityChartData}
                 />

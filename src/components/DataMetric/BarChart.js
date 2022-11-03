@@ -19,13 +19,13 @@ ChartJS.register(
   Legend
 );
 
-export default function BarChart({ data }) {
+export default function BarChart({ data, morale }) {
   const didMount = useRef(false);
   const [yearNumber, setYearNumber] = useState(2);
 
   const [state, setState] = useState({
     labels: ["Year 1"],
-    data: [100],
+    data: morale ? [100] : [150],
   });
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function BarChart({ data }) {
               display: false,
             },
             min: 0,
-            max: 100,
+            max: morale ? 100 : 500,
           },
         },
       }}

@@ -2,8 +2,9 @@ import { Box, Text } from "@mantine/core";
 import React from "react";
 import { DecreaseIcon, IncreaseIcon } from "../../icons";
 
-const IncrementChip = ({ increment }) => {
-  const colorString = increment < 0 ? "red" : "green";
+const IncrementChip = ({ increment, unit }) => {
+  const colorString =
+    increment < 0 ? "red" : increment === 0 ? "yellow" : "green";
   return (
     <Box
       sx={(theme) => ({
@@ -16,10 +17,12 @@ const IncrementChip = ({ increment }) => {
     >
       {increment > 0 ? (
         <IncreaseIcon className="h-5" />
-      ) : (
+      ) : increment < 0 ? (
         <DecreaseIcon className="h-5" />
+      ) : (
+        <IncreaseIcon className="h-5" style={{ transform: "rotate(10deg)" }} />
       )}
-      <Text>{`${increment}%`}</Text>
+      <Text>{`${increment} ${unit}`}</Text>
     </Box>
   );
 };
