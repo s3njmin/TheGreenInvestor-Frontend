@@ -78,7 +78,7 @@ export default function NavBar() {
     new window.google.translate.TranslateElement(
       {
         pageLanguage: "en",
-        includedLanguages: "ar,zh-TW,ms,es,",
+        includedLanguages: "ar,zh-TW,ms,es,en",
         autoDisplay: false,
       },
       "google_translate_element"

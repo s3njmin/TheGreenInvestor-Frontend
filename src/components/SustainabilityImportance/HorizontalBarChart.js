@@ -20,6 +20,18 @@ ChartJS.register(
 );
 
 export const options = {
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
   indexAxis: "y",
   elements: {
     bar: {
@@ -41,32 +53,33 @@ export const options = {
 
 const labels = ["BIT", "MSW", "LIG"];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [9862.6, 11541.99, 5583.21],
-      borderColor: ["#245A44", "#677C72", "#5387AA"],
-      backgroundColor: ["#245A44", "#677C72", "#5387AA"],
-    },
-  ],
-};
-
 export default function HorizontalBarChart({ data }) {
- 
   return (
     <div className="h-full w-1/3">
       <Bar
+        id="chart"
         options={options}
         data={{
           labels,
+          // datasets: [
+          //   {
+          //     label: "Carbon Emissions",
+          //     data: data,
+          //     borderColor: ["#245A44", "#4B296B", "#4B296B"],
+          //     backgroundColor: ["#245A44", "#4B296B", "#4B296B"],
+          //   },
+          // ],
           datasets: [
             {
-              label: "Carbon Emissions",
               data: data,
-              borderColor: ["#245A44", "#677C72", "#5387AA"],
-              backgroundColor: ["#245A44", "#677C72", "#5387AA"],
+              backgroundColor: (context) => {
+                const ctx = context.chart.ctx;
+                const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+                gradient.addColorStop(0, "#245A44");
+                gradient.addColorStop(1, "#B497D6");
+                return gradient;
+              },
+              barPercentage: 1,
             },
           ],
         }}

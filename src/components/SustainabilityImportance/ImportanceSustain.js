@@ -1,4 +1,4 @@
-import { Grid, Group, Stack, Text } from "@mantine/core";
+import { Box, Grid, Group, LoadingOverlay, Stack, Text } from "@mantine/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CircleData from "./CircleData";
@@ -50,21 +50,39 @@ const ImportanceSustain = () => {
     electricity === undefined ||
     fuelConsumption === undefined
   ) {
-    return <>Still loading...</>;
+    return (
+      <LoadingOverlay
+        loaderProps={{ size: "xl", color: "black" }}
+        overlayOpacity={0.3}
+        overlayColor="#c5c5c5"
+        visible
+      />
+    );
   }
   return (
-    <div>
-      {loading && <div>Still loading...</div>}
+    <div className="h-full w-full relative">
+      {loading && (
+        <Box className="h-full w-full items-center">
+          <LoadingOverlay
+            className="items-center align-middle h-full w-full"
+            loaderProps={{ size: "xl", color: "black" }}
+            overlayOpacity={0}
+            visible
+          />
+        </Box>
+      )}
       {!loading && (
         <Grid className="h-full w-full">
           <Grid.Col span={4}>
-            <Text className="text-lg font-semibold">
-              On the right, you some stastics regarding some of the biggest
-              causes of carbon emissions such as flight, electricity and fuel.
-              For fuel, there are multiple types of fuel and we can see the
-              large carbon emissions caused by these types of fuels. BIT is
+            <Text className="text-md font-semibold">
+              On the right, you are provided with stastics regarding some of the
+              biggest causes of carbon emissions such as flight, electricity and
+              fuel. For fuel, there are multiple types of fuel and we can see
+              the large carbon emissions caused by these types of fuels. BIT is
               Bituminous Coal , MSW is Municipal Solid Waste and LIG is Lignite
               Coal. From these large numbers, we can understand that all these
+              cause a lot of harm to the environment. Thus, do be mindful of
+              your actions!
             </Text>
           </Grid.Col>
           <Grid.Col span={8}>
