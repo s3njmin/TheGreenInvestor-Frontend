@@ -146,8 +146,9 @@ export default function Game() {
     imageArray[imageIndex] === undefined
   ) {
     return (
-      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-2">
+      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle relative w-full pt-2 pr-2 pl-2 pb-2">
         <LoadingOverlay
+          
           loaderProps={{ size: "xl", color: "black" }}
           overlayOpacity={0.0}
           overlayColor="#c5c5c5"
