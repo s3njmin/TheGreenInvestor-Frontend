@@ -12,6 +12,7 @@ import authHeader from "../services/auth-header";
 
 import axios from "axios";
 import ReviewModal from "../components/PostQuestionReview/ReviewModal";
+import GameEndPopup from "../components/GameEnd/GameEndPopup";
 
 export default function Game() {
   const [data, setData] = useState([]);
@@ -39,15 +40,23 @@ export default function Game() {
   const [cashChartData, setCashChartData] = useState([0, 100]);
 
   //for Review modal
-  const [opened, setOpened] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
+
+  //for End Game modl
+  const [openEndGame, setOpenEndGame] = useState(false);
 
   //handle closing of the reviewModal
-  function closeHandler() {
-    setOpened(false);
+  function closeReviewHandler() {
+    setOpenReview(false);
     setIndex(index + 1);
     setQuestion(data[index]);
     setImageIndex(imageIndex + 1);
     setSelectedOption(null);
+  }
+
+  //handle closing of end game handler
+  function closeEndGameHandler() {
+    setOpenEndGame(false);
   }
 
   //function called when the submit button is clicked (to transition the question and options and charts)
@@ -66,7 +75,8 @@ export default function Game() {
     //submit Answer to backend
     submitAnswer();
 
-    setOpened(true);
+    setOpenReview(true);
+    //setOpenEndGame(true);
   }
 
   //function to submit Answer to backend
@@ -148,7 +158,6 @@ export default function Game() {
     return (
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle relative w-full pt-2 pr-2 pl-2 pb-2">
         <LoadingOverlay
-          
           loaderProps={{ size: "xl", color: "black" }}
           overlayOpacity={0.0}
           overlayColor="#c5c5c5"
@@ -165,7 +174,14 @@ export default function Game() {
       exit="hidden"
       variants={variants}
     >
-      <ReviewModal opened={opened} handleClose={closeHandler} />
+      <ReviewModal opened={openReview} handleClose={closeReviewHandler} />
+      <GameEndPopup
+        failed={true}
+        opened={openEndGame}
+        handleClose={closeEndGameHandler}
+        userName={"Bob"}
+        finalScore={2000}
+      />
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-2">
         <Grid className="h-full w-full">
           <Grid.Col span={7} className="h-full">

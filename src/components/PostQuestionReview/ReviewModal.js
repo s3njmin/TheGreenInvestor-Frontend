@@ -33,9 +33,7 @@ export default function ReviewModal({ opened, handleClose }) {
               className="text-base font-normal text-blue-500"
               target="_blank"
               rel="noopener noreferrer"
-              href={
-                "https://www.channelnewsasia.com/singapore/cna-explains-article-156-singapore-constitution-protect-marriage-repeal-377a-3019261"
-              }
+              href={"https://www.newyorker.com/topics/gay-marriage-movement"}
             >
               <Text className="text-base font-normal text-blue-500">
                 article

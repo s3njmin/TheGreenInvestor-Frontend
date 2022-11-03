@@ -8,7 +8,7 @@ import {
 import { TbMusic, TbMusicOff } from "react-icons/tb";
 
 import { FiUsers, FiFeather } from "react-icons/fi";
-import { FaTrophy, FaLeaf, FaStar } from "react-icons/fa";
+import { FaTrophy, FaLeaf, FaDollarSign, FaStar, FaDizzy } from "react-icons/fa";
 
 export const PrevIcon = HiArrowCircleLeft;
 export const IncreaseIcon = HiTrendingUp;
@@ -21,3 +21,5 @@ export const MusicOffIcon = TbMusicOff;
 export const TrophyIcon = FaTrophy;
 export const LeafIcon = FaLeaf;
 export const StarIcon = FaStar;
+export const DollarIcon = FaDollarSign;
+export const SkullIcon = FaDizzy;
