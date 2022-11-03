@@ -7,7 +7,7 @@ import {
   StarIcon,
   SustainabilityIcon,
 } from "../../icons";
-import GameEndAvatar from "./GameEndAvatar";
+import GameEndAvatar from "./GenericAvatar";
 import StatsDisplay from "./StatsDisplay";
 
 import { useNavigate } from "react-router-dom";

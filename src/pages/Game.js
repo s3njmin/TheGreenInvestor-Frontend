@@ -149,12 +149,7 @@ export default function Game() {
   }, [question]);
 
   // prevent running into an not found error causing the app to crash
-  if (
-    data === undefined ||
-    question === undefined ||
-    options === undefined ||
-    imageArray[imageIndex] === undefined
-  ) {
+  if (data === undefined || question === undefined || options === undefined) {
     return (
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle relative w-full pt-2 pr-2 pl-2 pb-2">
         <LoadingOverlay
@@ -191,7 +186,7 @@ export default function Game() {
               </Text>
               <img
                 className="h-[70%] w-[40%] text-center rounded-2xl drop-shadow-xl"
-                src={require(`../assets/img${imageArray[imageIndex]}.jpg`)}
+                src={question.imageLink}
                 alt="new"
               />
             </Box>

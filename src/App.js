@@ -22,7 +22,13 @@ import EventBus from "./common/EventBus";
 function App() {
   return (
     <div className="main">
-      <video src="https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/bg_vid.mp4" type="video/mp4" autoPlay loop muted />
+      <video
+        src="https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/bg_vid.mp4"
+        type="video/mp4"
+        autoPlay
+        loop
+        muted
+      />
       <div className="content">
         <NavBar />
 
@@ -34,20 +40,20 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />
+
               <Route path="/user" element={<BoardUser />} />
               <Route path="/mod" element={<BoardModerator />} />
               <Route path="/admin" element={<BoardAdmin />} />
               <Route path="/game" element={<Game />} />
               <Route path="/gameover" element={<GameOver />} />
               <Route path="/gamewin" element={<GameWin />} />
-              
             </Routes>
           </AnimatePresence>
         </div>
         <div className=" flex justify-center items-center pl-10 pr-10 pt-3 ">
           <Routes>
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
         {/* <AuthVerify logOut={this.logOut}/> */}

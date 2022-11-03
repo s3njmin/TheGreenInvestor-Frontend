@@ -3,7 +3,7 @@ import { Group, Stack, Text } from "@mantine/core";
 import { LeafIcon, TrophyIcon } from "../../icons";
 import Avatar, { genConfig } from "react-nice-avatar";
 
-const GameEndAvatar = ({ name }) => {
+const GenericAvatar = ({ name }) => {
   const config = genConfig({ bgColor: "#245A44" });
   return (
     <div className="h-full align-baseline items-baseline">
@@ -33,4 +33,4 @@ const GameEndAvatar = ({ name }) => {
   );
 };
 
-export default GameEndAvatar;
+export default GenericAvatar;
