@@ -27,9 +27,7 @@ const GameEndPopup = ({
   let navigate = useNavigate();
 
   const [user, setUser] = useState();
-  const [cash, setCash] = useState();
-  const [morale, setMorale] = useState();
-  const [sustainability, setSustainability] = useState();
+
   const [totalScore, setTotalScore] = useState();
 
   useEffect(() => {
@@ -119,6 +117,7 @@ const GameEndPopup = ({
             <Button
               className="w-32 bg-darkGreen-50 rounded-md"
               onClick={() => {
+                handleClose();
                 navigate("/leaderboard");
               }}
             >
