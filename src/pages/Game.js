@@ -180,49 +180,65 @@ export default function Game() {
   function generateCashData(costStats) {
     let result = [0, 100];
     let sum = 20;
-
-    for (let i = 0; i < costStats.length - 1; i++) {
-      sum += costStats[i].incomeVal;
-      result.push(result[result.length - 1] - costStats[i].costVal + sum);
+    if (costStats != null) {
+      for (let i = 0; i < costStats.length - 1; i++) {
+        sum += costStats[i].incomeVal;
+        result.push(result[result.length - 1] - costStats[i].costVal + sum);
+      }
     }
 
     setCashChartData(result);
   }
 
-  //to retrieve data from the backend regarding questions,first option
+  //function to set all the data before starting the game
+
+  async function settingAllData(response) {
+    const gameStateData = response.data;
+    const questionRetrieved =
+      gameStateData.questionsAndOptions[gameStateData.year];
+
+    await setData(gameStateData);
+    await setCurrentYear(gameStateData.year);
+    await setListQuestions(gameStateData.questionsAndOptions);
+    await setCurrentQuestion(questionRetrieved);
+    await setImage(questionRetrieved.imagePath);
+
+    const currentStats = gameStateData.stats;
+
+    if (currentStats !== null && currentStats.length !== 1) {
+      await setCurrentMorale(
+        currentStats[currentStats.length - 1].currentMoraleVal
+      );
+      await setCurrentSustainability(
+        currentStats[currentStats.length - 1].currentEmissionVal
+      );
+    } else {
+      await setCurrentMorale(
+        currentStats !== null ? currentStats[0].currentMoraleVal : 65
+      );
+      await setCurrentSustainability(
+        currentStats !== null ? currentStats[0].currentEmissionVal : 150
+      );
+    }
+
+    await setOptions(questionRetrieved.optionsName);
+    await setIsOpenEnded(questionRetrieved.openEnded);
+
+    await generateCashData(gameStateData.stats);
+  }
+
+  //to retrieve data from the backend regarding questions and stats using the api call
   useEffect(() => {
     async function getStateAndQuestionData() {
       await GameService.getGameState()
         .then(async (response) => {
-          console.log(response);
-          const gameStateData = response.data;
-          const questionRetrieved =
-            gameStateData.questionsAndOptions[gameStateData.year];
-
-          await setData(gameStateData);
-          await setCurrentYear(gameStateData.year);
-          await setListQuestions(gameStateData.questionsAndOptions);
-          await setCurrentQuestion(questionRetrieved);
-          await setImage(questionRetrieved.imagePath);
-
-          const currentStats = gameStateData.stats;
-
-          if (currentStats !== null && currentStats.length !== 1) {
-            await setCurrentMorale(
-              currentStats[currentStats.length - 1].currentMoraleVal
-            );
-            await setCurrentSustainability(
-              currentStats[currentStats.length - 1].currentEmissionVal
-            );
+          if (response.data.state === "completed") {
+            await GameService.getGameState().then(async (response) => {
+              settingAllData(response);
+            });
           } else {
-            await setCurrentMorale(currentStats[0].currentMoraleVal);
-            await setCurrentSustainability(currentStats[0].currentEmissionVal);
+            settingAllData(response);
           }
-
-          await setOptions(questionRetrieved.optionsName);
-          await setIsOpenEnded(questionRetrieved.openEnded);
-
-          await generateCashData(gameStateData.stats);
         })
         .catch((error) => console.log(error));
     }
@@ -250,6 +266,7 @@ export default function Game() {
       </Box>
     );
   }
+
   return (
     <motion.div
       initial="hidden"
@@ -436,6 +453,8 @@ export default function Game() {
                   increment={
                     responseStats
                       ? responseStats.moraleVal
+                      : data.stats === null
+                      ? 0
                       : data.stats.length !== 1
                       ? data.stats[data.stats.length - 2].moraleVal
                       : 0
@@ -461,6 +480,8 @@ export default function Game() {
                   increment={
                     responseStats
                       ? responseStats.emissionVal
+                      : data.stats === null
+                      ? 0
                       : data.stats.length !== 1
                       ? data.stats[data.stats.length - 2].emissionVal
                       : 0
