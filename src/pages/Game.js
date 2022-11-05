@@ -116,8 +116,8 @@ export default function Game() {
         setCashChartData((prevState) => [
           ...prevState,
           cashChartData[cashChartData.length - 1] -
-            responseStats.costVal +
-            currentIncome,
+          responseStats.costVal +
+          currentIncome,
         ]);
       }
     }
@@ -232,11 +232,14 @@ export default function Game() {
     async function getStateAndQuestionData() {
       await GameService.getGameState()
         .then(async (response) => {
-          if (response.data.state === "completed") {
-            await GameService.getGameState().then(async (response) => {
-              settingAllData(response);
+          if (response.data.state === "start" || response.data.state === "completed") {
+            await GameService.postStartGame().then(async () => {
+              await GameService.getGameState().then((response) => {
+                settingAllData(response);
+              });
             });
           } else {
+            //this is for "answering" state
             settingAllData(response);
           }
         })
@@ -288,7 +291,7 @@ export default function Game() {
         opened={openEndGame.opening}
         handleClose={closeEndGameHandler}
         userName={"Bob"}
-        
+
         finalCash={cashChartData && cashChartData[cashChartData.length - 1]}
         finalMorale={
           responseStats ? responseStats.currentMorale : currentMorale
@@ -427,8 +430,8 @@ export default function Game() {
                   onClick={onClickHandler}
                   disabled={
                     inputValue1 === "" ||
-                    inputValue2 === "" ||
-                    inputValue3 === ""
+                      inputValue2 === "" ||
+                      inputValue3 === ""
                       ? true
                       : false
                   }
@@ -449,10 +452,10 @@ export default function Game() {
                   responseStats
                     ? responseStats.incomeVal
                     : data.stats === null
-                    ? 0
-                    : data.stats.length !== 1
-                    ? data.stats[data.stats.length - 2].incomeVal
-                    : 0
+                      ? 0
+                      : data.stats.length !== 1
+                        ? data.stats[data.stats.length - 2].incomeVal
+                        : 0
                 }
                 value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
@@ -471,10 +474,10 @@ export default function Game() {
                     responseStats
                       ? responseStats.moraleVal
                       : data.stats === null
-                      ? 0
-                      : data.stats.length !== 1
-                      ? data.stats[data.stats.length - 2].moraleVal
-                      : 0
+                        ? 0
+                        : data.stats.length !== 1
+                          ? data.stats[data.stats.length - 2].moraleVal
+                          : 0
                   }
                   icon={<MoraleIcon color="grey" className="text-xl" />}
                   value={
@@ -500,10 +503,10 @@ export default function Game() {
                     responseStats
                       ? responseStats.emissionVal
                       : data.stats === null
-                      ? 0
-                      : data.stats.length !== 1
-                      ? data.stats[data.stats.length - 2].emissionVal
-                      : 0
+                        ? 0
+                        : data.stats.length !== 1
+                          ? data.stats[data.stats.length - 2].emissionVal
+                          : 0
                   }
                   value={
                     responseStats

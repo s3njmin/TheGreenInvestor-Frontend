@@ -42,6 +42,16 @@ class GameService {
       });
     }
   }
+
+  postStartGame() {
+    console.log("hello");
+    if (Object.keys(authHeader()).length !== 0) {
+      return axios.post("http://localhost:8080/api/startGame", undefined, {
+        headers: authHeader(),
+        "Content-Type": "application/json",
+      });
+    }
+  }
 }
 
 export default new GameService();
