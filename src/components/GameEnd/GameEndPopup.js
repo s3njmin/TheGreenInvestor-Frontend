@@ -1,5 +1,5 @@
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   DollarIcon,
   MoraleIcon,
@@ -11,15 +11,45 @@ import GameEndAvatar from "./GenericAvatar";
 import StatsDisplay from "./StatsDisplay";
 
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../services/auth.service";
+import GameService from "../../services/GameService";
 
 const GameEndPopup = ({
   failed,
   opened,
   handleClose,
-  finalScore,
+  finalMorale,
+  finalSustainability,
+  finalCash,
+
   userName,
 }) => {
   let navigate = useNavigate();
+
+  const [user, setUser] = useState();
+  const [cash, setCash] = useState();
+  const [morale, setMorale] = useState();
+  const [sustainability, setSustainability] = useState();
+  const [totalScore, setTotalScore] = useState();
+
+  useEffect(() => {
+    async function getStateAndQuestionData() {
+      await GameService.getGameState()
+        .then(async (response) => {
+          setTotalScore(response.data.totalScore);
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+      setUser(AuthService.getCurrentUser());
+    }
+    getStateAndQuestionData();
+  }, [opened]);
+
+  console.log(user);
+
+  if (user === undefined) {
+    <div> still loading </div>;
+  }
   return (
     <>
       <Modal
@@ -56,7 +86,7 @@ const GameEndPopup = ({
               </Group>
             </>
           )}
-          <GameEndAvatar name={userName} />
+          <GameEndAvatar name={user && user.username} />
           {!failed ? (
             <Text className=" text-center font-bold text-lg text-darkGreen-50 ">
               YOU ARE A GREEN INVESTOR!
@@ -67,12 +97,15 @@ const GameEndPopup = ({
             </Text>
           )}
           <Text className=" text-center font-semibold text-lg text-darkGreen-50 ">
-            {`Final Score: ${finalScore} pts`}
+            {`Final Score: ${totalScore} pts`}
           </Text>
           <Group className="pt-2">
-            <StatsDisplay icon={<DollarIcon />} value={2000} />
-            <StatsDisplay icon={<MoraleIcon />} value={3400} />
-            <StatsDisplay icon={<SustainabilityIcon />} value={1000} />
+            <StatsDisplay icon={<DollarIcon />} value={finalCash} />
+            <StatsDisplay icon={<MoraleIcon />} value={finalMorale} />
+            <StatsDisplay
+              icon={<SustainabilityIcon />}
+              value={finalSustainability}
+            />
           </Group>
           <Group className="pt-2">
             <Button

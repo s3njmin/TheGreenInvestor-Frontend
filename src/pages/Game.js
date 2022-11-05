@@ -267,6 +267,7 @@ export default function Game() {
     );
   }
 
+  console.log(currentYear);
   return (
     <motion.div
       initial="hidden"
@@ -287,7 +288,14 @@ export default function Game() {
         opened={openEndGame.opening}
         handleClose={closeEndGameHandler}
         userName={"Bob"}
-        finalScore={2000}
+        
+        finalCash={cashChartData && cashChartData[cashChartData.length - 1]}
+        finalMorale={
+          responseStats ? responseStats.currentMorale : currentMorale
+        }
+        finalSustainability={
+          responseStats ? responseStats.currentEmission : currentSustainability
+        }
       />
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 ">
         <Grid className="h-full w-full">
@@ -437,11 +445,20 @@ export default function Game() {
               <DataMetric
                 hasChart={true}
                 icon={<CashIcon color="grey" className="text-xl" />}
-                increment={currentIncome}
+                increment={
+                  responseStats
+                    ? responseStats.incomeVal
+                    : data.stats === null
+                    ? 0
+                    : data.stats.length !== 1
+                    ? data.stats[data.stats.length - 2].incomeVal
+                    : 0
+                }
                 value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
                 label="Cash"
                 chartData={cashChartData}
+                year={currentYear}
               />
             </Box>
 
@@ -465,6 +482,7 @@ export default function Game() {
                   }
                   unit={"%"}
                   label="Morale"
+                  year={currentYear}
                   chartData={
                     responseStats
                       ? [responseStats.currentMorale]
@@ -477,6 +495,7 @@ export default function Game() {
                   morale={false}
                   className="w-1/2"
                   icon={<SustainabilityIcon color="grey" className="text-xl" />}
+                  year={currentYear}
                   increment={
                     responseStats
                       ? responseStats.emissionVal

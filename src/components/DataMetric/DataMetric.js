@@ -13,8 +13,9 @@ const DataMetric = ({
   increment,
   chartData,
   morale,
-  oldStats,
+  year,
 }) => {
+  console.log(year);
   return (
     <Stack
       spacing={4}
@@ -41,9 +42,9 @@ const DataMetric = ({
       </Group>
       <div className="h-full">
         {hasChart ? (
-          <LineChart data={chartData} />
+          <LineChart data={chartData} year={year} />
         ) : (
-          <BarChart morale={morale} data={chartData} />
+          <BarChart morale={morale} data={chartData} year={year} />
         )}
       </div>
     </Stack>

@@ -19,26 +19,24 @@ ChartJS.register(
   Legend
 );
 
-export default function BarChart({ data, morale }) {
+export default function BarChart({ data, morale, year }) {
   const didMount = useRef(false);
-  const [yearNumber, setYearNumber] = useState(2);
 
   const [state, setState] = useState({
-    labels: ["Year 1"],
+    labels: ["Year " + (year + 1)],
     data: morale ? [65] : [150],
   });
 
   useEffect(() => {
     if (didMount.current) {
-      setYearNumber(yearNumber + 1);
       setState({
-        labels: [`Year ${yearNumber}`],
+        labels: [`Year ${year + 1}`],
         data: data,
       });
     } else {
       didMount.current = true;
     }
-  }, [data]);
+  }, [data, year]);
 
   return (
     <Bar

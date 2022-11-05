@@ -34,10 +34,8 @@ class GameService {
   //     return axios.get(API_URL + 'admin', { headers: authHeader() });
   //   }
   getGameState() {
-   
-
+    console.log("hello");
     if (Object.keys(authHeader()).length !== 0) {
-
       return axios.get("http://localhost:8080/api/gameInfo", {
         headers: authHeader(),
         "Content-Type": "application/json",
