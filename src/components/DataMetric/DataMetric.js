@@ -13,6 +13,7 @@ const DataMetric = ({
   increment,
   chartData,
   morale,
+  oldStats,
 }) => {
   return (
     <Stack
@@ -28,9 +29,15 @@ const DataMetric = ({
       </Group>
 
       <Group className="items-end" spacing={4}>
-        <Text className="font-semibold text-xl xl:text-3xl">{value}</Text>
-        <Text className="text-gray-500">{unit}</Text>
-        <IncrementChip className="mb-1 ml-2" increment={increment} unit={unit} />
+        <Text className="font-semibold text-xl xl:text-3xl notranslate">
+          {value}
+        </Text>
+        <Text className="text-gray-500 notranslate">{unit}</Text>
+        <IncrementChip
+          className="mb-1 ml-2 notranslate"
+          increment={increment}
+          unit={unit}
+        />
       </Group>
       <div className="h-full">
         {hasChart ? (

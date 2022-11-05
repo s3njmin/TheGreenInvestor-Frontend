@@ -22,7 +22,7 @@ const IncrementChip = ({ increment, unit }) => {
       ) : (
         <IncreaseIcon className="h-5" style={{ transform: "rotate(10deg)" }} />
       )}
-      <Text>{`${increment} ${unit}`}</Text>
+      <Text className="notranslate">{`${increment} ${unit}`}</Text>
     </Box>
   );
 };

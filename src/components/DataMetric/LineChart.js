@@ -26,19 +26,25 @@ ChartJS.register(
 
 export default function LineChart({ data }) {
   const didMount = useRef(false);
-  
-  const [yearNumber, setYearNumber] = useState(2);
-  const [labels, setLabels] = useState(["Year 0", "Year 1"]);
+
+  const [yearNumber, setYearNumber] = useState(data.length - 1);
+  const [labels, setLabels] = useState([]);
   const [state, setState] = useState({
     labels: labels,
     data: data,
   });
 
   useEffect(() => {
+    for (let i = 0; i < data.length; i++) {
+      setLabels((prevState) => [...prevState, "Year " + i]);
+    }
+  }, []);
+
+  useEffect(() => {
     if (didMount.current) {
       setYearNumber(yearNumber + 1);
       setLabels((prevState) => [...prevState, `Year ${yearNumber}`]);
-      
+
       setState({
         labels: labels,
         data: data,
@@ -48,6 +54,9 @@ export default function LineChart({ data }) {
     }
   }, [data]);
 
+  if (labels.length === 0) {
+    return <div> still loading </div>;
+  }
 
   return (
     <div className="h-full">

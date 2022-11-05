@@ -13,26 +13,17 @@ import authHeader from "../services/auth-header";
 import axios from "axios";
 import ReviewModal from "../components/PostQuestionReview/ReviewModal";
 import GameEndPopup from "../components/GameEnd/GameEndPopup";
-import GameService from "../services/GameService";
 
 export default function Game() {
   const [data, setData] = useState([]);
-  const [listQuestions, setListQuestions] = useState();
+  const [question, setQuestion] = useState();
   const [options, setOptions] = useState();
-  const [image, setImage] = useState();
-
-  const [isOpenEnded, setIsOpenEnded] = useState(false);
-
   const [responseStats, setResponseStats] = useState(null);
   const [responseFeedback, setResponseFeedback] = useState("");
-
-  const [currentYear, setCurrentYear] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState();
+  const [isOpenEnded, setIsOpenEnded] = useState(false);
 
   //income statistic
-  const [currentIncome, setCurrentIncome] = useState(20);
-  const [currentMorale, setCurrentMorale] = useState(65);
-  const [currentSustainability, setCurrentSustainability] = useState(150);
+  const [income, setIncome] = useState(20);
 
   //input values for open-ended questions
   const [inputValue1, setInputValue1] = useState("");
@@ -42,99 +33,86 @@ export default function Game() {
   //used for the highlighting of the selected option
   const [selectedOption, setSelectedOption] = useState(null);
 
+  //index to iterate through the set of 10 questions
+  const [index, setIndex] = useState(1);
+
   //Statistics Data State to update Graphs
-  const [moraleChartData, setMoraleChartData] = useState([65]);
+  const [moraleChartData, setMoraleChartData] = useState([100]);
   const [sustainabilityChartData, setSustainabilityChartData] = useState([150]);
-  const [cashChartData, setCashChartData] = useState();
+  const [cashChartData, setCashChartData] = useState([0, 100]);
 
   //for Review modal
   const [openReview, setOpenReview] = useState(false);
 
   //for End Game modal
-  const [openEndGame, setOpenEndGame] = useState({
-    failed: false,
-    opening: false,
-  });
+  const [openEndGame, setOpenEndGame] = useState(false);
 
-  //handle Closing of the ReviewModal
-  async function closeReviewHandler() {
-    const changeQuestion = listQuestions[currentYear + 1];
+  //handle closing of the reviewModal
+  function closeReviewHandler() {
     setOpenReview(false);
-    setCurrentYear(currentYear + 1);
-
-    //set questions to the next one when closing the reviewHandler
-    if (changeQuestion !== undefined) {
-      setCurrentQuestion(changeQuestion);
-
-      setImage(changeQuestion.imagePath);
-
-      setOptions(changeQuestion.optionsName);
-      setIsOpenEnded(changeQuestion.openEnded);
-    }
+    setIndex(index + 1);
+    setQuestion(data[index]);
+    setSelectedOption(null);
   }
 
   //handle closing of end game handler
   function closeEndGameHandler() {
-    setOpenEndGame({ failed: false, opening: false });
+    setOpenEndGame(false);
   }
-
-  useEffect(() => {
-    if (cashChartData !== undefined && responseStats !== null) {
-      if (
-        responseStats?.currentEmission < 0 ||
-        responseStats?.currentMorale < 0 ||
-        cashChartData[cashChartData?.length - 1] < 0
-      ) {
-        setOpenEndGame({ failed: true, opening: true });
-      } else if (currentYear > 9) {
-        setOpenEndGame({ failed: false, opening: true });
-      }
-    }
-  }, [
-    responseStats?.currentEmission,
-    responseStats?.currentMorale,
-    cashChartData,
-    currentYear,
-  ]);
 
   //function called when the submit button is clicked (to transition the question and options and charts)
   async function onClickHandler() {
+    if (selectedOption != null) {
+      setResponseStats(
+        [
+          options[selectedOption].costImpact,
+          options[selectedOption].moraleImpact,
+          options[selectedOption].sustainabilityImpact,
+        ],
+        function () {
+          console.log("setResponsestats completed");
+        }
+      );
+      setResponseFeedback(options[selectedOption].feedback, function () {
+        console.log("setfeedback completed");
+      });
+    }
+
     //submit Answer to backend
     submitAnswer();
-
+    
     setOpenReview(true);
+    //setOpenEndGame(true);
   }
 
   //function to change chart data upon submitting a response
   useEffect(() => {
-    async function changeChartData() {
-      if (responseStats !== null) {
-        setMoraleChartData([moraleChartData[0] + responseStats.moraleVal]);
+    function changeChartData() {
+      if (question?.openEnded === false && responseStats !== null) {
+        setMoraleChartData([moraleChartData[0] + responseStats[1]]);
         setSustainabilityChartData([
-          sustainabilityChartData[0] + responseStats.emissionVal,
+          sustainabilityChartData[0] + responseStats[2],
         ]);
         setCashChartData((prevState) => [
           ...prevState,
-          cashChartData[cashChartData.length - 1] -
-            responseStats.costVal +
-            currentIncome,
+          cashChartData[cashChartData.length - 1] - responseStats[0] + income,
         ]);
+        setIncome(income + options[selectedOption].incomeImpact);
       }
     }
     changeChartData();
-  }, [responseStats]);
+  }, [responseFeedback, responseStats]);
 
   //function to submit Answer to backend
   async function submitAnswer() {
-    //open ended answer submission
     if (isOpenEnded) {
-      await axios
+      const response = await axios
         .post(
-          `http://localhost:8080/api/submitAnswer`,
+          `http://localhost:8080/api/${question.id}/answer`,
           {
             //concatenate input1, input2 and input3 by comma
             answer: inputValue1 + "," + inputValue2 + "," + inputValue3,
-            // isOpenEnded: true,
+            isOpenEnded: true,
           },
           {
             headers: authHeader(),
@@ -143,102 +121,49 @@ export default function Game() {
         )
         .then((response) => {
           console.log(response);
-          setResponseStats(response.data);
-          setResponseFeedback(response.data.feedback);
-          setCurrentIncome(response.data.currentIncome);
         });
 
       //reset the input values
       setInputValue1("");
       setInputValue2("");
       setInputValue3("");
-    } else {
-      //multi select options
-      await axios
-        .post(
-          `http://localhost:8080/api/submitAnswer`,
-          {
-            answer: selectedOption,
-          },
-          {
-            headers: authHeader(),
-            "Content-Type": "application/json",
-          }
-        )
-        .then((response) => {
-          console.log(response);
-          setResponseStats(response.data);
-          setResponseFeedback(response.data.feedback);
-          setCurrentIncome(response.data.currentIncome);
-        });
-
-      //reset the input values
-      setSelectedOption(null);
     }
-  }
-
-  function generateCashData(costStats) {
-    let result = [0, 100];
-    let sum = 20;
-
-    for (let i = 0; i < costStats.length - 1; i++) {
-      sum += costStats[i].incomeVal;
-      result.push(result[result.length - 1] - costStats[i].costVal + sum);
-    }
-
-    setCashChartData(result);
   }
 
   //to retrieve data from the backend regarding questions,first option
   useEffect(() => {
-    async function getStateAndQuestionData() {
-      await GameService.getGameState()
-        .then(async (response) => {
-          console.log(response);
-          const gameStateData = response.data;
-          const questionRetrieved =
-            gameStateData.questionsAndOptions[gameStateData.year];
-
-          await setData(gameStateData);
-          await setCurrentYear(gameStateData.year);
-          await setListQuestions(gameStateData.questionsAndOptions);
-          await setCurrentQuestion(questionRetrieved);
-          await setImage(questionRetrieved.imagePath);
-
-          const currentStats = gameStateData.stats;
-
-          if (currentStats !== null && currentStats.length !== 1) {
-            await setCurrentMorale(
-              currentStats[currentStats.length - 1].currentMoraleVal
-            );
-            await setCurrentSustainability(
-              currentStats[currentStats.length - 1].currentEmissionVal
-            );
-          } else {
-            await setCurrentMorale(currentStats[0].currentMoraleVal);
-            await setCurrentSustainability(currentStats[0].currentEmissionVal);
-          }
-
-          await setOptions(questionRetrieved.optionsName);
-          await setIsOpenEnded(questionRetrieved.openEnded);
-
-          await generateCashData(gameStateData.stats);
+    async function getAllData() {
+      await axios
+        .get("http://localhost:8080/api/questionsAndOptions", {
+          headers: authHeader(),
+          "Content-Type": "application/json",
         })
-        .catch((error) => console.log(error));
+        .then(async (response) => {
+          await setData(response.data);
+          await setQuestion(response.data[0]);
+          await setIsOpenEnded(response.data[0].openEnded);
+          await setOptions(response.data[0].options);
+        })
+        .catch((error) => console.log(error.response));
     }
-    getStateAndQuestionData();
+    getAllData();
   }, []);
 
-  // prevent running into an not found error causing the app to crash
+  //function to get subsequent options using the id
+  useEffect(() => {
+    async function getOptions() {
+      if (question !== undefined) {
+        setOptions(question.options);
+        setIsOpenEnded(question.openEnded);
+      }
+    }
+    getOptions();
+  }, [question]);
 
-  console.log(responseStats?.currentSustainability);
-  if (
-    data === undefined ||
-    currentQuestion === undefined ||
-    options === undefined ||
-    currentYear === undefined ||
-    cashChartData === undefined
-  ) {
+  
+
+  // prevent running into an not found error causing the app to crash
+  if (data === undefined || question === undefined || options === undefined) {
     return (
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle relative w-full pt-2 pr-2 pl-2 pb-2">
         <LoadingOverlay
@@ -250,6 +175,7 @@ export default function Game() {
       </Box>
     );
   }
+
   return (
     <motion.div
       initial="hidden"
@@ -259,29 +185,29 @@ export default function Game() {
     >
       <ReviewModal
         content={responseFeedback}
-        cash={responseStats && responseStats.costVal}
-        morale={responseStats && responseStats.moraleVal}
-        sustainability={responseStats && responseStats.emissionVal}
+        cash={responseStats && responseStats[0]}
+        morale={responseStats && responseStats[1]}
+        sustainability={responseStats && responseStats[2]}
         opened={openReview}
         handleClose={closeReviewHandler}
       />
       <GameEndPopup
-        failed={openEndGame.failed}
-        opened={openEndGame.opening}
+        failed={true}
+        opened={openEndGame}
         handleClose={closeEndGameHandler}
         userName={"Bob"}
         finalScore={2000}
       />
-      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 ">
+      <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 pb-1">
         <Grid className="h-full w-full">
           <Grid.Col span={7} className="h-full">
             <Box className="h-[55%] w-full flex flex-col items-center space-y-4">
               <Text className="text-center font-semibold text-xl">
-                {currentQuestion.questionName}
+                {question.question}
               </Text>
               <img
-                className="h-[55%] w-[35%] text-center rounded-2xl drop-shadow-xl -pt-4"
-                src={image}
+                className="h-[60%] w-[40%] text-center rounded-2xl drop-shadow-xl"
+                src={question.imageLink}
                 alt="new"
               />
             </Box>
@@ -306,7 +232,7 @@ export default function Game() {
                     },
                   })}
                 >
-                  {options[0]}
+                  {options[0].option}
                 </Button>
                 <Button
                   onClick={() => setSelectedOption(1)}
@@ -324,7 +250,7 @@ export default function Game() {
                     },
                   })}
                 >
-                  {options[1]}
+                  {options[1].option}
                 </Button>
                 <Button
                   onClick={() => setSelectedOption(2)}
@@ -342,7 +268,7 @@ export default function Game() {
                     },
                   })}
                 >
-                  {options[2]}
+                  {options[2].option}
                 </Button>
                 <Button
                   onClick={() => setSelectedOption(3)}
@@ -360,7 +286,7 @@ export default function Game() {
                     },
                   })}
                 >
-                  {options[3]}
+                  {options[3].option}
                 </Button>
 
                 <Button
@@ -420,7 +346,7 @@ export default function Game() {
               <DataMetric
                 hasChart={true}
                 icon={<CashIcon color="grey" className="text-xl" />}
-                increment={currentIncome}
+                increment={income}
                 value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
                 label="Cash"
@@ -433,24 +359,12 @@ export default function Game() {
                 <DataMetric
                   morale={true}
                   className="w-1/2"
-                  increment={
-                    responseStats
-                      ? responseStats.moraleVal
-                      : data.stats.length !== 1
-                      ? data.stats[data.stats.length - 2].moraleVal
-                      : 0
-                  }
+                  increment={responseStats ? responseStats[1] : 0}
                   icon={<MoraleIcon color="grey" className="text-xl" />}
-                  value={
-                    responseStats ? responseStats.currentMorale : currentMorale
-                  }
+                  value={moraleChartData[0]}
                   unit={"%"}
                   label="Morale"
-                  chartData={
-                    responseStats
-                      ? [responseStats.currentMorale]
-                      : [currentMorale]
-                  }
+                  chartData={moraleChartData}
                 />
               </Box>
               <Box className="h-full w-1/2">
@@ -458,25 +372,11 @@ export default function Game() {
                   morale={false}
                   className="w-1/2"
                   icon={<SustainabilityIcon color="grey" className="text-xl" />}
-                  increment={
-                    responseStats
-                      ? responseStats.emissionVal
-                      : data.stats.length !== 1
-                      ? data.stats[data.stats.length - 2].emissionVal
-                      : 0
-                  }
-                  value={
-                    responseStats
-                      ? responseStats.currentEmission
-                      : currentSustainability
-                  }
+                  increment={responseStats ? responseStats[2] : 0}
+                  value={sustainabilityChartData[0]}
                   unit={"pts"}
                   label="Sustainability"
-                  chartData={
-                    responseStats
-                      ? [responseStats.currentEmission]
-                      : [currentSustainability]
-                  }
+                  chartData={sustainabilityChartData}
                 />
               </Box>
             </Box>

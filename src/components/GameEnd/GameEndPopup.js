@@ -28,6 +28,7 @@ const GameEndPopup = ({
         opened={opened}
         onClose={handleClose}
         withCloseButton={false}
+        closeOnClickOutside={false}
       >
         <Stack className="h-full w-full items-center">
           {!failed ? (

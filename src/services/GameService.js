@@ -6,7 +6,7 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:8080/api/";
 
 class GameService {
-   getGameContent() {
+  getGameContent() {
     return axios.get(API_URL + "questions", {
       headers: authHeader(),
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ class GameService {
     //return "dummytext";
   }
 
-  getOptions({id}) {
+  getOptions({ id }) {
     return axios.get(API_URL + `questions/${id}/options`, {
       headers: authHeader(),
       "Content-Type": "application/json",
@@ -33,6 +33,15 @@ class GameService {
   //   getAdminBoard() {
   //     return axios.get(API_URL + 'admin', { headers: authHeader() });
   //   }
+  getGameState() {
+    console.log(authHeader());
+    if (Object.keys(authHeader()).length !== 0) {
+      return axios.get("http://localhost:8080/api/gameInfo", {
+        headers: authHeader(),
+        "Content-Type": "application/json",
+      });
+    }
+  }
 }
 
 export default new GameService();

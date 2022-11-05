@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Register from "./pages/Register";
@@ -18,8 +18,26 @@ import Login from "./components/Login";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
+import GameService from "./services/GameService";
 
 function App() {
+  const [currentState, setCurrentState] = useState("");
+  useEffect(() => {
+    async function getCurrentState() {
+      const gameStateResponse = GameService.getGameState();
+      if (gameStateResponse !== undefined) {
+        gameStateResponse
+          .then(async (response) => {
+            await setCurrentState(response.data.state);
+           
+          })
+          .catch((error) => console.log(error.response));
+      }
+    }
+    getCurrentState();
+  }, []);
+
+  
   return (
     <div className="main">
       <video
@@ -36,7 +54,12 @@ function App() {
         <div className=" justify-center  pl-10 pr-10 pt-3 ">
           <AnimatePresence>
             <Routes>
-              <Route path="/" element={<Home />} />
+              {currentState === "answering" ? (
+                <Route path="/" element={<Game />} />
+              ) : (
+                <Route path="/" element={<Home />} />
+              )}
+              {/* <Route path="/" element={<Home />} /> */}
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

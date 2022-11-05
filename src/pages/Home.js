@@ -13,6 +13,7 @@ import { PrevIcon } from "../icons";
 
 import authService from "../services/auth.service";
 import ImportanceSustain from "../components/SustainabilityImportance/ImportanceSustain";
+import GameService from "../services/GameService";
 
 export default function Home() {
   const [content, setContent] = useState("");
@@ -87,7 +88,6 @@ export default function Home() {
       variants={variants}
       style={{ marginTop: 30, height: "170px" }}
     >
-      
       <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
         <h1 className="text-center text-darkGreen-50">{t("welcome")}</h1>
 

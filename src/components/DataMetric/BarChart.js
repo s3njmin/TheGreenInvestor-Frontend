@@ -25,7 +25,7 @@ export default function BarChart({ data, morale }) {
 
   const [state, setState] = useState({
     labels: ["Year 1"],
-    data: morale ? [100] : [150],
+    data: morale ? [65] : [150],
   });
 
   useEffect(() => {
