@@ -22,17 +22,7 @@ class GameService {
     //return "dummytext";
   }
 
-  //   getUserBoard() {
-  //     return axios.get(API_URL + 'user', { headers: authHeader() });
-  //   }
-
-  //   getModeratorBoard() {
-  //     return axios.get(API_URL + 'mod', { headers: authHeader() });
-  //   }
-
-  //   getAdminBoard() {
-  //     return axios.get(API_URL + 'admin', { headers: authHeader() });
-  //   }
+ 
   getGameState() {
     console.log("hello");
     if (Object.keys(authHeader()).length !== 0) {

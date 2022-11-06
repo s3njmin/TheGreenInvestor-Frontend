@@ -15,7 +15,6 @@ const DataMetric = ({
   morale,
   year,
 }) => {
-  console.log(year);
   return (
     <Stack
       spacing={4}

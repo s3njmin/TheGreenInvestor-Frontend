@@ -28,7 +28,7 @@ const Leaderboard = () => {
       </Box>
     );
   }
-  console.log(leaderboardData.length === 0);
+
   if (leaderboardData.length === 0) {
     return (
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] space-y-4 rounded-xl align-middle w-[60%] pt-4 pr-22 pl-22 pb-12  items-center justify-center scrollbar-hide overflow-auto">

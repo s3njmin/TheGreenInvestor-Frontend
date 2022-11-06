@@ -1,10 +1,9 @@
 import { Avatar, Group, Text, Box } from "@mantine/core";
 import React from "react";
-// import Avatar, { genConfig } from "react-nice-avatar";
-import { StarIcon } from "../../icons";
+
 
 const RemainingAvatars = ({ name, position, score, image }) => {
-  //const config = genConfig({ bgColor: "#FFFFFF" });
+ 
   return (
     <>
       <Group className="w-full items-center" position="apart">
@@ -20,7 +19,7 @@ const RemainingAvatars = ({ name, position, score, image }) => {
         <Box
           className={`inline-flex border pt-2 pb-2 pl-3 pr-3 border-solid text-xs mb-1 space-x-2 text-center items-center bg-darkGreen-50 rounded-full`}
         >
-          {/* <StarIcon className="text-white" /> */}
+         
           <Text className="font-semibold text-base text-white">{position}</Text>
         </Box>
       </Group>

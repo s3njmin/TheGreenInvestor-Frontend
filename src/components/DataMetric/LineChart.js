@@ -27,23 +27,24 @@ ChartJS.register(
 export default function LineChart({ data, year }) {
   const didMount = useRef(false);
 
-  const [yearNumber, setYearNumber] = useState(data.length - 1);
+  
   const [labels, setLabels] = useState([]);
   const [state, setState] = useState({
     labels: labels,
     data: data,
   });
 
+  // labels render when the user returns to the game after leaving the site
   useEffect(() => {
     for (let i = 0; i < data.length; i++) {
       setLabels((prevState) => [...prevState, "Year " + i]);
     }
   }, []);
 
-  console.log(year);
+  //update chart upon submission of answer
   useEffect(() => {
     if (didMount.current) {
-      // setYearNumber(yearNumber + 1);
+      
       setLabels((prevState) => [...prevState, `Year ${year + 1}`]);
 
       setState({

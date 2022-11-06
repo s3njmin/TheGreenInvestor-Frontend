@@ -27,6 +27,7 @@ export default function BarChart({ data, morale, year }) {
     data: data,
   });
 
+  //function for the updating of charts when there is a submission of a response
   useEffect(() => {
     if (didMount.current) {
       setState({

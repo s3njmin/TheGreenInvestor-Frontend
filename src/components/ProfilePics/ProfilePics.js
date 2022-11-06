@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { TickIcon } from "../../icons";
 import authHeader from "../../services/auth-header";
 
+//display profile pics if the user decides to change
 const ProfilePics = ({ opened, handleClose }) => {
   const indexArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [selectedProfilePic, setSelectedProfilePic] = useState();

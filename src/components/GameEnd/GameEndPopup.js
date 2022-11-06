@@ -29,8 +29,6 @@ const GameEndPopup = ({
   finalMorale,
   finalSustainability,
   finalCash,
-
-  userName,
 }) => {
   let navigate = useNavigate();
 
@@ -38,6 +36,7 @@ const GameEndPopup = ({
 
   const [totalScore, setTotalScore] = useState();
 
+  //get results of the user at the end or when he loses
   useEffect(() => {
     async function getStateAndQuestionData() {
       await GameService.getGameState()
@@ -53,6 +52,7 @@ const GameEndPopup = ({
 
   const [profileDetails, setProfileDetails] = useState(null);
 
+  //user profileDetails
   useEffect(() => {
     async function getDetails() {
       await ProfileService.getProfileDetails().then((response) => {

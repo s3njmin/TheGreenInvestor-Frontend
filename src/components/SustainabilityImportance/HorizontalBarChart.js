@@ -61,14 +61,7 @@ export default function HorizontalBarChart({ data }) {
         options={options}
         data={{
           labels,
-          // datasets: [
-          //   {
-          //     label: "Carbon Emissions",
-          //     data: data,
-          //     borderColor: ["#245A44", "#4B296B", "#4B296B"],
-          //     backgroundColor: ["#245A44", "#4B296B", "#4B296B"],
-          //   },
-          // ],
+
           datasets: [
             {
               data: data,

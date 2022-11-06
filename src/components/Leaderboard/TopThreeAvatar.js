@@ -26,14 +26,7 @@ const TopThreeAvatar = ({ first, position, name, points, image }) => {
             className={`${first ? "text-2xl" : "text-xl"} text-darkGreen-50`}
           />
 
-          {/* <Avatar
-            style={
-              first
-                ? { width: "8rem", height: "8rem" }
-                : { width: "6rem", height: "6rem" }
-            }
-            {...config}
-          /> */}
+         
           <Avatar
             style={
               first

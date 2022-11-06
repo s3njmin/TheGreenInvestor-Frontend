@@ -19,6 +19,8 @@ export default function ReviewModal({
         className="font-bold text-xl"
         opened={opened}
         onClose={handleClose}
+        withCloseButton={false}
+        closeOnClickOutside={false}
         title="Post Question Review"
       >
         <Stack>
