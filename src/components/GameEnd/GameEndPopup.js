@@ -1,4 +1,11 @@
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  LoadingOverlay,
+} from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import {
   DollarIcon,
@@ -13,6 +20,7 @@ import StatsDisplay from "./StatsDisplay";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import GameService from "../../services/GameService";
+import ProfileService from "../../services/ProfileService";
 
 const GameEndPopup = ({
   failed,
@@ -43,10 +51,35 @@ const GameEndPopup = ({
     getStateAndQuestionData();
   }, [opened]);
 
-  console.log(user);
+  const [profileDetails, setProfileDetails] = useState(null);
 
-  if (user === undefined) {
-    <div> still loading </div>;
+  useEffect(() => {
+    async function getDetails() {
+      await ProfileService.getProfileDetails().then((response) => {
+        setProfileDetails(response.data);
+      });
+    }
+    getDetails();
+  }, [opened]);
+
+  if (user === undefined || profileDetails === null) {
+    return (
+      <Modal
+        centered
+        size="lg"
+        opened={opened}
+        onClose={handleClose}
+        withCloseButton={false}
+        closeOnClickOutside={false}
+      >
+        <LoadingOverlay
+          loaderProps={{ size: "xl", color: "black" }}
+          overlayOpacity={0.0}
+          overlayColor="#c5c5c5"
+          visible
+        />
+      </Modal>
+    );
   }
   return (
     <>
@@ -84,7 +117,10 @@ const GameEndPopup = ({
               </Group>
             </>
           )}
-          <GameEndAvatar name={user && user.username} />
+          <GameEndAvatar
+            name={user && user.username}
+            profilePicIndex={profileDetails.profileIndex}
+          />
           {!failed ? (
             <Text className=" text-center font-bold text-lg text-darkGreen-50 ">
               YOU ARE A GREEN INVESTOR!

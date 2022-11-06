@@ -23,7 +23,7 @@ const Leaderboard = () => {
     leaderboardData &&
     leaderboardData.slice(3).map((userData) => console.log(userData));
 
-  console.log(sources);
+  console.log(leaderboardData);
 
   if (leaderboardData === undefined) {
     return (

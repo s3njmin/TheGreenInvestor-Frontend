@@ -280,7 +280,7 @@ export default function Game() {
     >
       <ReviewModal
         content={responseFeedback}
-        cash={responseStats && responseStats.costVal}
+        cash={responseStats && -responseStats.costVal}
         morale={responseStats && responseStats.moraleVal}
         sustainability={responseStats && responseStats.emissionVal}
         opened={openReview}

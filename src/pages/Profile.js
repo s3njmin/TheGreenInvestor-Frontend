@@ -7,125 +7,78 @@ import {
   Container,
   Box,
   Select,
-  NativeSelect,
+  Button,
   Stack,
   Text,
+  LoadingOverlay,
 } from "@mantine/core";
 import GenericAvatar from "../components/GameEnd/GenericAvatar";
+import ProfilePics from "../components/ProfilePics/ProfilePics";
+
+import ProfileService from "../services/ProfileService";
 
 export default function Profile() {
-  const [redirect, setRedirect] = useState(null);
-  const [userReady, setUserReady] = useState(false);
   const [currentUser, setCurrentUser] = useState({ username: "" });
-  const [yearValue, setYearValue] = useState(0);
-  const [currentState, setCurrentState] = useState("");
 
-  const [value, setValue] = useState("");
+  const [opened, setOpened] = useState(false);
+
+  const [profileDetails, setProfileDetails] = useState(null);
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser();
-
-    // if (!currentUser) this.setState({ redirect: "/home" });
-    // this.setState({ currentUser: currentUser, userReady: true })
     setCurrentUser(currentUser);
-    setUserReady(true);
 
-    StateService.getStates(currentUser.id).then((response) => {
-      setCurrentState(response.data.currentState);
-      setYearValue(response.data.yearValue);
-    });
-
-    if (redirect) {
-      return <Navigate to={redirect} />;
+    async function getDetails() {
+      await ProfileService.getProfileDetails().then((response) => {
+        setProfileDetails(response.data);
+      });
     }
-  }, []);
+    getDetails();
+  }, [opened]);
 
-  function OnClickButton() {
-    StateService.changeStates(currentUser.id, value, yearValue).then(
-      (response) => {
-        setCurrentState(response.data.currentState);
-        setYearValue(response.data.yearValue);
-      }
+  function handleClose(selectedIndex) {
+    setOpened(false);
+  }
+
+  console.log(profileDetails);
+
+  console.log(currentUser.username);
+  if (currentUser === undefined || profileDetails === null) {
+    return (
+      <Box className="bg-gray-50 bg-opacity-70 h-[46vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
+        <LoadingOverlay
+          loaderProps={{ size: "xl", color: "black" }}
+          overlayOpacity={0.0}
+          overlayColor="#c5c5c5"
+          visible
+        />
+      </Box>
     );
   }
-  console.log(currentUser.username);
   return (
     <Box className="bg-gray-50 bg-opacity-70 h-[46vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
+      <ProfilePics opened={opened} handleClose={handleClose} />
       <Stack justify="space-between">
         <Text className="text-center font-bold text-3xl text-darkGreen-50">
           User Profile
         </Text>
-        <GenericAvatar name={"" + currentUser.username} />
+        <GenericAvatar
+          name={"" + currentUser.username}
+          profilePicIndex={profileDetails.profileIndex}
+        />
         <Text className="text-center font-semibold text-xl text-darkGreen-50">
-          Highscore: <span className="font-bold">2000 pts</span>
+          Highscore:{" "}
+          <span className="font-bold">{`${profileDetails.highScore} pts`}</span>
         </Text>
         <Text className="text-center font-semibold text-xl text-darkGreen-50">
           {" "}
-          No. of Games Played: <span className="font-bold"> 10 </span>{" "}
+          No. of Games Played:{" "}
+          <span className="font-bold"> {profileDetails.gamesPlayed} </span>{" "}
         </Text>
+        <Button className="bg-darkGreen-50 " onClick={() => setOpened(true)}>
+          Change Profile Pic
+        </Button>
       </Stack>
     </Box>
   );
 }
-
-{
-  /* // <Container size="xl" px="0">
-    //   {(userReady) ?
-    //     <div>
-    //       <Box className="bg-white h-[80vh] rounded-none">
-    //         <h3>
-    //           <strong>{currentUser.username}</strong> Profile
-    //         </h3>
-    //         <p>
-    //           <strong>Token:</strong>{" "}
-    //           {currentUser.accessToken.substring(0, 20)} ...{" "}
-    //           {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-    //         </p>
-    //         <p>
-    //           <strong>Id:</strong>{" "}
-    //           {currentUser.id}
-    //         </p>
-    //         {/* <p>
-    //       <strong>Email:</strong>{" "}
-    //       {currentUser.email}
-    //     </p> */
-}
-//         <strong>Authorities:</strong>
-//         <ul>
-//           {currentUser.roles &&
-//             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-//         </ul>
-
-//         <p>
-//           <strong>yearValue:</strong>{" "}
-//           {yearValue}
-//         </p>
-
-//         <p>
-//           <strong>currentState:</strong>{" "}
-//           {currentState}
-//         </p>
-
-//         {/* <Select
-//           label="your favorite state to change to"
-//           placeholder="Pick one"
-//           data={[
-//             { value: 'start', label: 'start' },
-//             { value: 'answering', label: 'answering' },
-//             { value: 'feedback', label: 'feedback' },
-//             { value: 'completed', label: 'completed' },
-//           ]}
-//         /> */}
-
-//         <NativeSelect
-//           value={value}
-//           onChange={(event) => setValue(event.currentTarget.value)}
-//           data={["start", "answering", "feedback", "completed"]}
-//         />
-
-//         <button onClick={OnClickButton}>Change State</button>
-
-//       </Box>
-
-//     </div> : null}
-// </Container> */}

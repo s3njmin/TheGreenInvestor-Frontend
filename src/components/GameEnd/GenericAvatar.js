@@ -1,10 +1,9 @@
 import React from "react";
-import { Group, Stack, Text } from "@mantine/core";
+import { Group, Stack, Text, Avatar } from "@mantine/core";
 import { LeafIcon, TrophyIcon } from "../../icons";
-import Avatar, { genConfig } from "react-nice-avatar";
 
-const GenericAvatar = ({ name }) => {
-  const config = genConfig({ bgColor: "#245A44" });
+const GenericAvatar = ({ name, profilePicIndex }) => {
+  // const config = genConfig({ bgColor: "#245A44" });
   return (
     <div className="h-full align-baseline items-baseline">
       <Stack className="-space-y-2 h-full items-baseline">
@@ -14,7 +13,12 @@ const GenericAvatar = ({ name }) => {
             className={` text-xl text-darkGreen-50`}
           />
 
-          <Avatar style={{ width: "6rem", height: "6rem" }} {...config} />
+          {/* <Avatar style={{ width: "6rem", height: "6rem" }} {...config} /> */}
+          <Avatar
+            style={{ width: "6rem", height: "6rem" }}
+            src={`https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/avatars/avatar-${profilePicIndex}.png`}
+            alt="profilepic"
+          />
           <LeafIcon
             className={`text-xl text-darkGreen-50`}
             style={{ transform: "rotate(-10deg)" }}

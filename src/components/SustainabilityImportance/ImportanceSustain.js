@@ -51,7 +51,14 @@ const ImportanceSustain = () => {
     fuelConsumption === undefined
   ) {
     return (
-      <LoadingOverlay loaderProps={{ size: "xl", color: "black" }} visible />
+      <Box className="h-full w-full items-center">
+        <LoadingOverlay
+          className="items-center align-middle h-full w-full"
+          loaderProps={{ size: "xl", color: "black" }}
+          overlayOpacity={0}
+          visible
+        />
+      </Box>
     );
   }
   return (
