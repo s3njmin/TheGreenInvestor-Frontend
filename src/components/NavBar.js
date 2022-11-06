@@ -5,34 +5,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 import "../css/barchart.css";
 import "../css/navbar.css";
+// import "../css/navbar.css";
 import LoginPopUp from "./LoginPopUp";
-
-import { MusicUpIcon, MusicOffIcon } from "../icons";
-import thegreeninvestor from "../assets/thegreeninvestor.png";
 import myMusic from "../assets/music.mp3";
 import MuteButton from "./MuteButton";
 
 import AuthService from "../services/auth.service";
-// import AuthVerify from "./common/auth-verify";
 import EventBus from "../common/EventBus";
-
-const languages = [
-  { value: "", text: "Change language" },
-  { value: "en", text: "English" },
-  { value: "zh", text: "中文(简体）" },
-  { value: "es", text: "español" },
-  // { value: 'ms', text: "Bahasa Melayu" },
-];
 
 export default function NavBar() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-  const [isMuted, setIsMuted] = useState(false);
-  const [music, setMusic] = useState(new Audio(myMusic));
+  const [playing, setPause] = useState(false);
+  const player = new Audio(myMusic);
 
-  const { t } = useTranslation();
-
+  // const { t } = useTranslation();
   const [lang, setLang] = useState("");
 
   // This function put query that helps to
@@ -61,6 +49,14 @@ export default function NavBar() {
     };
   }, []);
 
+  // For music player, runs everytime 'playing' is changed
+  useEffect(() => {
+    playing ? player.play() : player.pause();
+
+    // This is cleanup of the effect
+    return () => player.pause();
+  }, [playing]);
+
   function logOut() {
     AuthService.logout();
     setShowModeratorBoard(false);
@@ -69,10 +65,10 @@ export default function NavBar() {
   }
 
   function _toggleMuteButton() {
-    var myAudio = document.getElementById("audio_player");
-    myAudio.muted = !myAudio.muted;
-
-    setIsMuted(!isMuted);
+    // var myAudio = document.getElementById("audio_player");
+    // myAudio.muted = !myAudio.muted;
+    setPause((s) => !s);
+    // setPause(!playing);
   }
   const googleTranslateElementInit = () => {
     var duplicate_google_translate_counter = 0;
@@ -131,120 +127,102 @@ export default function NavBar() {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand h-12 bg-gradient-to-r from-transparent via-teal-400/70 border-bottom-line h-15">
-      <audio id="audio_player" autoPlay loop>
-        {/* <source src={myMusic} type="audio/mp3" /> */}
-        <source src={null} type="audio/mp3" />
+    // Fixed size that NavBar will take up
+    <div className="nav-container lg:h-20 fixed w-full text-white text-m grid grid-cols-12 z-20 my-auto py-auto">
+      <audio
+        id="audio_player"
+        autoPlay
+        loop
+        // controls
+      >
+        <source src={myMusic} type="audio/mp3" />
       </audio>
-      <div className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link to={"/home"} className="nav-link" class="notranslate">
-            Home
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            to={"/leaderboard"}
-            className="nav-link"
-            onClick={_toggleMuteButton}
-            class="notranslate"
-          >
-            {t("home-leaderboard")}
-          </Link>
-        </li>
+
+      {/* Home and Leaderboard, keep at leftmost except for mobile, which will be below title */}
+      <div
+        className="order-3 col-span-12 grid grid-cols-2
+                  lg:-order-1 lg:col-span-4
+                  text-md my-auto pt-2 lg:pt-0 pb-2 text-center"
+      >
+        <Link
+          to={"/home"}
+          className="col-span-2 lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
+        >
+          Home
+        </Link>
+
+        <Link
+          to={"/leaderboard"}
+          className="col-span-2 lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
+        >
+          Leaderboard
+        </Link>
 
         {showModeratorBoard && (
-          <li className="nav-item">
-            <Link to={"/mod"} className="nav-link" class="notranslate">
-              Moderator Board
-            </Link>
-          </li>
+          <Link to={"/mod"} className="cursor-pointer hover:scale-110">
+            Moderator Board
+          </Link>
         )}
 
         {showAdminBoard && (
-          <li className="nav-item">
-            <Link to={"/admin"} className="nav-link" class="notranslate">
-              Admin Board
-            </Link>
-          </li>
-        )}
-
-        {currentUser && (
-          <li className="nav-item">
-            <Link to={"/user"} className="nav-link" class="notranslate">
-              User
-            </Link>
-          </li>
+          <Link to={"/admin"} className="cursor-pointer hover:scale-110">
+            Admin Board
+          </Link>
         )}
       </div>
 
-      {/* green investor logo */}
+      {/* Title, keep at Center, except mobile, which will be below lang/music */}
+      <span
+        className="navbar-title -order-1 col-span-12
+                  lg:py-4 lg:col-span-4 lg:order-4 
+                  my-auto text-center"
+      >
+        The Green Investor
+      </span>
 
-      <img
-        className="logo"
-        src={thegreeninvestor}
-        alt="thegreeninvestorlogo"
-        class="notranslate"
-      />
-
-      <div className="navbar-nav ml-auto">
-        {/* language selector */}
-        {/* <li className="nav-item">
-          <select value={lang} onChange={handleChange}
-            style={{ top: "50%", left: "50%", marginTop: "1vh" }}>
-            {languages.map(item => {
-              return (<option key={item.value}
-                value={item.value}>{item.text}</option>);
-            })}
-          </select>
-        </li> */}
-        <div className="pt-2 pr-2">
-          <div id="google_translate_element"></div>
+      {/* Lang & Music, keep at right, before login but at top for mobile */}
+      {/* music button, ADD MUSIC LATER */}
+      <div
+        className="grid grid-cols-2 
+                  -order-3 col-span-12
+                  lg:order-6 lg:col-span-2 xl:col-span-2
+                  my-auto pt-2 lg:pt-0 pb-2 text-center
+      "
+      >
+        <div className="music-button hover:scale-110 m-auto cursor-pointer w-[36px]">
+          <MuteButton playing={playing} _toggleMuteButton={_toggleMuteButton} />
         </div>
-
-        {/* music button */}
-        <li className="nav-item pt-2 pr-2">
-          <span className="changeColor">
-            <MuteButton
-              isMuted={isMuted}
-              _toggleMuteButton={_toggleMuteButton}
-              class="notranslate"
-            />
-          </span>
-        </li>
+        <div className="" id="google_translate_element" />
       </div>
 
-      {/* when user is logged in */}
-      {currentUser ? (
-        <div className="navbar-nav">
-          <li className="nav-item">
-            <Link to={"/profile"} className="nav-link" class="notranslate">
+      {/* Login, keep at rightmost at all times */}
+      {/* Log in, log out */}
+
+      <div
+        className="order-last col-span-12
+                  lg:col-span-2 w-auto
+                  my-auto text-center"
+      >
+        {/* when user is logged in */}
+        {currentUser ? (
+          <div className="grid grid-cols-2">
+            <Link
+              to={"/profile"}
+              className="cursor-pointer hover:scale-110 m-auto "
+            >
               {currentUser.username}
             </Link>
-          </li>
-          <li className="nav-item">
-            <a href="/home" className="nav-link" onClick={logOut}>
-              {t("home-logout")}
-            </a>
-          </li>
-        </div>
-      ) : (
-        // when user is not logged in
-        <div className="navbar-nav">
-          <li className="nav-item" class="notranslate">
-            {/* <Link to={"/login"} className="nav-link">
-              {t("home-login")}
-            </Link> */}
-            <LoginPopUp class="notranslate" />
-          </li>
-
-          {/* <li className="nav-item">
-            <Link to={"/register"} className="nav-link">
-              {t("home-signup")}
-            </Link>
-          </li> */}
-        </div>
-      )}
-    </nav>
+            <div className="cursor-pointer hover:scale-110 m-auto ">
+              <a href="/home" onClick={logOut}>
+                Log Out
+              </a>
+            </div>
+          </div>
+        ) : (
+          // when user is not logged in
+          <LoginPopUp class="notranslate" />
+        )}
+      </div>
+    </div>
   );
 }

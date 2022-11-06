@@ -4,14 +4,19 @@ import { Box, Button, Stack } from "@mantine/core";
 import { Tabs } from "@mantine/core";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-
-import { variants } from "../assets/Animations";
+import { Parallax } from "react-scroll-parallax";
 
 import UserService from "../services/user.service";
 import { displayContent } from "../assets/LandingPageDisplayContent";
-import { PrevIcon } from "../icons";
 
 import authService from "../services/auth.service";
+
+import "../css/home.css";
+import { ScrollTip } from "../assets/images";
+
+import { variants } from "../assets/Animations";
+import { PrevIcon } from "../icons";
+
 import ImportanceSustain from "../components/SustainabilityImportance/ImportanceSustain";
 import GameService from "../services/GameService";
 
@@ -48,6 +53,12 @@ export default function Home() {
   }, []);
 
   const tabValues = ["first", "second", "third", "forth"];
+  const subheaders = [
+    "Introduction",
+    "What is Sustainability?",
+    "Importance of Sustainability",
+    "How to Play?",
+  ];
 
   function handleNextClick() {
     let oldIndex = tabValues.indexOf(activeTab);
@@ -81,101 +92,89 @@ export default function Home() {
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      variants={variants}
-      style={{ marginTop: 30, height: "170px" }}
-    >
-      <Box className="bg-gray-50 bg-opacity-70 h-[75vh] rounded-xl align-middle w-full pt-2 pr-20 pl-20 pb-4">
-        <h1 className="text-center text-darkGreen-50">{t("welcome")}</h1>
+    <div className="container text-center">
+      <div className="container-content">
+        <Parallax className="screen1 flex flex-col justify-between items-center">
+          <span />
+          <h1 className="center bounce title mt-10 self-center shadow-xl border-t-4 border-b-4 ">
+            Welcome to the Sustainability Game
+          </h1>
 
-        <Stack className="h-full" justify="space-between">
-          <Tabs
-            value={activeTab}
-            onTabChange={setActiveTab}
-            color="teal"
-            className="h-full"
-            styles={(theme) => ({
-              tab: {
-                "&[data-active]": {
-                  borderColor: theme.colors.teal[9],
-                  color: theme.colors.teal[9],
-                },
-              },
-            })}
-          >
-            <Tabs.List layout position="apart">
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="first">
-                {t("home-tab1")}
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="second">
-                What is Sustainability?
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="third">
-                {t("home-tab2")}
-              </Tabs.Tab>
-              <Tabs.Tab className="lg:text-md xl:text-xl" value="forth">
-                {t("home-tab3")}
-              </Tabs.Tab>
-            </Tabs.List>
-            <Tabs.Panel className="h-[36vh] overflow-auto" value="first">
-              {t("home-tab1-body")}
-            </Tabs.Panel>
-            <Tabs.Panel className="h-[36vh] overflow-auto" value="second">
+          <div className="scrollTip flex-end mb-10">
+            <img
+              src={ScrollTip}
+              className="scrollTip w-10 px-1 border-x-2"
+              alt="Scroll"
+            />
+          </div>
+        </Parallax>
+
+        <div className="screen2 h-screen">
+          <div className="text-container grid grid-rows-3 h-full">
+            <div className="subheader m-auto p-3 m-3">{subheaders[0]}</div>
+            <Parallax
+              speed={-5}
+              className="text-content p-3 my-auto mt-5 row-span-2"
+            >
+              {displayContent[0].src}
+            </Parallax>
+          </div>
+        </div>
+        <div className="screen3 h-screen">
+          <div className="text-container grid grid-rows-3 md:grid-cols-3 h-full">
+            <Parallax translateX={[0, 50]} className="subheader m-auto p-3">
+              {subheaders[1]}
+            </Parallax>
+            <Parallax
+              translateX={[0, -50]}
+              className="text-content p-3 my-auto md:ml-5 row-span-2 md:col-span-2"
+            >
               {displayContent[1].src}
-            </Tabs.Panel>
-            <Tabs.Panel className="h-[36vh] overflow-auto" value="third">
-              {/* {t("home-tab2-body")} */}
+            </Parallax>
+          </div>
+        </div>
+        <div className="screen4 h-screen">
+          <div className="text-container grid grid-rows-3 md:grid-cols-3 h-full">
+            <Parallax translateX={[0, -50]} className="subheader p-3 m-auto ">
+              {subheaders[2]}
+            </Parallax>
+            <Parallax
+              translateX={[0, 50]}
+              className="text-content md:order-first p-3 my-auto md:mr-5 row-span-2 md:col-span-2"
+            >
               <ImportanceSustain />
-            </Tabs.Panel>
-            <Tabs.Panel className="h-[36vh] overflow-auto" value="forth">
-              {t("home-tab3-body")}
-            </Tabs.Panel>
-          </Tabs>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className=" w-full h-full flex flex-grow items-center mt-auto align-baseline justify-center "
+            </Parallax>
+          </div>
+        </div>
+        <div className="screen5 h-screen">
+          <Parallax
+            speed={-20}
+            className="h-screen items-center grid grid-rows-3 "
           >
-            {activeTab !== "first" && (
-              <div className="flex-1">
-                <PrevIcon
-                  className="text-darkGreen-50 cursor-pointer text-center h-16 w-20"
-                  onClick={handlePrvClick}
-                />
-              </div>
-            )}
-            {activeTab !== "forth" ? (
-              <Button
-                size="lg"
-                className="bg-darkGreen-50 justify-center items-center  text-center items"
-                onClick={handleNextClick}
-              >
-                {t("home-button-next")}
-              </Button>
-            ) : currentUser ? (
-              <Link to="/game" className="">
-                <Button size="lg" className="bg-darkGreen-50 mt-auto ">
-                  {t("home-button-playgame")}
+            <div className="subheader m-auto p-3">{subheaders[3]}</div>
+            <div className="text-content m-auto p-3">
+              {displayContent[3].src}
+            </div>
+            <div className="play-button m-auto p-3 p-2 text-3xl cursor-pointer hover:bg-darkGreen-50 hover:border-0 border-white border-2 border-opacity-50 rounded-3xl hover:scale-110">
+              {currentUser ? (
+                <Link to="/game" className="">
+                  <Button size="lg" className="bg-darkGreen-50 mt-auto ">
+                    {t("home-button-playgame")}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  size="lg"
+                  className="bg-darkGreen-50"
+                  onClick={signUpAsGuest}
+                >
+                  {t("home-button-playguest")}
                 </Button>
-              </Link>
-            ) : (
-              <Button
-                size="lg"
-                className="bg-darkGreen-50"
-                onClick={signUpAsGuest}
-              >
-                {t("home-button-playguest")}
-              </Button>
-            )}
-            {activeTab !== "first" && <div class="flex-1"></div>}
-          </motion.div>
-        </Stack>
-      </Box>
-    </motion.div>
+              )}
+            </div>
+          </Parallax>
+        </div>
+      </div>
+    </div>
   );
 }

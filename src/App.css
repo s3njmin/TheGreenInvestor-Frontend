@@ -1,13 +1,44 @@
+/* Height of navbar in different screen view */
+:root {
+  --navbar-height-lg: 10vh;
+  --navbar-height: 30vh;
+}
+
+.content {
+  position: absolute;
+  /* box-sizing: border-box; */
+  width: 100vw;
+  margin-top: calc(var(--navbar-height) + 1rem);
+  z-index: 10;
+
+  /* To hide scrollable content below navbar */
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* Hides miniscrollbar that appears when overflow is used */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    margin-top: var(--navbar-height-lg);
+  }
+}
+
+/* Used in Register and Login */
 label {
   display: block;
   margin-top: 10px;
 }
-
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
 }
-
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
@@ -20,7 +51,6 @@ label {
   -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
-
 .profile-img-card {
   width: 96px;
   height: 96px;
@@ -30,28 +60,17 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-
-/*Green-App title*/
-.navbar-brand {
-  color: white;
-  text-shadow: #ddd;
-  font-weight: bolder;
+.components-common-assets-LoginPopup {
+  position: relative;
+  width: 60rem;
+  height: 38rem;
+  background: url(assets/popup_bg.png) 50% / contain no-repeat;
+  padding: 100px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 5px;
+  max-width: 350px !important;
 }
-
-/*Other buttons like Home User, Login Register*/
-.nav-link {
-  color: white;
-  text-shadow: #ddd;
-  font-weight: normal;
-}
-
-img[alt="thegreeninvestorlogo"] {
-  /* display: block; */
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  height: 220%;
-}
+/*  */
 
 /* the line under the nav bar*/
 .border-bottom-line {
@@ -67,29 +86,14 @@ img[alt="thegreeninvestorlogo"] {
   padding: 10px;
 }
 
-/* css to fit background image to screen */
-.App {
-  background-image: url("../src/assets/green-background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  margin-top: 0px;
-  font-size: 20px;
-}
-
 .main {
   width: 100%;
   height: 100vh;
 }
 
-.content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  display: flex;
-  flex-direction: column;
+/* Makes sure bg video is always at the back */
+.bg-video {
+  z-index: 0;
 }
 
 video {
@@ -98,86 +102,55 @@ video {
   object-fit: cover;
 }
 
-/* container for the buttons */
-.block {
-  /* display: block; */
-  margin-top: 6px;
-  display: inline-block;
-  width: 100%;
-  height: 7.5vh;
-  border: none;
-  background-color: #f7f7f7b8;
-  padding: 14px 28px;
-  font-size: 1.5vw;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 5px;
-}
-
-/* when hover over the container for the buttons */
-.block:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.button {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
-  background: rgb(145, 92, 182);
-  padding: 15px 40px;
-  border-radius: 4px;
-  font-weight: normal;
-  text-transform: uppercase;
-  transition: all 0.2s ease-in-out;
-}
-
-/* hover over buttons */
-.glow-button:hover {
-  color: rgba(255, 255, 255, 1);
-  box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
-}
-
-/* on click buttons */
-.glow-button:active {
-  background-color: #569d80;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
+/* For GameOver and GameWin */
 /* container for the game panel */
 .q-container {
   width: 100%;
   height: 50%;
 }
 
-.components-common-assets-LoginPopup {
-  position: relative;
-  width: 60rem;
-  height: 38rem;
-  background: url(assets/popup_bg.png) 50% / contain no-repeat;
-  padding: 100px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 5px;
-  max-width: 350px !important;
-}
+/* For Google Translate API */
 .goog-logo-link {
   display: none !important;
 }
 
 .goog-te-gadget {
   color: transparent !important;
+  align-self: center;
+  text-align: center;
 }
 
 .goog-te-gadget .goog-te-combo {
   color: black !important;
 }
 
-#google_translate_element {
-  width: 300px;
-  float: right;
+.goog-te-combo {
+  transform: translateY(50%);
+}
 
-  text-align: right;
-  display: block;
+@media screen and (min-width: 1024px) {
+  .goog-te-combo {
+    transform: translate(-35%, 50%);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .goog-te-combo {
+    transform: translateY(50%);
+  }
+}
+
+#google_translate_element {
+  width: auto;
+  height: auto;
+}
+#google_translate_element select {
+  background-color: none;
+  color: #383ffa;
+  /* border: none; */
+  border-radius: 3px;
+  /* margin-right: 10px; */
+  /* padding: 6px 8px; */
 }
 .goog-te-banner-frame.skiptranslate {
   display: none !important;

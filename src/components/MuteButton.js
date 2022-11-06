@@ -1,20 +1,31 @@
 import React, { Component } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { MusicUpIcon, MusicOffIcon } from "../icons";
+import SpinningMusic from "../assets/compact-disc.svg";
+import "../css/spinner.css";
 
 class MuteButton extends Component {
   render() {
-    if (this.props.isMuted === true) {
+    if (this.props.playing === false) {
       return (
         <div onClick={this.props._toggleMuteButton}>
-          <MusicOffIcon icon="volume-mute" size="30" />
+          <img
+            className="music"
+            src={SpinningMusic}
+            alt="Music Logo"
+            width="36"
+            height="36"
+          />
         </div>
       );
     }
     return (
       <div onClick={this.props._toggleMuteButton}>
-        <MusicUpIcon icon="volume-up" size="30" />
+        <img
+          className="music music-spinner"
+          src={SpinningMusic}
+          alt="Music Logo"
+          width="36"
+          height="36"
+        />
       </div>
     );
   }

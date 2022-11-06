@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { ParallaxProvider } from "react-scroll-parallax";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
+import "./App.css";
 import BoardAdmin from "./components/BoardAdmin";
 import NavBar from "./components/NavBar";
 import Game from "./pages/Game";
@@ -39,27 +40,25 @@ function App() {
 
   
   return (
-    <div className="main">
+    <div className="main overflow-hidden">
       <video
         src="https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/bg_vid.mp4"
         type="video/mp4"
         autoPlay
         loop
         muted
+        className="fixed bg-video"
       />
+      <NavBar className="my-nav" />
       <div className="content">
-        <NavBar />
-
-        <div className="line"></div>
-        <div className=" justify-center  pl-10 pr-10 pt-3 ">
-          <AnimatePresence>
+        <div className="">
+          <ParallaxProvider>
             <Routes>
               {currentState === "answering" ? (
                 <Route path="/" element={<Game />} />
               ) : (
                 <Route path="/" element={<Home />} />
               )}
-              {/* <Route path="/" element={<Home />} /> */}
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -71,9 +70,9 @@ function App() {
               <Route path="/gameover" element={<GameOver />} />
               <Route path="/gamewin" element={<GameWin />} />
             </Routes>
-          </AnimatePresence>
+          </ParallaxProvider>
         </div>
-        <div className=" flex justify-center items-center pl-10 pr-10 pt-3 ">
+        <div className=" flex justify-center items-center">
           <Routes>
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/profile" element={<Profile />} />

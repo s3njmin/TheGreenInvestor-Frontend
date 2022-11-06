@@ -1,50 +1,46 @@
-/* SHIFT */
+@import "../App.css";
 
-.logo {
-  width: auto;
-  height: 100px;
-}
-
-nav-link {
-  position: relative;
-  z-index: 1;
-}
-
-nav-link:hover {
-  color: #91640f;
-}
-
-nav-link:after {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+.nav-container {
   width: 100%;
-  height: 1px;
-  content: ".";
-  color: transparent;
-  background: #f1c40f;
-  visibility: none;
-  opacity: 0;
-  z-index: -1;
+  height: 30vh;
+  font-family: "Playfair Display SC", serif;
+  font-size: 1.25rem;
 }
 
-nav-link:hover:after {
-  opacity: 1;
-  visibility: visible;
-  height: 100%;
+.music-button {
+  transform: translateX(-100%);
+}
+@media screen and (max-width: 425px) {
+  .music-button {
+    transform: translateX(0);
+  }
+}
+@media screen and (min-width: 1024px) {
+  .nav-container {
+    height: 10vh;
+  }
 }
 
-.nav-link:hover {
-  color: #3ea07a;
+.navbar-title {
+  font-size: 2rem !important;
 }
 
-.changeColor {
-  color: white;
+@media screen and (min-width: 1024px) {
+  .nav-container {
+    font-size: 1.25rem;
+  }
+
+  .navbar-title {
+    font-size: 2rem;
+  }
 }
-.changeColor:hover {
-  color: #3ea07a;
+
+@media screen and (min-width: 1440px) {
+  .nav-container {
+    font-size: 1.5rem;
+  }
+  .navbar-title {
+    font-size: 3rem;
+    padding-top: 0.5rem !important;
+  }
 }
