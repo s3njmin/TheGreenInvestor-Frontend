@@ -3,7 +3,7 @@ import { Avatar, Group, Stack, Text } from "@mantine/core";
 import { LeafIcon, TrophyIcon } from "../../icons";
 
 const TopThreeAvatar = ({ first, position, name, points, image }) => {
-  // const config = genConfig({ bgColor: "#245A44" });
+  
   return (
     <div className="h-full align-baseline items-baseline">
       <Text
