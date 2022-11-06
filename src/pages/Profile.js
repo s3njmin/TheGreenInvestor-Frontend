@@ -56,9 +56,9 @@ export default function Profile() {
     );
   }
   return (
-    <Box className="bg-gray-50 bg-opacity-70 h-[46vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
+    <Box className="bg-gray-50 bg-opacity-70 h-[48vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
       <ProfilePics opened={opened} handleClose={handleClose} />
-      <Stack justify="space-between">
+      <Stack align="center" justify="space-between">
         <Text className="text-center font-bold text-3xl text-darkGreen-50">
           User Profile
         </Text>
@@ -75,7 +75,10 @@ export default function Profile() {
           No. of Games Played:{" "}
           <span className="font-bold"> {profileDetails.gamesPlayed} </span>{" "}
         </Text>
-        <Button className="bg-darkGreen-50 " onClick={() => setOpened(true)}>
+        <Button
+          className="bg-darkGreen-50 w-1/3"
+          onClick={() => setOpened(true)}
+        >
           Change Profile Pic
         </Button>
       </Stack>
