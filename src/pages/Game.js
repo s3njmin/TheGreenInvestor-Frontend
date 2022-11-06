@@ -25,14 +25,15 @@ export default function Game() {
 
   const [responseStats, setResponseStats] = useState(null);
   const [responseFeedback, setResponseFeedback] = useState("");
+  const [article, setArticle] = useState();
 
   const [currentYear, setCurrentYear] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState();
 
   //income statistic
-  const [currentIncome, setCurrentIncome] = useState(20);
-  const [currentMorale, setCurrentMorale] = useState(65);
-  const [currentSustainability, setCurrentSustainability] = useState(150);
+  const [currentIncome, setCurrentIncome] = useState(null);
+  const [currentMorale, setCurrentMorale] = useState(null);
+  const [currentSustainability, setCurrentSustainability] = useState(null);
 
   //input values for open-ended questions
   const [inputValue1, setInputValue1] = useState("");
@@ -148,6 +149,7 @@ export default function Game() {
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
           setCurrentIncome(response.data.currentIncomeVal);
+          setArticle(response.data.article);
         });
 
       //reset the input values
@@ -172,6 +174,7 @@ export default function Game() {
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
           setCurrentIncome(response.data.currentIncomeVal);
+          setArticle(response.data.article);
         });
 
       //reset the input values
@@ -208,8 +211,10 @@ export default function Game() {
     await setImage(questionRetrieved.imagePath);
 
     const currentStats = gameStateData.stats;
+    console.log(currentStats[currentStats.length - 1].currentSustainabilityVal);
 
     if (currentStats !== null && currentStats.length !== 1) {
+      console.log("lalala");
       await setCurrentMorale(
         currentStats[currentStats.length - 1].currentMoraleVal
       );
@@ -263,7 +268,8 @@ export default function Game() {
     currentQuestion === undefined ||
     options === undefined ||
     currentYear === undefined ||
-    cashChartData === undefined
+    cashChartData === undefined ||
+    currentSustainability === null
   ) {
     return (
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle relative w-full pt-2 pr-2 pl-2 pb-2">
@@ -277,7 +283,7 @@ export default function Game() {
     );
   }
 
-  console.log(data.stats[data.stats.length - 1]);
+  console.log(currentMorale);
   return (
     <motion.div
       initial="hidden"
@@ -293,6 +299,7 @@ export default function Game() {
           responseStats && responseStats.changeInSustainabilityVal
         }
         opened={openReview}
+        article={article}
         handleClose={closeReviewHandler}
       />
       <GameEndPopup

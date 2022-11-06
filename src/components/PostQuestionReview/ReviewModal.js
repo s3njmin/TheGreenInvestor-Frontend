@@ -7,8 +7,10 @@ export default function ReviewModal({
   morale,
   content,
   opened,
+  article,
   handleClose,
 }) {
+  console.log(article);
   return (
     <>
       <Modal
@@ -22,20 +24,25 @@ export default function ReviewModal({
         <Stack>
           <Text className="text-base font-normal">{content}</Text>
 
-          <Group spacing={6} className="text-base font-normal">
-            {`Find out more in this`}
-            <a
-              key={1}
-              className="text-base font-normal text-blue-500"
-              target="_blank"
-              rel="noopener noreferrer"
-              href={"https://www.newyorker.com/topics/gay-marriage-movement"}
-            >
-              <Text className="text-base font-normal text-blue-500">
-                article
-              </Text>
-            </a>
-          </Group>
+          {article !== undefined && article !== null && (
+            <>
+              <Text className="text-base font-normal">{article.body}</Text>
+              <Group spacing={6} className="text-base font-normal">
+                {`Find out more in this`}
+                <a
+                  key={1}
+                  className="text-base font-normal text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={article.article}
+                >
+                  <Text className="text-base font-normal text-blue-500">
+                    article
+                  </Text>
+                </a>
+              </Group>
+            </>
+          )}
           <Text>Update of your Statistics</Text>
           <Group position="apart" className="w-full h-full ">
             <Group spacing={6} className="text-base font-semi-bold ">
