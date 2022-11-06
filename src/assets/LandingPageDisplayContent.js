@@ -6,7 +6,10 @@ export const displayContent = [
       <p>
         The Green Investor Sustainability game is a turn-based business
         management game that will test your skill on how to grow a profitable
-        and sustainable business.
+        and sustainable business. You will be tasked to answer questions that
+        simulate real life decisions. The purpose of this game is to educate you
+        regarding sustainable investing and to help you understand the
+        consquences of the potential actions that you may take in the future.
       </p>
     ),
     altText: "Tab 1",
@@ -16,9 +19,14 @@ export const displayContent = [
     src: (
       <p>
         {" "}
-        The Green Investor Sustainability game is a turn-based business
-        management game that will test your skill on how to grow a profitable
-        and sustainable business.
+        Sustainability is a societal goal that broadly aims for humans to safely
+        co-exist on Earth over a long time. Specific definitions of
+        sustainability are difficult to agree on and therefore vary in the
+        literature and over time. Socially responsible investing, social
+        investment, sustainable socially conscious, "green" or ethical
+        investing, is any investment strategy which seeks to consider both
+        financial return and social/environmental good to bring about social
+        change regarded as positive by proponents.
       </p>
     ),
     altText: "Tab 2",

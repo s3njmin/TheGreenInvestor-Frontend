@@ -76,7 +76,7 @@ const ImportanceSustain = () => {
       {!loading && (
         <Grid className="h-full w-full">
           <Grid.Col span={4}>
-            <Text className="text-md font-semibold">
+            <Text className="text-md  font-serif">
               On the right, you are provided with stastics regarding some of the
               biggest causes of carbon emissions such as flight, electricity and
               fuel. For fuel, there are multiple types of fuel and we can see

@@ -45,7 +45,7 @@ export default function Profile() {
   console.log(currentUser.username);
   if (currentUser === undefined || profileDetails === null) {
     return (
-      <Box className="bg-gray-50 bg-opacity-70 h-[46vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
+      <Box className="bg-gray-50 bg-opacity-70 h-[35%] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
         <LoadingOverlay
           loaderProps={{ size: "xl", color: "black" }}
           overlayOpacity={0.0}
@@ -56,7 +56,7 @@ export default function Profile() {
     );
   }
   return (
-    <Box className="bg-gray-50 bg-opacity-70 h-[48vh] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
+    <Box className="bg-gray-50 bg-opacity-70 h-[40%] rounded-xl self-center align-middle relative w-[35%] pt-2 pr-2 pl-2 pb-2">
       <ProfilePics opened={opened} handleClose={handleClose} />
       <Stack align="center" justify="space-between">
         <Text className="text-center font-bold text-3xl text-darkGreen-50">

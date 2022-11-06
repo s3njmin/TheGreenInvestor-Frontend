@@ -157,6 +157,7 @@ export default function Game() {
       setInputValue2("");
       setInputValue3("");
     } else {
+      console.log(selectedOption)
       //multi select options
       await axios
         .post(
@@ -181,6 +182,8 @@ export default function Game() {
       setSelectedOption(null);
     }
   }
+
+  
 
   function generateCashData(costStats) {
     let result = [0, 100];

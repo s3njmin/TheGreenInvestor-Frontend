@@ -92,15 +92,15 @@ export default function Home() {
   }
 
   return (
-    <div className="container text-center">
+    <div className="pl-48 pr-48 text-center">
       <div className="container-content">
         <Parallax className="screen1 flex flex-col justify-between items-center">
           <span />
-          <h1 className="center bounce title mt-10 self-center shadow-xl border-t-4 border-b-4 ">
+          <h1 className="center text-white bounce title mt-10 self-center shadow-xl border-t-4 border-b-4 ">
             Welcome to the Sustainability Game
           </h1>
 
-          <div className="scrollTip flex-end mb-10">
+          <div className="scrollTip flex-end mb-44 ">
             <img
               src={ScrollTip}
               className="scrollTip w-10 px-1 border-x-2"
@@ -110,68 +110,68 @@ export default function Home() {
         </Parallax>
 
         <div className="screen2 h-screen">
-          <div className="text-container grid grid-rows-3 h-full">
-            <div className="subheader m-auto p-3 m-3">{subheaders[0]}</div>
-            <Parallax
-              speed={-5}
-              className="text-content p-3 my-auto mt-5 row-span-2"
-            >
+          {/* <div className="text-container grid grid-rows-3 h-full"> */}
+          <Stack className=" mt-32">
+            <Box className=" text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
+              {subheaders[0]}
+            </Box>
+            <Box className="text-white text-white bg-black bg-opacity-70 p-4 rounded-3xl text-xl font-serif w-full">
               {displayContent[0].src}
-            </Parallax>
-          </div>
+            </Box>
+          </Stack>
         </div>
         <div className="screen3 h-screen">
-          <div className="text-container grid grid-rows-3 md:grid-cols-3 h-full">
-            <Parallax translateX={[0, 50]} className="subheader m-auto p-3">
+          <Stack className="mt-32">
+            <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[1]}
-            </Parallax>
-            <Parallax
-              translateX={[0, -50]}
-              className="text-content p-3 my-auto md:ml-5 row-span-2 md:col-span-2"
-            >
+            </Box>
+            <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl text-xl font-serif w-full">
               {displayContent[1].src}
-            </Parallax>
-          </div>
+            </Box>
+          </Stack>
         </div>
-        <div className="screen4 h-screen">
-          <div className="text-container grid grid-rows-3 md:grid-cols-3 h-full">
-            <Parallax translateX={[0, -50]} className="subheader p-3 m-auto ">
+        <div className="screen2 h-screen items-center">
+          <Stack className=" mt-32">
+            <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[2]}
-            </Parallax>
-            <Parallax
-              translateX={[0, 50]}
-              className="text-content md:order-first p-3 my-auto md:mr-5 row-span-2 md:col-span-2"
-            >
+            </Box>
+            <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl w-full">
               <ImportanceSustain />
-            </Parallax>
-          </div>
+            </Box>
+          </Stack>
         </div>
-        <div className="screen5 h-screen">
+        <div className="screen5 h-screen mt-44">
           <Parallax
             speed={-20}
             className="h-screen items-center grid grid-rows-3 "
           >
-            <div className="subheader m-auto p-3">{subheaders[3]}</div>
-            <div className="text-content m-auto p-3">
-              {displayContent[3].src}
-            </div>
-            <div className="play-button m-auto p-3 p-2 text-3xl cursor-pointer hover:bg-darkGreen-50 hover:border-0 border-white border-2 border-opacity-50 rounded-3xl hover:scale-110">
+            <Stack className=" mt-32">
+              <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
+                {subheaders[3]}
+              </Box>
+              <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl text-xl font-serif w-full">
+                {displayContent[3].src}
+              </Box>
+
               {currentUser ? (
                 <Link to="/game" className="">
-                  <Button size="lg" className="bg-darkGreen-50 mt-auto ">
+                  <Button
+                    size="lg"
+                    className=" text-white border-white self-center font-serif w-1/3 rounded-full font-extrabold text-xl mt-auto bg-darkGreen-50 "
+                  >
                     {t("home-button-playgame")}
                   </Button>
                 </Link>
               ) : (
                 <Button
                   size="lg"
-                  className="bg-darkGreen-50"
                   onClick={signUpAsGuest}
+                  className=" text-white border-white self-center font-serif w-1/3 rounded-full font-extrabold text-xl mt-auto bg-darkGreen-50 "
                 >
                   {t("home-button-playguest")}
                 </Button>
               )}
-            </div>
+            </Stack>
           </Parallax>
         </div>
       </div>

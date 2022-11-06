@@ -12,6 +12,7 @@ import MuteButton from "./MuteButton";
 
 import AuthService from "../services/auth.service";
 import EventBus from "../common/EventBus";
+import { Group, Text } from "@mantine/core";
 
 export default function NavBar() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -128,15 +129,53 @@ export default function NavBar() {
 
   return (
     // Fixed size that NavBar will take up
+    // <Group className="w-full" positon="apart">
+    //   <Group>
+    //     <Link
+    //       to={"/home"}
+    //       // className="col-span-2 lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
+    //       className="text-white z-20"
+    //     >
+    //       Home
+    //     </Link>
+    //     <Text>Hello</Text>
+    //     <Link to={"/leaderboard"} className="text-white z-20">
+    //       <Text>Leaderboard</Text>
+    //     </Link>
+    //     <span>The Green Investor</span>
+    //     <Group>
+    //       <div className="" id="google_translate_element" />
+    //       {/* when user is logged in */}
+    //       {currentUser ? (
+    //         <div className="grid grid-cols-2">
+    //           <Link
+    //             to={"/profile"}
+    //             className="cursor-pointer hover:scale-110 m-auto z-20 text-white"
+    //           >
+    //             {currentUser.username}
+    //           </Link>
+    //           <div className="cursor-pointer hover:scale-110 m-auto z-20 text-white">
+    //             <a href="/home" onClick={logOut}>
+    //               Log Out
+    //             </a>
+    //           </div>
+    //         </div>
+    //       ) : (
+    //         // when user is not logged in
+    //         <LoginPopUp class="notranslate" className="z-20 text-white" />
+    //       )}
+    //     </Group>
+    //   </Group>
+    // </Group>
     <div className="nav-container lg:h-20 fixed w-full text-white text-m grid grid-cols-12 z-20 my-auto py-auto">
-      <audio
+      {/* <audio
         id="audio_player"
         autoPlay
         loop
         // controls
       >
         <source src={myMusic} type="audio/mp3" />
-      </audio>
+      </audio> */}
 
       {/* Home and Leaderboard, keep at leftmost except for mobile, which will be below title */}
       <div
@@ -144,19 +183,21 @@ export default function NavBar() {
                   lg:-order-1 lg:col-span-4
                   text-md my-auto pt-2 lg:pt-0 pb-2 text-center"
       >
-        <Link
-          to={"/home"}
-          className="col-span-2 lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
-        >
-          Home
-        </Link>
+        <Group className="pl-4">
+          <Link
+            to={"/home"}
+            className="notranslate col-span-2 no-translate lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
+          >
+            Home
+          </Link>
 
-        <Link
-          to={"/leaderboard"}
-          className="col-span-2 lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
-        >
-          Leaderboard
-        </Link>
+          <Link
+            to={"/leaderboard"}
+            className="col-span-2  notranslate lg:col-span-1 py-2 md:py-0 cursor-pointer hover:scale-110"
+          >
+            Leaderboard
+          </Link>
+        </Group>
 
         {showModeratorBoard && (
           <Link to={"/mod"} className="cursor-pointer hover:scale-110">
@@ -174,8 +215,8 @@ export default function NavBar() {
       {/* Title, keep at Center, except mobile, which will be below lang/music */}
       <span
         className="navbar-title -order-1 col-span-12
-                  lg:py-4 lg:col-span-4 lg:order-4 
-                  my-auto text-center"
+                  lg:py-4 lg:col-span-4 lg:order-4
+                  my-auto text-center  notranslate"
       >
         The Green Investor
       </span>
@@ -183,15 +224,15 @@ export default function NavBar() {
       {/* Lang & Music, keep at right, before login but at top for mobile */}
       {/* music button, ADD MUSIC LATER */}
       <div
-        className="grid grid-cols-2 
+        className="grid grid-cols-2
                   -order-3 col-span-12
                   lg:order-6 lg:col-span-2 xl:col-span-2
-                  my-auto pt-2 lg:pt-0 pb-2 text-center
+                  my-auto pt-2 lg:pt-0 pb-2 text-center  notranslate
       "
       >
-        <div className="music-button hover:scale-110 m-auto cursor-pointer w-[36px]">
+        {/* <div className="music-button hover:scale-110 m-auto cursor-pointer w-[36px]">
           <MuteButton playing={playing} _toggleMuteButton={_toggleMuteButton} />
-        </div>
+        </div> */}
         <div className="" id="google_translate_element" />
       </div>
 
@@ -201,18 +242,18 @@ export default function NavBar() {
       <div
         className="order-last col-span-12
                   lg:col-span-2 w-auto
-                  my-auto text-center"
+                  my-auto text-center  notranslate"
       >
         {/* when user is logged in */}
         {currentUser ? (
           <div className="grid grid-cols-2">
             <Link
               to={"/profile"}
-              className="cursor-pointer hover:scale-110 m-auto "
+              className="cursor-pointer hover:scale-110 m-auto  notranslate"
             >
               {currentUser.username}
             </Link>
-            <div className="cursor-pointer hover:scale-110 m-auto ">
+            <div className="cursor-pointer hover:scale-110 m-auto  notranslate ">
               <a href="/home" onClick={logOut}>
                 Log Out
               </a>
@@ -220,7 +261,7 @@ export default function NavBar() {
           </div>
         ) : (
           // when user is not logged in
-          <LoginPopUp class="notranslate" />
+          <LoginPopUp class="notranslate " />
         )}
       </div>
     </div>

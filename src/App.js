@@ -30,7 +30,6 @@ function App() {
         gameStateResponse
           .then(async (response) => {
             await setCurrentState(response.data.state);
-           
           })
           .catch((error) => console.log(error.response));
       }
@@ -38,9 +37,8 @@ function App() {
     getCurrentState();
   }, []);
 
-  
   return (
-    <div className="main overflow-hidden">
+    <div className="main scrollbar-hide overflow-auto">
       <video
         src="https://tgi-bucket.s3.ap-southeast-1.amazonaws.com/bg_vid.mp4"
         type="video/mp4"
@@ -49,9 +47,9 @@ function App() {
         muted
         className="fixed bg-video"
       />
-      <NavBar className="my-nav" />
-      <div className="content">
-        <div className="">
+      <NavBar />
+      <div className="content pl-4 pr-4 h-full scrollbar-hide overflow-auto">
+        <div className="scrollbar-hide overflow-auto">
           <ParallaxProvider>
             <Routes>
               {currentState === "answering" ? (
