@@ -81,8 +81,8 @@ export default function Game() {
   useEffect(() => {
     if (cashChartData !== undefined && responseStats !== null) {
       if (
-        responseStats?.currentEmission < 0 ||
-        responseStats?.currentMorale < 0 ||
+        responseStats?.currentSustainabilityVal < 0 ||
+        responseStats?.currentMoraleVal < 0 ||
         cashChartData[cashChartData?.length - 1] < 0
       ) {
         setOpenEndGame({ failed: true, opening: true });
@@ -91,8 +91,8 @@ export default function Game() {
       }
     }
   }, [
-    responseStats?.currentEmission,
-    responseStats?.currentMorale,
+    responseStats?.currentSustainabilityVal,
+    responseStats?.currentMoraleVal,
     cashChartData,
     currentYear,
   ]);
@@ -109,15 +109,17 @@ export default function Game() {
   useEffect(() => {
     async function changeChartData() {
       if (responseStats !== null) {
-        setMoraleChartData([moraleChartData[0] + responseStats.moraleVal]);
+        setMoraleChartData([
+          moraleChartData[0] + responseStats.changeInMoraleVal,
+        ]);
         setSustainabilityChartData([
-          sustainabilityChartData[0] + responseStats.emissionVal,
+          sustainabilityChartData[0] + responseStats.changeInSustainabilityVal,
         ]);
         setCashChartData((prevState) => [
           ...prevState,
           cashChartData[cashChartData.length - 1] -
-          responseStats.costVal +
-          currentIncome,
+            responseStats.changeInCashVal +
+            +currentIncome,
         ]);
       }
     }
@@ -145,7 +147,7 @@ export default function Game() {
           console.log(response);
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
-          setCurrentIncome(response.data.currentIncome);
+          setCurrentIncome(response.data.currentIncomeVal);
         });
 
       //reset the input values
@@ -169,7 +171,7 @@ export default function Game() {
           console.log(response);
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
-          setCurrentIncome(response.data.currentIncome);
+          setCurrentIncome(response.data.currentIncomeVal);
         });
 
       //reset the input values
@@ -182,8 +184,10 @@ export default function Game() {
     let sum = 20;
     if (costStats != null) {
       for (let i = 0; i < costStats.length - 1; i++) {
-        sum += costStats[i].incomeVal;
-        result.push(result[result.length - 1] - costStats[i].costVal + sum);
+        sum += costStats[i].changeInIncomeVal;
+        result.push(
+          result[result.length - 1] - costStats[i].changeInCashVal + sum
+        );
       }
     }
 
@@ -210,14 +214,14 @@ export default function Game() {
         currentStats[currentStats.length - 1].currentMoraleVal
       );
       await setCurrentSustainability(
-        currentStats[currentStats.length - 1].currentEmissionVal
+        currentStats[currentStats.length - 1].currentSustainabilityVal
       );
     } else {
       await setCurrentMorale(
         currentStats !== null ? currentStats[0].currentMoraleVal : 65
       );
       await setCurrentSustainability(
-        currentStats !== null ? currentStats[0].currentEmissionVal : 150
+        currentStats !== null ? currentStats[0].currentSustainabilityVal : 150
       );
     }
 
@@ -232,7 +236,10 @@ export default function Game() {
     async function getStateAndQuestionData() {
       await GameService.getGameState()
         .then(async (response) => {
-          if (response.data.state === "start" || response.data.state === "completed") {
+          if (
+            response.data.state === "start" ||
+            response.data.state === "completed"
+          ) {
             await GameService.postStartGame().then(async () => {
               await GameService.getGameState().then((response) => {
                 settingAllData(response);
@@ -250,7 +257,7 @@ export default function Game() {
 
   // prevent running into an not found error causing the app to crash
 
-  console.log(responseStats?.currentSustainability);
+  console.log(currentMorale);
   if (
     data === undefined ||
     currentQuestion === undefined ||
@@ -270,7 +277,7 @@ export default function Game() {
     );
   }
 
-  console.log(currentYear);
+  console.log(data.stats[data.stats.length - 1]);
   return (
     <motion.div
       initial="hidden"
@@ -280,9 +287,11 @@ export default function Game() {
     >
       <ReviewModal
         content={responseFeedback}
-        cash={responseStats && -responseStats.costVal}
-        morale={responseStats && responseStats.moraleVal}
-        sustainability={responseStats && responseStats.emissionVal}
+        cash={responseStats && -responseStats.changeInCashVal}
+        morale={responseStats && responseStats.changeInMoraleVal}
+        sustainability={
+          responseStats && responseStats.changeInSustainabilityVal
+        }
         opened={openReview}
         handleClose={closeReviewHandler}
       />
@@ -291,13 +300,14 @@ export default function Game() {
         opened={openEndGame.opening}
         handleClose={closeEndGameHandler}
         userName={"Bob"}
-
         finalCash={cashChartData && cashChartData[cashChartData.length - 1]}
         finalMorale={
-          responseStats ? responseStats.currentMorale : currentMorale
+          responseStats ? responseStats.currentMoraleVal : currentMorale
         }
         finalSustainability={
-          responseStats ? responseStats.currentEmission : currentSustainability
+          responseStats
+            ? responseStats.currentSustainabilityVal
+            : currentSustainability
         }
       />
       <Box className="bg-gray-50 bg-opacity-70 h-[85vh] rounded-xl align-middle w-full pt-2 pr-2 pl-2 ">
@@ -430,8 +440,8 @@ export default function Game() {
                   onClick={onClickHandler}
                   disabled={
                     inputValue1 === "" ||
-                      inputValue2 === "" ||
-                      inputValue3 === ""
+                    inputValue2 === "" ||
+                    inputValue3 === ""
                       ? true
                       : false
                   }
@@ -450,12 +460,12 @@ export default function Game() {
                 icon={<CashIcon color="grey" className="text-xl" />}
                 increment={
                   responseStats
-                    ? responseStats.incomeVal
+                    ? responseStats.currentIncomeVal
                     : data.stats === null
-                      ? 0
-                      : data.stats.length !== 1
-                        ? data.stats[data.stats.length - 2].incomeVal
-                        : 0
+                    ? 0
+                    : data.stats.length !== 1
+                    ? data.stats[data.stats.length - 1].currentIncomeVal
+                    : 0
                 }
                 value={cashChartData[cashChartData.length - 1]}
                 unit={"SGD"}
@@ -472,23 +482,25 @@ export default function Game() {
                   className="w-1/2"
                   increment={
                     responseStats
-                      ? responseStats.moraleVal
+                      ? responseStats.changeInMoraleVal
                       : data.stats === null
-                        ? 0
-                        : data.stats.length !== 1
-                          ? data.stats[data.stats.length - 2].moraleVal
-                          : 0
+                      ? 0
+                      : data.stats.length !== 1
+                      ? data.stats[data.stats.length - 2].changeInMoraleVal
+                      : 0
                   }
                   icon={<MoraleIcon color="grey" className="text-xl" />}
                   value={
-                    responseStats ? responseStats.currentMorale : currentMorale
+                    responseStats
+                      ? responseStats.currentMoraleVal
+                      : currentMorale
                   }
                   unit={"%"}
                   label="Morale"
                   year={currentYear}
                   chartData={
                     responseStats
-                      ? [responseStats.currentMorale]
+                      ? [responseStats.currentMoraleVal]
                       : [currentMorale]
                   }
                 />
@@ -501,23 +513,24 @@ export default function Game() {
                   year={currentYear}
                   increment={
                     responseStats
-                      ? responseStats.emissionVal
+                      ? responseStats.changeInSustainabilityVal
                       : data.stats === null
-                        ? 0
-                        : data.stats.length !== 1
-                          ? data.stats[data.stats.length - 2].emissionVal
-                          : 0
+                      ? 0
+                      : data.stats.length !== 1
+                      ? data.stats[data.stats.length - 2]
+                          .changeInSustainabilityVal
+                      : 0
                   }
                   value={
                     responseStats
-                      ? responseStats.currentEmission
+                      ? responseStats.currentSustainabilityVal
                       : currentSustainability
                   }
                   unit={"pts"}
                   label="Sustainability"
                   chartData={
                     responseStats
-                      ? [responseStats.currentEmission]
+                      ? [responseStats.currentSustainabilityVal]
                       : [currentSustainability]
                   }
                 />
