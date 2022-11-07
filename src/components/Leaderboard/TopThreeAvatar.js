@@ -3,7 +3,11 @@ import { Avatar, Group, Stack, Text } from "@mantine/core";
 import { LeafIcon, TrophyIcon } from "../../icons";
 
 const TopThreeAvatar = ({ first, position, name, points, image }) => {
-  
+  function toFixed(num, fixed) {
+    fixed = fixed || 0;
+    fixed = Math.pow(10, fixed);
+    return Math.floor(num * fixed) / fixed;
+  }
   return (
     <div className="h-full align-baseline items-baseline">
       <Text
@@ -26,7 +30,6 @@ const TopThreeAvatar = ({ first, position, name, points, image }) => {
             className={`${first ? "text-2xl" : "text-xl"} text-darkGreen-50`}
           />
 
-         
           <Avatar
             style={
               first
@@ -62,7 +65,7 @@ const TopThreeAvatar = ({ first, position, name, points, image }) => {
           first ? "text-4xl" : "text-2xl"
         } text-darkGreen-50`}
       >
-        {`${points} pts`}
+        {`${toFixed(points)} pts`}
       </Text>
     </div>
   );
