@@ -86,7 +86,7 @@ export default function Profile() {
           <span className="font-bold"> {profileDetails.gamesPlayed} </span>{" "}
         </Text>
         <Button
-          className="bg-darkGreen-50 w-1/3"
+          className="bg-darkGreen-50 w-1/2"
           onClick={() => {
             setOpened(true);
           }}
