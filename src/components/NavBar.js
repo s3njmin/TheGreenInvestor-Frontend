@@ -141,24 +141,25 @@ export default function NavBar() {
         <source src={myMusic} type="audio/mp3" />
       </audio>
       <Grid
-        className="w-full z-20 pt-2 mx-0 mb-4 align-baseline notranslate "
+        className="w-full z-20 pt-2 pr-4 pl-4 mx-0 mb-4 align-baseline notranslate "
         grow
+        columns={24}
       >
-        <Grid.Col className="pt-3" span={3}>
-          <Group className="mx-auto space-x-4" position="center">
+        <Grid.Col className="pt-3" span={7}>
+          <Group className="space-x-4" position="left">
             <Link
               to={"/home"}
-              className="text-white font-serif text-xl z-20 hover:scale-110 mx-auto "
+              className="text-white font-serif text-xl z-20 hover:scale-110 "
             >
               Home
             </Link>
             <Link
               to={"/leaderboard"}
-              className="text-white font-serif text-xl z-20 hover:scale-110 mx-auto "
+              className="text-white font-serif text-xl z-20 hover:scale-110  "
             >
               Leaderboard
             </Link>
-            <div className="music-button hover:scale-110 cursor-pointer mx-auto w-[36px] z-20">
+            <div className="music-button hover:scale-110 cursor-pointer  w-[36px] z-20">
               <MuteButton
                 playing={playing}
                 _toggleMuteButton={_toggleMuteButton}
@@ -166,8 +167,8 @@ export default function NavBar() {
             </div>
           </Group>
         </Grid.Col>
-        <Grid.Col span={1} />
-        <Grid.Col span={4} className="pt-3">
+        {/* <Grid.Col span={1} /> */}
+        <Grid.Col span={8} className="pt-3">
           <Group className="w-full" position="center">
             {/* <Text className="text-white text-lg z-24 navbar-title">
             The Green Investor
@@ -178,12 +179,12 @@ export default function NavBar() {
             </Text>
           </Group>
         </Grid.Col>
-        <Grid.Col span={1} />
-        <Grid.Col span={3} className="pt-3">
-          <Group className="w-full" spacing={2} position="center">
+        {/* <Grid.Col span={1} /> */}
+        <Grid.Col span={7} className="pt-3">
+          <Group className="w-full" spacing={2} position="right">
             <Button
               style={{ backgroundColor: "transparent" }}
-              className="mx-auto z-20"
+              className="z-20"
               onClick={() => setTranslateOpen(true)}
             >
               <CIcon
@@ -199,12 +200,12 @@ export default function NavBar() {
               <>
                 <Link
                   to={"/profile"}
-                  className="cursor-pointer text-white font-serif text-xl hover:scale-110 mx-auto pl-4 pr-4 z-20 "
+                  className="cursor-pointer text-white font-serif text-xl hover:scale-110  pl-4 pr-4 z-20 "
                 >
                   {currentUser.username}
                 </Link>
 
-                <div className="cursor-pointer font-serif text-xl hover:scale-110 mx-auto z-20 text-white">
+                <div className="cursor-pointer font-serif text-xl hover:scale-110 z-20 text-white">
                   <a href="/home" onClick={logOut}>
                     Log Out
                   </a>
