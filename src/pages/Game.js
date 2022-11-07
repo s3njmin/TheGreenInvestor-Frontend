@@ -72,8 +72,6 @@ export default function Game() {
     const changeQuestion = listQuestions[currentYear + 1];
     setOpenReview(false);
     setCurrentYear(currentYear + 1);
-    setResponseFeedback(null);
-    setResponseStats(null);
 
     //set questions to the next one when closing the reviewHandler
     if (changeQuestion !== undefined) {
@@ -84,6 +82,8 @@ export default function Game() {
       setOptions(changeQuestion.optionsName);
       setIsOpenEnded(changeQuestion.openEnded);
     }
+    // setResponseFeedback(null);
+    // setResponseStats(null);
   }
 
   //handle closing of end game handler
@@ -158,6 +158,8 @@ export default function Game() {
         )
         .then((response) => {
           console.log(response);
+          setResponseFeedback(null);
+          setResponseStats(null);
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
           setCurrentIncome(response.data.currentIncomeVal);
@@ -185,6 +187,8 @@ export default function Game() {
         )
         .then((response) => {
           console.log(response);
+          setResponseFeedback(null);
+          setResponseStats(null);
           setResponseStats(response.data);
           setResponseFeedback(response.data.feedback);
           setCurrentIncome(response.data.currentIncomeVal);
