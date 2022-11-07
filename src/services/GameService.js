@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 
 /** change this to api.js */
 
-const API_URL = "http://localhost:8080/api/";
+const API_URL = "https://api.thegreeninvestor.net:8080/api/";
 
 class GameService {
   getGameContent() {
@@ -26,7 +26,7 @@ class GameService {
   getGameState() {
     console.log("hello");
     if (Object.keys(authHeader()).length !== 0) {
-      return axios.get("http://localhost:8080/api/gameInfo", {
+      return axios.get("https://api.thegreeninvestor.net:8080/api/gameInfo", {
         headers: authHeader(),
         "Content-Type": "application/json",
       });
@@ -36,7 +36,7 @@ class GameService {
   postStartGame() {
     console.log("hello");
     if (Object.keys(authHeader()).length !== 0) {
-      return axios.post("http://localhost:8080/api/startGame", undefined, {
+      return axios.post("https://api.thegreeninvestor.net:8080/api/startGame", undefined, {
         headers: authHeader(),
         "Content-Type": "application/json",
       });

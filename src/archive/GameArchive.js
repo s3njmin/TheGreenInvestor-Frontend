@@ -108,7 +108,7 @@ export default function Game() {
     if (isOpenEnded) {
       const response = await axios
         .post(
-          `http://localhost:8080/api/${question.id}/answer`,
+          `https://api.thegreeninvestor.net:8080/api/${question.id}/answer`,
           {
             //concatenate input1, input2 and input3 by comma
             answer: inputValue1 + "," + inputValue2 + "," + inputValue3,
@@ -134,7 +134,7 @@ export default function Game() {
   useEffect(() => {
     async function getAllData() {
       await axios
-        .get("http://localhost:8080/api/questionsAndOptions", {
+        .get("https://api.thegreeninvestor.net:8080/api/questionsAndOptions", {
           headers: authHeader(),
           "Content-Type": "application/json",
         })

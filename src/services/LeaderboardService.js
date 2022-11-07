@@ -2,7 +2,7 @@ import axios from "axios";
 
 /** change this to api.js */
 
-const API_URL = "http://localhost:8080/api/";
+const API_URL = "https://api.thegreeninvestor.net:8080/api/";
 
 class LeaderboardService {
   getLeaderboardDetails() {

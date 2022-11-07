@@ -13,7 +13,7 @@ const ProfilePics = ({ opened, handleClose, setReturnProfilePic }) => {
     if (Object.keys(authHeader()).length !== 0) {
       await axios
         .put(
-          `http://localhost:8080/api/user/profileImageIndex/${selectedProfilePic}`,
+          `https://api.thegreeninvestor.net:8080/api/user/profileImageIndex/${selectedProfilePic}`,
           undefined,
           {
             headers: authHeader(),

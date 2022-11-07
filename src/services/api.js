@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.service";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "https://api.thegreeninvestor.net:8080/api",
   headers: {
     "Content-Type": "application/json",
   },

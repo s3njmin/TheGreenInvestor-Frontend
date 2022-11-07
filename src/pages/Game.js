@@ -145,7 +145,7 @@ export default function Game() {
     if (isOpenEnded) {
       await axios
         .post(
-          `http://localhost:8080/api/submitAnswer`,
+          `https://api.thegreeninvestor.net:8080/api/submitAnswer`,
           {
             //concatenate input1, input2 and input3 by comma
             answer: inputValue1 + "," + inputValue2 + "," + inputValue3,
@@ -174,7 +174,7 @@ export default function Game() {
       //multi select options
       await axios
         .post(
-          `http://localhost:8080/api/submitAnswer`,
+          `https://api.thegreeninvestor.net:8080/api/submitAnswer`,
           {
             answer: selectedOption,
           },

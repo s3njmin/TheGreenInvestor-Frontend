@@ -18,7 +18,7 @@ const ImportanceSustain = () => {
     async function getCarbonData() {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:8080/api/carbon`, {
+        const res = await axios.get(`https://api.thegreeninvestor.net:8080/api/carbon`, {
           "Content-Type": "application/json",
         });
         setData(res.data);
