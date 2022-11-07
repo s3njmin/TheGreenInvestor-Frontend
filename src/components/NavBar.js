@@ -14,6 +14,7 @@ import AuthService from "../services/auth.service";
 import EventBus from "../common/EventBus";
 import { Box, Button, Grid, Group, Menu, Select, Text } from "@mantine/core";
 import TranslatePopup from "./TranslatePopup/TranslatePopup";
+import { registerables } from "chart.js";
 
 export default function NavBar() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -144,7 +145,7 @@ export default function NavBar() {
         grow
       >
         <Grid.Col className="pt-3" span={3}>
-          <Group className="w-[100%] mx-auto space-x-4" position="center">
+          <Group className="mx-auto space-x-4" position="center">
             <Link
               to={"/home"}
               className="text-white font-serif text-xl z-20 hover:scale-110 mx-auto "
@@ -155,7 +156,7 @@ export default function NavBar() {
               to={"/leaderboard"}
               className="text-white font-serif text-xl z-20 hover:scale-110 mx-auto "
             >
-              <Text>Leaderboard</Text>
+              Leaderboard
             </Link>
             <div className="music-button hover:scale-110 cursor-pointer mx-auto w-[36px] z-20">
               <MuteButton
@@ -181,7 +182,8 @@ export default function NavBar() {
         <Grid.Col span={3} className="pt-3">
           <Group className="w-full" spacing={2} position="center">
             <Button
-              className="hover:border-transparent mx-auto z-20"
+              style={{ backgroundColor: "transparent" }}
+              className="mx-auto z-20"
               onClick={() => setTranslateOpen(true)}
             >
               <CIcon
@@ -212,7 +214,7 @@ export default function NavBar() {
               // when user is not logged in
               <LoginPopUp
                 class="notranslate"
-                className="z-20 text-white font-serif text-xl"
+                className="z-20 text-white font-serif text-xl hover:scale-110"
               />
             )}
           </Group>
