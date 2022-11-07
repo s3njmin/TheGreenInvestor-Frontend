@@ -5,7 +5,7 @@ import { TickIcon } from "../../icons";
 import authHeader from "../../services/auth-header";
 
 //display profile pics if the user decides to change
-const ProfilePics = ({ opened, handleClose }) => {
+const ProfilePics = ({ opened, handleClose, setReturnProfilePic }) => {
   const indexArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [selectedProfilePic, setSelectedProfilePic] = useState();
   async function submitAndClose() {
@@ -20,7 +20,10 @@ const ProfilePics = ({ opened, handleClose }) => {
             "Content-Type": "application/json",
           }
         )
-        .then(handleClose());
+        .then(() => {
+          setReturnProfilePic(selectedProfilePic);
+          handleClose();
+        });
     }
   }
 
@@ -32,6 +35,7 @@ const ProfilePics = ({ opened, handleClose }) => {
       className="font-bold text-xl"
       opened={opened}
       onClose={handleClose}
+      setReturnProfilePic={setReturnProfilePic}
       title="Pick your profile picture"
     >
       <Stack>

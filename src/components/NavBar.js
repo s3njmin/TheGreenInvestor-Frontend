@@ -30,7 +30,7 @@ export default function NavBar() {
   // change the language
   const handleChange = (e) => {
     setLang(e.target.value);
-    let loc = "http://localhost:8081/";
+    let loc = "https://api.thegreeninvestor.net:8080/";
     window.location.replace(loc + "?lng=" + e.target.value);
   };
 
