@@ -24,11 +24,14 @@ export const options = {
     x: {
       grid: {
         display: false,
+        color: "#FFFFFF",
       },
+     
     },
     y: {
       grid: {
         display: false,
+        color: "#FFFFFF",
       },
     },
   },
@@ -47,6 +50,7 @@ export const options = {
     title: {
       display: true,
       text: "Carbon Emission Caused by Different Fuel Types",
+      color: "#FFFFFF",
     },
   },
 };

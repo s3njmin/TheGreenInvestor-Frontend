@@ -8,7 +8,7 @@
   position: absolute;
   /* box-sizing: border-box; */
   width: 100vw;
-  margin-top: calc(var(--navbar-height) + 1rem);
+  margin-top: 10;
   z-index: 10;
 
   /* To hide scrollable content below navbar */
@@ -26,7 +26,7 @@
 
 @media screen and (min-width: 1024px) {
   .content {
-    margin-top: var(--navbar-height-lg);
+    margin-top: 20;
   }
 }
 
@@ -174,4 +174,3 @@ body {
   border: none !important;
   box-shadow: none !important;
 }
-

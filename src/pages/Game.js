@@ -5,7 +5,14 @@ import { variants } from "../assets/Animations";
 
 import DataMetric from "../components/DataMetric/DataMetric";
 import { CashIcon, MoraleIcon, SustainabilityIcon } from "../icons";
-import { Box, Grid, Text, Button, LoadingOverlay } from "@mantine/core";
+import {
+  Box,
+  Grid,
+  Text,
+  Button,
+  LoadingOverlay,
+  TextInput,
+} from "@mantine/core";
 import { Input } from "@mantine/core";
 
 import authHeader from "../services/auth-header";
@@ -157,7 +164,7 @@ export default function Game() {
       setInputValue2("");
       setInputValue3("");
     } else {
-      console.log(selectedOption)
+      console.log(selectedOption);
       //multi select options
       await axios
         .post(
@@ -182,8 +189,6 @@ export default function Game() {
       setSelectedOption(null);
     }
   }
-
-  
 
   function generateCashData(costStats) {
     let result = [0, 100];
@@ -428,19 +433,22 @@ export default function Game() {
                 <Text className="font-semibold text-lg ">
                   Enter your answers
                 </Text>
-                <Input
-                  className="w-[80%] h-full bg-gray-50 text-black"
+                <TextInput
+                  size="lg"
+                  className="w-[80%]  h-full bg-gray-50 text-black"
                   placeholder="Enter your answer here"
                   value={inputValue1}
                   onChange={(e) => setInputValue1(e.target.value)}
                 />
-                <Input
+                <TextInput
+                  size="lg"
                   className="w-[80%] h-full bg-gray-50 text-black"
                   placeholder="Enter your answer here"
                   value={inputValue2}
                   onChange={(e) => setInputValue2(e.target.value)}
                 />
-                <Input
+                <TextInput
+                  size="lg"
                   className="w-[80%] h-full bg-gray-50 text-black"
                   placeholder="Enter your answer here"
                   value={inputValue3}
