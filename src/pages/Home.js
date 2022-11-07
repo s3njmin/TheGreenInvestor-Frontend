@@ -100,7 +100,7 @@ export default function Home() {
             Welcome to the Sustainability Game
           </h1>
 
-          <div className="scrollTip flex-end mb-44 ">
+          <div className="scrollTip flex-end mb-10 ">
             <img
               src={ScrollTip}
               className="scrollTip w-10 px-1 border-x-2"
@@ -109,9 +109,9 @@ export default function Home() {
           </div>
         </Parallax>
 
-        <div className="screen2 h-screen">
+        <div className="screen2 h-screen grid grid-rows-3">
           {/* <div className="text-container grid grid-rows-3 h-full"> */}
-          <Stack className=" mt-32">
+          <Stack className="row-start-2">
             <Box className=" text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[0]}
             </Box>
@@ -120,8 +120,8 @@ export default function Home() {
             </Box>
           </Stack>
         </div>
-        <div className="screen3 h-screen">
-          <Stack className="mt-32">
+        <div className="screen3 h-screen grid grid-rows-3">
+          <Stack className="row-start-2">
             <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[1]}
             </Box>
@@ -130,8 +130,8 @@ export default function Home() {
             </Box>
           </Stack>
         </div>
-        <div className="screen2 h-screen items-center">
-          <Stack className=" mt-32">
+        <div className="screen4 h-screen items-center grid grid-rows-3">
+          <Stack className="row-start-2">
             <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[2]}
             </Box>
@@ -140,39 +140,34 @@ export default function Home() {
             </Box>
           </Stack>
         </div>
-        <div className="screen5 h-screen mt-64">
-          <Parallax
-            speed={-20}
-            className="h-screen items-center grid grid-rows-3 "
-          >
-            <Stack className=" mt-32">
-              <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
-                {subheaders[3]}
-              </Box>
-              <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl text-xl font-serif w-full">
-                {displayContent[3].src}
-              </Box>
+        <div className="screen5 h-screen items-center grid grid-rows-3">
+          <Stack className="row-start-2">
+            <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
+              {subheaders[3]}
+            </Box>
+            <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl text-xl font-serif w-full">
+              {displayContent[3].src}
+            </Box>
 
-              {currentUser ? (
-                <Link to="/game" className="">
-                  <Button
-                    size="lg"
-                    className=" text-white border-white self-center font-serif w-1/3 rounded-full font-extrabold text-xl mt-auto bg-darkGreen-50 "
-                  >
-                    {t("home-button-playgame")}
-                  </Button>
-                </Link>
-              ) : (
+            {currentUser ? (
+              <Link to="/game" className="">
                 <Button
                   size="lg"
-                  onClick={signUpAsGuest}
                   className=" text-white border-white self-center font-serif w-1/3 rounded-full font-extrabold text-xl mt-auto bg-darkGreen-50 "
                 >
-                  {t("home-button-playguest")}
+                  {t("home-button-playgame")}
                 </Button>
-              )}
-            </Stack>
-          </Parallax>
+              </Link>
+            ) : (
+              <Button
+                size="lg"
+                onClick={signUpAsGuest}
+                className=" text-white border-white self-center font-serif w-1/3 rounded-full font-extrabold text-xl mt-auto bg-darkGreen-50 "
+              >
+                {t("home-button-playguest")}
+              </Button>
+            )}
+          </Stack>
         </div>
       </div>
     </div>
