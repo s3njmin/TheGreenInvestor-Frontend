@@ -92,7 +92,7 @@ export default function Home() {
   }
 
   return (
-    <div className="pl-48 pr-48 text-center">
+    <div className="pl-4 pr-4 text-center">
       <div className="container-content">
         <Parallax className="screen1 flex flex-col justify-between items-center">
           <span />
@@ -135,12 +135,12 @@ export default function Home() {
             <Box className="text-white bg-black bg-opacity-50 font-serif text-3xl p-4 rounded-3xl w-1/2 self-center">
               {subheaders[2]}
             </Box>
-            <Box className="text-white bg-black bg-opacity-70 p-4 rounded-3xl w-full">
+            <Box className="text-white bg-black bg-opacity-70 p-2 rounded-3xl w-full">
               <ImportanceSustain />
             </Box>
           </Stack>
         </div>
-        <div className="screen5 h-screen mt-44">
+        <div className="screen5 h-screen mt-64">
           <Parallax
             speed={-20}
             className="h-screen items-center grid grid-rows-3 "

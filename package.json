@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@coreui/icons": "^2.1.0",
+    "@coreui/icons-react": "^2.1.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mantine/core": "^5.4.2",

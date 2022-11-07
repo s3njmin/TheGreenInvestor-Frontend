@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import CIcon from "@coreui/icons-react";
+import { cilTranslate } from "@coreui/icons";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
@@ -12,12 +13,14 @@ import MuteButton from "./MuteButton";
 
 import AuthService from "../services/auth.service";
 import EventBus from "../common/EventBus";
-import { Grid, Group, Text } from "@mantine/core";
+import { Box, Button, Grid, Group, Menu, Select, Text } from "@mantine/core";
+import TranslatePopup from "./TranslatePopup/TranslatePopup";
 
 export default function NavBar() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [translateOpen, setTranslateOpen] = useState(false);
   const [playing, setPause] = useState(false);
   const player = new Audio(myMusic);
 
@@ -77,7 +80,7 @@ export default function NavBar() {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: "en",
-          includedLanguages: "ar,zh-TW,ms,es,en",
+          includedLanguages: "ar,en,zh-TW,ms,es",
           autoDisplay: false,
         },
 
@@ -127,13 +130,15 @@ export default function NavBar() {
     window.googleTranslateElementInit = googleTranslateElementInit;
   }, []);
 
+  function handleClose() {
+    setTranslateOpen(false);
+  }
+
   return (
     // Fixed size that NavBar will take up
     <>
-      <Grid
-        className="w-full z-20 pt-2  mb-4 align-baseline notranslate pl-20 pr-20"
-        grow
-      >
+      <TranslatePopup opened={translateOpen} handleClose={handleClose} />
+      <Grid className="w-full z-20 pt-2  mb-4 align-baseline notranslate " grow>
         <Grid.Col className="pt-3" span={4}>
           <Group className="w-[75%] space-x-4" position="center">
             <Link
@@ -157,29 +162,38 @@ export default function NavBar() {
             The Green Investor
           </Text> */}
 
-            <Text className="z-20 notranslate text-white  text-5xl font-['Playfair_Display_SC']">
+            <Text className="z-20 notranslate text-white  text-4xl font-['Playfair_Display_SC']">
               The Green Investor
             </Text>
           </Group>
         </Grid.Col>
         <Grid.Col span={4} className="pt-3">
-          <Group className="w-full space-x-8" position="center">
-            <div className="" id="google_translate_element" />
+          <Group className="w-full" spacing={2} position="center">
+            <Button onClick={() => setTranslateOpen(true)}>
+              <CIcon
+                icon={cilTranslate}
+                className="text-xs text-white z-20 w-6 h-6"
+                size="custom"
+                color="white"
+              />
+            </Button>
+            {/* <div className="" id="google_translate_element" /> */}
             {/* when user is logged in */}
             {currentUser ? (
-              <div className="grid grid-cols-2 space-x-8">
+              <>
                 <Link
                   to={"/profile"}
-                  className="cursor-pointer font-serif text-xl hover:scale-110 m-auto z-20 text-white"
+                  className="cursor-pointer text-white font-serif text-xl hover:scale-110 pl-4 pr-4 z-20 "
                 >
                   {currentUser.username}
                 </Link>
-                <div className="cursor-pointer font-serif text-xl hover:scale-110 m-auto z-20 text-white">
+
+                <div className="cursor-pointer font-serif text-xl hover:scale-110  z-20 text-white">
                   <a href="/home" onClick={logOut}>
                     Log Out
                   </a>
                 </div>
-              </div>
+              </>
             ) : (
               // when user is not logged in
               <LoginPopUp

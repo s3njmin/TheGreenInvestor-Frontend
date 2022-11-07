@@ -118,6 +118,7 @@ video {
   color: transparent !important;
   align-self: center;
   text-align: center;
+  width: 10px;
 }
 
 .goog-te-gadget .goog-te-combo {

@@ -3,6 +3,11 @@ import React from "react";
 import { DecreaseIcon, IncreaseIcon } from "../../icons";
 
 const IncrementChip = ({ increment, unit }) => {
+  function toFixed(num, fixed) {
+    fixed = fixed || 0;
+    fixed = Math.pow(10, fixed);
+    return Math.floor(num * fixed) / fixed;
+  }
   const colorString =
     increment < 0 ? "red" : increment === 0 ? "yellow" : "green";
   return (
@@ -22,7 +27,7 @@ const IncrementChip = ({ increment, unit }) => {
       ) : (
         <IncreaseIcon className="h-5" style={{ transform: "rotate(10deg)" }} />
       )}
-      <Text className="notranslate">{`${increment} ${unit}`}</Text>
+      <Text className="notranslate">{`${toFixed(increment,2)} ${unit}`}</Text>
     </Box>
   );
 };

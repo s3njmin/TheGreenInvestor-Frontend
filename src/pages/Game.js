@@ -33,6 +33,7 @@ export default function Game() {
   const [responseStats, setResponseStats] = useState(null);
   const [responseFeedback, setResponseFeedback] = useState("");
   const [article, setArticle] = useState();
+  const [multiplier, setMultiplier] = useState();
 
   const [currentYear, setCurrentYear] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState();
@@ -157,6 +158,7 @@ export default function Game() {
           setResponseFeedback(response.data.feedback);
           setCurrentIncome(response.data.currentIncomeVal);
           setArticle(response.data.article);
+          setMultiplier(response.data.multiplier);
         });
 
       //reset the input values
@@ -307,6 +309,8 @@ export default function Game() {
           responseStats && responseStats.changeInSustainabilityVal
         }
         opened={openReview}
+        openEnded={isOpenEnded}
+        multiplier={multiplier}
         article={article}
         handleClose={closeReviewHandler}
       />

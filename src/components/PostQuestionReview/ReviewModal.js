@@ -8,6 +8,8 @@ export default function ReviewModal({
   content,
   opened,
   article,
+  openEnded,
+  multiplier,
   handleClose,
 }) {
   console.log(article);
@@ -46,26 +48,35 @@ export default function ReviewModal({
             </>
           )}
           <Text>Update of your Statistics</Text>
-          <Group position="apart" className="w-full h-full ">
-            <Group spacing={6} className="text-base font-semi-bold ">
-              <Text>Cash</Text>
+          {!openEnded ? (
+            <Group position="apart" className="w-full h-full ">
+              <Group spacing={6} className="text-base font-semi-bold ">
+                <Text>Cash</Text>
+                <div className="pt-1">
+                  <IncrementChip increment={cash} unit={"SGD"} />
+                </div>
+              </Group>
+              <Group spacing={6} className="text-lg font-semi-bold ">
+                <Text>Morale</Text>
+                <div className="pt-1">
+                  <IncrementChip increment={morale} unit={"%"} />
+                </div>
+              </Group>
+              <Group spacing={6} className="text-base font-semi-bold">
+                <Text>Sustainability</Text>
+                <div className="pt-1">
+                  <IncrementChip increment={sustainability} unit={"pts"} />
+                </div>
+              </Group>
+            </Group>
+          ) : (
+            <Group position="center">
+              <Text>Multiplier</Text>
               <div className="pt-1">
-                <IncrementChip increment={cash} unit={"SGD"} />
+                <IncrementChip increment={multiplier} unit={"x"} />
               </div>
             </Group>
-            <Group spacing={6} className="text-lg font-semi-bold ">
-              <Text>Morale</Text>
-              <div className="pt-1">
-                <IncrementChip increment={morale} unit={"%"} />
-              </div>
-            </Group>
-            <Group spacing={6} className="text-base font-semi-bold">
-              <Text>Sustainability</Text>
-              <div className="pt-1">
-                <IncrementChip increment={sustainability} unit={"pts"} />
-              </div>
-            </Group>
-          </Group>
+          )}
           <div></div>
           <Button
             className="bg-darkGreen-50 text-white w-1/8 self-center "

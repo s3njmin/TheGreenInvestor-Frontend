@@ -75,23 +75,18 @@ const ImportanceSustain = () => {
       )}
       {!loading && (
         <Grid className="h-full w-full">
-          <Grid.Col span={4}>
+          <Grid.Col span={3}>
             <Text className="text-md  font-serif">
               On the right, you are provided with stastics regarding some of the
               biggest causes of carbon emissions such as flight, electricity and
-              fuel. For fuel, there are multiple types of fuel and we can see
-              the large carbon emissions caused by these types of fuels. BIT is
-              Bituminous Coal , MSW is Municipal Solid Waste and LIG is Lignite
-              Coal. From these large numbers, we can understand that all these
-              cause a lot of harm to the environment. Thus, do be mindful of
-              your actions!
+              fuel. BIT is Bituminous Coal , MSW is Municipal Solid Waste and
+              LIG is Lignite Coal. From these large numbers, we can understand
+              that all these cause a lot of harm to the environment. Thus, do be
+              mindful of your actions!
             </Text>
           </Grid.Col>
-          <Grid.Col span={8}>
-            <Group
-              spacing="xs"
-              className="flex items-center justify-center h-full w-full p-0 "
-            >
+          <Grid.Col span={9}>
+            <Group className="flex items-center justify-center h-full w-full p-0 -space-x-4">
               <CircleData
                 value={flight.attributes.carbon_lb}
                 label={"Flight"}
