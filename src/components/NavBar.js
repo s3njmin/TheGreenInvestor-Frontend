@@ -139,7 +139,7 @@ export default function NavBar() {
     <>
       <TranslatePopup opened={translateOpen} handleClose={handleClose} />
       <Grid className="w-full z-20 pt-2  mb-4 align-baseline notranslate " grow>
-        <Grid.Col className="pt-3" span={4}>
+        <Grid.Col className="pt-2" span={4}>
           <Group className="w-[75%] space-x-4" position="center">
             <Link
               to={"/home"}
@@ -167,7 +167,7 @@ export default function NavBar() {
             </Text>
           </Group>
         </Grid.Col>
-        <Grid.Col span={4} className="pt-3">
+        <Grid.Col span={4} className="pt-2">
           <Group className="w-full" spacing={2} position="center">
             <Button onClick={() => setTranslateOpen(true)}>
               <CIcon
