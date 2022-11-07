@@ -66,10 +66,14 @@ export default function Game() {
   });
 
   //handle Closing of the ReviewModal
+  console.log(responseFeedback);
+  console.log(responseStats);
   async function closeReviewHandler() {
     const changeQuestion = listQuestions[currentYear + 1];
     setOpenReview(false);
     setCurrentYear(currentYear + 1);
+    setResponseFeedback(null);
+    setResponseStats(null);
 
     //set questions to the next one when closing the reviewHandler
     if (changeQuestion !== undefined) {
@@ -309,6 +313,10 @@ export default function Game() {
           responseStats && responseStats.changeInSustainabilityVal
         }
         opened={openReview}
+        setResponseStats={setResponseStats}
+        setResponseFeedback={setResponseFeedback}
+        responseStats={responseStats}
+        responseFeedback={responseFeedback}
         openEnded={isOpenEnded}
         multiplier={multiplier}
         article={article}
@@ -424,7 +432,7 @@ export default function Game() {
                   onClick={onClickHandler}
                   disabled={selectedOption === null ? true : false}
                   size="md"
-                  className="h-[90%] w-[15%] bg-darkGreen-50 text-white"
+                  className="h-[90%] w-[25%] bg-darkGreen-50 text-white"
                 >
                   Submit
                 </Button>
