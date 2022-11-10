@@ -76,7 +76,7 @@ export default function Home() {
         <div className="screen1 h-screen flex flex-col justify-between items-center">
           <span />
           <h1 className="center text-white bounce title mt-10 self-center shadow-xl border-t-4 border-b-4 ">
-            Welcome to the Sustainability Game
+            Welcome to The Green Investor
           </h1>
 
           <div className="scrollTip flex-end mb-10 ">
